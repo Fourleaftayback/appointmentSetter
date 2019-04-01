@@ -10,6 +10,7 @@ const port = process.env.PORT || 5000;
 const db = process.env.DATABASE || "mongodb://localhost/test";
 
 //import routes here
+const teamApi = require("./routes/team");
 
 mongoose
   .connect(db, { useNewUrlParser: true })
@@ -18,5 +19,7 @@ mongoose
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use("/team", teamApi);
 
 app.listen(port, () => console.log(`server connected on ${port}`));
