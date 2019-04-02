@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const passport = require("passport");
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -11,6 +12,8 @@ const db = process.env.DATABASE || "mongodb://localhost/test";
 
 //import routes here
 const teamApi = require("./routes/team");
+const userApi = require("./routes/user");
+const appointmentApi = require("./routes/appointment");
 
 mongoose
   .connect(db, { useNewUrlParser: true })
@@ -21,5 +24,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use("/team", teamApi);
+
+app.use(passport.initialize());
+require("./config/passportUser")(passport);
+
+app.use("/user", userApi);
+app.use("/appointment", appointmentApi);
 
 app.listen(port, () => console.log(`server connected on ${port}`));

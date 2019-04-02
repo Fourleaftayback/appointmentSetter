@@ -7,8 +7,8 @@ const jwt = require("jsonwebtoken");
 const Team = require("../models/Team");
 const keys = process.env.secret;
 
-const validateLoginInput = require("../validation/teamValidation/loginValidation");
-const validateRegisterInput = require("../validation/teamValidation/registerValidation");
+const validateLoginInput = require("../validation/loginValidation");
+const validateRegisterInput = require("../validation/registerValidation");
 
 // @route   POST team/register
 // @desc    Register team for testing purposes only
@@ -38,7 +38,7 @@ router.post("/register", (req, res) => {
           newTeam.password = hash;
           newTeam
             .save()
-            .then(team => res.json(team)) //consider changing the response to maybe just status
+            .then(team => res.json(team)) //change after testing to just return status
             .catch(err => console.log(err));
         });
       });
@@ -46,7 +46,6 @@ router.post("/register", (req, res) => {
   });
 });
 
-//place validation here
 // @route   POST team/login
 // @desc    Login User / Returning JWT Token
 // @access  Public

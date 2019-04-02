@@ -7,14 +7,22 @@ const AppointmentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "users",
     required: true
-  },
+  } /*,
   team: {
     type: Schema.Types.ObjectId,
     ref: "team",
     required: true
-  },
+  } */,
   appointment_type: {
     type: String,
+    required: true
+  },
+  appointment_start: {
+    type: Date,
+    required: true
+  },
+  appointment_end: {
+    type: Date,
     required: true
   },
   confirmed: {
