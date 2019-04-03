@@ -13,7 +13,8 @@ const db = process.env.DATABASE || "mongodb://localhost/test";
 //import routes here
 const teamApi = require("./routes/team");
 const userApi = require("./routes/user");
-const appointmentApi = require("./routes/appointment");
+const appointmentApiClient = require("./routes/appointmentClient");
+const appointmentApiTeam = require("./routes/appointmentTeam");
 
 mongoose
   .connect(db, { useNewUrlParser: true })
@@ -24,11 +25,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use("/team", teamApi);
-
-app.use(passport.initialize());
-require("./config/passportUser")(passport);
-
+app.use("/team/appointment", appointmentApiTeam);
 app.use("/user", userApi);
-app.use("/appointment", appointmentApi);
+app.use("/appointment", appointmentApiClient);
 
 app.listen(port, () => console.log(`server connected on ${port}`));

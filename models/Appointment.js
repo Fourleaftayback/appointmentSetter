@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const User = require("./User");
+const Team = require("./Team");
 
 // Create Schema
 const AppointmentSchema = new Schema({
@@ -7,12 +9,11 @@ const AppointmentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "users",
     required: true
-  } /*,
-  team: {
-    type: Schema.Types.ObjectId,
-    ref: "team",
+  },
+  client_info: {
+    type: Object,
     required: true
-  } */,
+  },
   appointment_type: {
     type: String,
     required: true
@@ -30,20 +31,12 @@ const AppointmentSchema = new Schema({
     required: true,
     default: false
   },
-  client_phone: {
-    type: Number,
-    required: true
-  },
-  client_email: {
+  team_member_id: {
     type: String,
     required: true
   },
-  client_name: {
-    type: String,
-    required: true
-  },
-  team_name: {
-    type: String,
+  team_member_info: {
+    type: Object,
     required: true
   },
   date_requested_on: {
