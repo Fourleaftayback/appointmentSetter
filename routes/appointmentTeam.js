@@ -2,21 +2,18 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
-const app = express();
-
 const Appointment = require("../models/Appointment");
 const Team = require("../models/Team");
 const User = require("../models/User");
 
-app.use(passport.initialize());
 require("../config/passportTeam")(passport);
 
 // @route   Get team/appointment/delete/:id
 // @desc    delete appointment by appointment id
-// @access  Public
+// @access  private team
 router.delete(
   "/delete/:id",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("teamPass", { session: false }),
   (req, res) => {
     Appointment.findById(req.params.id)
       .then(data => {
@@ -35,10 +32,10 @@ router.delete(
 
 // @route   Get team/appointment/all
 // @desc    get All data for Team side only
-// @access  Public
+// @access  private
 router.get(
   "/all",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("teamPass", { session: false }),
   (req, res) => {
     Appointment.find({ appointment_end: { $gte: Date.now() } })
       .then(app => {
@@ -50,10 +47,10 @@ router.get(
 
 // @route   Get team/appointment/team
 // @desc    get appointment by team ID
-// @access  Public
+// @access  private
 router.get(
   "/team",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("teamPass", { session: false }),
   (req, res) => {
     Appointment.find({
       team_member_id: req.user.id,
@@ -61,6 +58,40 @@ router.get(
     })
       .then(app => {
         res.status(200).json(app);
+      })
+      .catch(err => res.status(400).json({ errors: err }));
+  }
+);
+
+// @route   Get team/appointment/edit/:id
+// @desc    get appointment by team ID
+// @access  private
+
+router.put(
+  "/edit/:id",
+  passport.authenticate("teamPass", { session: false }),
+  (req, res) => {
+    // error handler here
+    Appointment.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        appointment_type: req.body.appointment_type,
+        appointment_start: req.body.appointment_start,
+        appointment_end: req.body.appointment_end
+      }
+    )
+      .then(app => {
+        if (!app)
+          return res.status(400).json({
+            errors: "This appointment does not exist."
+          });
+        if (app.team_member_id !== req.user.id) {
+          return res.status(400).json({
+            errors: "Sorry you are not authorized to modify this appointment"
+          });
+        }
+        app.save();
+        return res.status(400).json({ appointment: "success" });
       })
       .catch(err => res.status(400).json({ errors: err }));
   }

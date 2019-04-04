@@ -10,6 +10,7 @@ opts.secretOrKey = process.env.secret;
 
 module.exports = passport => {
   passport.use(
+    "teamPass",
     new JwtStrategy(opts, (jwt_payload, done) => {
       Team.findById(jwt_payload.id)
         .then(user => {

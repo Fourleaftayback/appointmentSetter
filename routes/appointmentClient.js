@@ -6,12 +6,8 @@ const Appointment = require("../models/Appointment");
 const Team = require("../models/Team");
 const User = require("../models/User");
 
-const app = express();
-
 const validateAppointment = require("../validation/appointmentValidation");
-//const encryptText = require("../encryption/encrpyt");
 
-app.use(passport.initialize());
 require("../config/passportUser")(passport);
 
 // @route   Post appointment/add
@@ -19,7 +15,7 @@ require("../config/passportUser")(passport);
 // @access  Private
 router.post(
   "/add",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("userPass", { session: false }),
   async (req, res) => {
     const { errors, isValid } = validateAppointment(req.body);
 
