@@ -49,6 +49,74 @@ router.post(
   }
 );
 
+// @route   Put appointment/edit/:id
+// @desc    modify appointment
+// @access  Private
+
+router.put(
+  "/edit/:id",
+  passport.authenticate("userPass", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateAppointment(req.body);
+
+    if (!isValid) return res.status(400).json(errors);
+
+    Appointment.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        appointment_type: req.body.appointment_type,
+        appointment_start: req.body.appointment_start,
+        appointment_end: req.body.appointment_end,
+        confirmed: false
+      }
+    )
+      .then(app => {
+        if (!app)
+          return res.status(400).json({
+            errors: "This appointment does not exist."
+          });
+        if (app.user._id !== req.user._id) {
+          return res.status(400).json({
+            errors: "Sorry you are not authorized to modify this appointment"
+          });
+        }
+        app.save();
+        return res.status(400).json({
+          appointment: "You will recieve a email confirming your change soon"
+        });
+      })
+      .catch(err => res.status(400).json({ errors: err }));
+  }
+);
+
+// @route   Delete appointment/delete/:id
+// @desc    delete appointment
+// @access  Private
+
+router.delete(
+  "/delete/:id",
+  passport.authenticate("userPass", { session: false }),
+  (req, res) => {
+    Appointment.findById(req.params.id)
+      .then(app => {
+        if (req.user._id.toString() != app.user._id)
+          return res.status(404).json({
+            errors: "You are not authorized to change this appointment"
+          });
+        if (Date.now() > new Date(app.appointment_start - 3600000)) {
+          return res.status(400).json({
+            errors:
+              "You care too close to the appointment to cancel online, Please call directly to cancel"
+          });
+        }
+        app.remove().then(() => res.status(200).json({ success: true }));
+      })
+      .catch(err =>
+        res.status(400).json({ errors: "Appointment does not exist" })
+      );
+  }
+);
+
 // @route   Get appointment/all
 // @desc    get All data for client side only
 // @access  Public

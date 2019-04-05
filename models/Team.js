@@ -23,10 +23,10 @@ const TeamSchema = new Schema({
     type: String,
     required: true
   },
-  access_level: {
-    type: String,
+  isAdmin: {
+    type: Boolean,
     required: true,
-    default: "user"
+    default: false
   },
   created_on: {
     type: Date,

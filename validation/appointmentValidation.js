@@ -20,16 +20,10 @@ module.exports = function validateAppointmentInput(data) {
 
   if (Validator.isEmpty(data.appointment_start))
     errors.appointment_start = "Apppointment start date is required";
-  /*
-  if (Validator.isISO8601(data.appointment_start))
-    errors.appointment_start = "Apppointment start date is not valid";
-  */
+
   if (Validator.isEmpty(data.appointment_end))
     errors.appointment_end = "Apppointment end date is required";
-  /*
-  if (Validator.isISO8601(data.appointment_end))
-    errors.appointment_end = "Apppointment end date is not valid";
-  */
+
   return {
     errors,
     isValid: isEmpty(errors)
