@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-//const passport = require("passport");
+const passport = require("passport");
 
 const Team = require("../models/Team");
 const keys = process.env.secret;
@@ -28,7 +28,6 @@ router.post("/register", (req, res) => {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         phone: req.body.phone,
-        access_level: req.body.access_level,
         password: req.body.password
       });
 
@@ -82,5 +81,23 @@ router.post("/login", (req, res) => {
     });
   });
 });
+
+// @route   POST team/create
+// @desc    admin only can create new user invite sent to the user only then they will need to register in the route
+// @access  private
+
+router.post(
+  "/create",
+  passport.authenticate("teamPass", { session: false }),
+  (req, res) => {
+    if (!req.user.isAdmin) {
+      return res
+        .status(400)
+        .json({ errors: "Sorry you are authorized to create a new user" });
+    }
+    //get email from request, save data to a new model, send email ...set up other routes GET , Register Routes to create a new team member
+    //set up emailer to manage the request here to send the email that provides the route to register the user
+  }
+);
 
 module.exports = router;

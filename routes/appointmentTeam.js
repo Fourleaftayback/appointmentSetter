@@ -10,6 +10,45 @@ const validateAppointment = require("../validation/appointmentValidation");
 
 require("../config/passportTeam")(passport);
 
+// @route   Post team/appointment/add
+// @desc    add new appointment to Team
+// @access  Private
+router.post(
+  "/add",
+  passport.authenticate("teamPass", { session: false }),
+  async (req, res) => {
+    const { errors, isValid } = validateAppointment(req.body);
+
+    if (!isValid) return res.status(400).json(errors);
+    let userInfo = await User.findById(
+      req.body.clientId,
+      "email first_name last_name phone"
+    );
+    let teamInfo = await Team.findById(
+      req.body.teamId,
+      "email first_name last_name phone"
+    );
+
+    let newAppointment = new Appointment({
+      user: req.body.clientId,
+      client_info: userInfo,
+      appointment_type: req.body.appointment_type,
+      appointment_start: req.body.appointment_start,
+      appointment_end: req.body.appointment_end,
+      team_member_id: req.body.teamId,
+      team_member_info: teamInfo,
+      date_requested_on: Date.now()
+    });
+
+    newAppointment
+      .save()
+      .then(app => {
+        res.status(200).json({ status: "appointment saved" });
+      })
+      .catch(err => res.status(400).json({ errors: "failed to save" }));
+  }
+);
+
 // @route   put team/appointment/edit/:id
 // @desc    edit appointment by team ID
 // @access  private
