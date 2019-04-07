@@ -1,4 +1,4 @@
-function UserResetMessage(toEmail, token, url) {
+function PasswordResetMessage(toEmail, token, url) {
   (this.to = toEmail),
     (this.from = process.env.SEND_GRID_EMAIL),
     (this.subject = `Reset Password Request from AppointmentSetter`),
@@ -8,6 +8,6 @@ function UserResetMessage(toEmail, token, url) {
 function anotherMessage(email, token, url) {}
 
 module.exports = {
-  UserResetMessage,
+  PasswordResetMessage,
   anotherMessage
 };

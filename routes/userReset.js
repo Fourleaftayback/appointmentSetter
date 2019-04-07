@@ -9,7 +9,7 @@ const User = require("../models/User");
 const validateEmail = require("../validation/emailValidation");
 const validateResetPassword = require("../validation/resetPasswordValidation");
 
-const { UserResetMessage } = require("../emails/Emails");
+const { PasswordResetMessage } = require("../emails/Emails");
 sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 
 // @route   POST reset/user/forgot
@@ -34,7 +34,7 @@ router.post("/forgot", (req, res) => {
     }
     user.save();
 
-    let email = new UserResetMessage(req.body.email, token, req.hostname);
+    let email = new PasswordResetMessage(req.body.email, token, req.hostname);
     sgMail
       .send(email)
       .then(() => {
