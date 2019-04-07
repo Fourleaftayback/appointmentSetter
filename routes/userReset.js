@@ -57,6 +57,7 @@ router.get("/:token", (req, res) => {
   }).then(user => {
     if (!user)
       return res.redirect(`https://${req.hostname}/reset/user/notvalid`);
+
     return res.redirect(
       `https://${req.hostname}/reset/user/password/${req.params.token}`
     );

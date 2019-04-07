@@ -1,7 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const passport = require("passport");
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -10,7 +9,6 @@ const app = express();
 const port = process.env.PORT;
 const db = process.env.DATABASE || "mongodb://localhost/test";
 
-//import routes here
 const teamApi = require("./routes/team");
 const userApi = require("./routes/user");
 const appointmentApiClient = require("./routes/appointmentClient");

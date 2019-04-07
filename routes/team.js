@@ -3,17 +3,25 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
+const randomstring = require("randomstring");
+const crypto = require("crypto");
+const sgMail = require("@sendgrid/mail");
 
 const Team = require("../models/Team");
 const keys = process.env.secret;
 
 const validateLoginInput = require("../validation/loginValidation");
 const validateRegisterInput = require("../validation/registerValidation");
+const validateEmail = require("../validation/emailValidation");
+const validateTeamRegister = require("../validation/registerTeamValidation");
 
-// @route   POST team/register
+const TeamRegistrationMessage = require("../emails/Emails");
+sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+
+// @route   POST team/test/register
 // @desc    Register team for testing purposes only
 // @access  Public
-router.post("/register", (req, res) => {
+router.post("/test/register", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
   if (!isValid) return res.status(400).json(errors);
@@ -83,21 +91,101 @@ router.post("/login", (req, res) => {
 });
 
 // @route   POST team/create
-// @desc    admin only can create new user invite sent to the user only then they will need to register in the route
+// @desc    Admin Only can create new user invite sent to the user only then they will need to register in the route
 // @access  private
 
 router.post(
   "/create",
   passport.authenticate("teamPass", { session: false }),
   (req, res) => {
-    if (!req.user.isAdmin) {
+    if (!req.user.isAdmin)
       return res
         .status(400)
         .json({ errors: "Sorry you are authorized to create a new user" });
-    }
-    //get email from request, save data to a new model, send email ...set up other routes GET , Register Routes to create a new team member
-    //set up emailer to manage the request here to send the email that provides the route to register the user
+
+    const { errors, isValid } = validateEmail(req.body);
+    if (!isValid) return res.status(400).json(errors);
+
+    let randomStr = randomstring.generate({
+      length: 10,
+      charset: "alphanumeric"
+    });
+
+    let isAmdin = req.body.isAdmin === "true" ? true : false;
+    let token = crypto.randomBytes(20).toString("hex");
+
+    let newTeam = new Team({
+      email: req.body.email,
+      isAmdin: isAmdin,
+      password: randomStr,
+      resetPasswordToken: token
+    });
+
+    newTeam.save();
+    let mail = new TeamRegistrationMessage(req.body.email, token, req.hostname);
+
+    sgMail
+      .send(mail)
+      .then(() => {
+        return res.status(200).json({
+          message:
+            "please have the team memeber check thier Email to finish the registration process"
+        });
+      })
+      .catch(err => {
+        errors.email = "Email could not be sent to finish registration";
+        return res.status(400).json(errors);
+      });
   }
 );
+
+// @route   GET /team/register/:token
+// @desc    route to redirect team to register page to complete set up
+// @access  Public
+router.get("/register/:token", (req, res) => {
+  Team.findOne({ resetPasswordToken: req.params.token }).then(team => {
+    if (!team)
+      return res.redirect(`https://${req.hostname}/reset/team/notvalid`);
+
+    return res.redirect(
+      `https://${req.hostname}/team/register/${req.params.token}`
+    );
+  });
+});
+
+// @route   POST /team/register
+// @desc    get token for req from the params in frontend
+// @access  Public
+
+router.post("/register", (req, res) => {
+  const { errors, isValid } = validateTeamRegister(req.body);
+  if (!isValid) return res.status(400).json(errors);
+
+  Team.findOne({
+    resetPasswordToken: req.body.resetPasswordToken
+  }).then(team => {
+    if (!team) {
+      errors.password = "Sorry registration could not be complete";
+      return res.status(400).json(errors);
+    }
+    let newPassword = req.body.password;
+    bcrypt.getSalt(10, (err, salt) => {
+      bcrypt.hash(newPassword, salt, (err, hash) => {
+        team.password = hash;
+        team.first_name = req.body.first_name;
+        team.last_name = req.body.last_name;
+        team.phone = req.body.phone;
+        team.resetPasswordToken = undefined;
+        team
+          .save()
+          .then(() => res.status(200).json({ teamInfo: "updated" }))
+          .catch(err => {
+            errors.teamInfo = "Sorry your information could not be updated";
+            return res.status(400).json(errors);
+          });
+      });
+    });
+  });
+});
 
 module.exports = router;
