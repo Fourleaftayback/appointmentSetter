@@ -15,7 +15,7 @@ const validateRegisterInput = require("../validation/registerValidation");
 const validateEmail = require("../validation/emailValidation");
 const validateTeamRegister = require("../validation/registerTeamValidation");
 
-const TeamRegistrationMessage = require("../emails/Emails");
+const { TeamRegistrationMessage } = require("../emails/Emails");
 sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 
 // @route   POST team/test/register

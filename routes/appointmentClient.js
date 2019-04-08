@@ -1,12 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const sgMail = require("@sendgrid/mail");
 
 const Appointment = require("../models/Appointment");
 const Team = require("../models/Team");
 const User = require("../models/User");
 
 const validateAppointment = require("../validation/appointmentValidation");
+
+const { TeamConfirmAppMessage } = require("../emails/Emails");
+sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 
 require("../config/passportUser")(passport);
 
@@ -43,7 +47,20 @@ router.post(
     newAppointment
       .save()
       .then(app => {
-        res.status(200).json({ status: "appointment saved" });
+        let email = new TeamConfirmAppMessage(
+          app.team_member_info.email,
+          app.id,
+          req.hostname
+        );
+        sgMail
+          .send(email)
+          .then(() => {
+            res.status(200).json({ status: "appointment saved" });
+          })
+          .catch(err => {
+            errors.email = "something went wrong please contact directly";
+            return res.status(400).json(errors);
+          });
       })
       .catch(err => res.status(400).json({ errors: "failed to save" }));
   }
