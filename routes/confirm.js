@@ -5,6 +5,8 @@ const moment = require("moment");
 
 const Appointment = require("../models/Appointment");
 
+const EmailErrors = require("../models/EmailErrors");
+
 const {
   ClientConfirmAppMessage,
   ClientRejectAppMessage
@@ -58,11 +60,13 @@ router.put(
                   .json({ email: "Confirmation sent to cient" });
               })
               .catch(err => {
-                return res
-                  .status(400)
-                  .json({
-                    email: "Email could not be sent to finish registration"
-                  });
+                let emailErr = new EmailErrors(
+                  data.client_info.email,
+                  "/confirm/team/:token",
+                  err
+                );
+                emailErr.save();
+                return res.status(400).json({ errors: "Email was not sent" });
               });
           });
         })
@@ -88,7 +92,13 @@ router.put(
               .json({ email: "Email sent to client to reschedule" });
           })
           .catch(err => {
-            return res.status(400).json({ email: "Email could not be sentå" });
+            let emailErr = new EmailErrors(
+              data.client_info.email,
+              "/confirm/team/:token",
+              err
+            );
+            emailErr.save();
+            return res.status(400).json({ errors: "Email was not sent" });
           });
       });
     }

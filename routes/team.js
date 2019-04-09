@@ -8,6 +8,8 @@ const crypto = require("crypto");
 const sgMail = require("@sendgrid/mail");
 
 const Team = require("../models/Team");
+const EmailErrors = require("../models/EmailErrors");
+
 const keys = process.env.secret;
 
 const validateLoginInput = require("../validation/loginValidation");
@@ -133,7 +135,9 @@ router.post(
         });
       })
       .catch(err => {
-        errors.email = "Email could not be sent to finish registration";
+        let emailErr = new EmailErrors(req.body.email, "/team/create", err);
+        emailErr.save();
+        errors.email = "Sorry email could not be sent";
         return res.status(400).json(errors);
       });
   }

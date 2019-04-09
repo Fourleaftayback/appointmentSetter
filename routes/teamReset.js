@@ -5,6 +5,7 @@ const sgMail = require("@sendgrid/mail");
 const bcrypt = require("bcryptjs");
 
 const Team = require("../models/User");
+const EmailErrors = require("../models/EmailErrors");
 
 const validateEmail = require("../validation/emailValidation");
 const validateResetPassword = require("../validation/resetPasswordValidation");
@@ -41,7 +42,14 @@ router.post("/forgot", (req, res) => {
         return res.status(200).json({ email: "email sent" });
       })
       .catch(err => {
-        console.log(err);
+        let emailErr = new EmailErrors(
+          req.body.email,
+          "/reset/team/forgot",
+          err
+        );
+        emailErr.save();
+        errors.email = "Sorry email could not be sent";
+        return res.status(400).json(errors);
       });
   });
 });

@@ -6,6 +6,7 @@ const sgMail = require("@sendgrid/mail");
 const Appointment = require("../models/Appointment");
 const Team = require("../models/Team");
 const User = require("../models/User");
+const EmailErrors = require("../models/EmailErrors");
 
 const validateAppointment = require("../validation/appointmentValidation");
 
@@ -58,7 +59,13 @@ router.post(
             res.status(200).json({ status: "appointment saved" });
           })
           .catch(err => {
-            errors.email = "something went wrong please contact directly";
+            let emailErr = new EmailErrors(
+              app.team_member_info.email,
+              "/appointment/add",
+              err
+            );
+            emailErr.save();
+            errors.email = "Sorry email could not be sent";
             return res.status(400).json(errors);
           });
       })
