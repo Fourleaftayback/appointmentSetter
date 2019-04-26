@@ -40,8 +40,7 @@ FormItem.propTypes = {
   info: PropTypes.string,
   error: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  label: PropTypes.string,
-  invalid: PropTypes.bool
+  label: PropTypes.string
 };
 
 export default FormItem;

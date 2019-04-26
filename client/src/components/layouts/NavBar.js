@@ -13,6 +13,8 @@ import {
   DropdownItem
 } from "reactstrap";
 
+import LoginModal from "../auth/LoginModal";
+
 const NavBar = () => {
   const [collapsed, setCollapse] = useState(false);
 
@@ -47,15 +49,11 @@ const NavBar = () => {
             </DropdownToggle>
             <DropdownMenu className="bg-dark" right>
               <DropdownItem>
-                <NavLink className="text-white text-center p-0" href="/login">
-                  User login
-                </NavLink>
+                <LoginModal loginType="User" forgotPath="/forgot" />
               </DropdownItem>
               <DropdownItem divider />
               <DropdownItem className="text-white">
-                <NavLink className="text-white text-center p-0" href="/login">
-                  Team login
-                </NavLink>
+                <LoginModal loginType="Team" forgotPath="/team/forgot" />
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
