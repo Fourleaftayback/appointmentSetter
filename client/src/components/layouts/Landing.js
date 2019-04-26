@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Container } from "reactstrap";
 
 const Landing = () => {
   const [test] = useState("test");
 
-  return <Container className="landing">{test}</Container>;
+  return (
+    <Container className="landing text-center">
+      <h3>{test}</h3>
+      <hr />
+    </Container>
+  );
 };
 
 export default Landing;
