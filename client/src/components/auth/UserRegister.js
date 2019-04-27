@@ -14,7 +14,7 @@ const UserRegister = () => {
   return (
     <React.Fragment>
       <Row className="mt-3">
-        <Col className="col-md-4 m-auto pb-3">
+        <Col md={4} className="m-auto pb-3">
           <h3 className="text-center mt-3">Register</h3>
           <Form>
             <FormItem
@@ -25,22 +25,28 @@ const UserRegister = () => {
               error={null}
               onChange={e => setEmail(e.target.value)}
             />
-            <FormItem
-              type="text"
-              name="first_name"
-              placeholder="First name"
-              value={first_name}
-              error={null}
-              onChange={e => setFirstName(e.target.value)}
-            />
-            <FormItem
-              type="text"
-              name="last_name"
-              placeholder="Last name"
-              value={last_name}
-              error={null}
-              onChange={e => setLastName(e.target.value)}
-            />
+            <Row>
+              <Col md={6} className="pr-1">
+                <FormItem
+                  type="text"
+                  name="first_name"
+                  placeholder="First name"
+                  value={first_name}
+                  error={null}
+                  onChange={e => setFirstName(e.target.value)}
+                />
+              </Col>
+              <Col md={6} className="pl-1">
+                <FormItem
+                  type="text"
+                  name="last_name"
+                  placeholder="Last name"
+                  value={last_name}
+                  error={null}
+                  onChange={e => setLastName(e.target.value)}
+                />
+              </Col>
+            </Row>
             <FormItem
               type="tel"
               name="phone"
