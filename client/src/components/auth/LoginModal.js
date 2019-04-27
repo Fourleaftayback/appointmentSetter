@@ -37,9 +37,8 @@ const LoginModal = ({ loginType, forgotPath }) => {
             <FormItem
               type="email"
               name="email"
-              placeholder="example@test.com"
+              placeholder="Email"
               value={email}
-              label="Email"
               error={null}
               onChange={e => setEmail(e.target.value)}
             />
@@ -48,7 +47,6 @@ const LoginModal = ({ loginType, forgotPath }) => {
               name="password"
               placeholder="Password"
               value={password}
-              label="Password"
               error={null}
               onChange={e => setPassword(e.target.value)}
             />

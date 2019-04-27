@@ -6,17 +6,16 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
+  NavLink
 } from "reactstrap";
 
-import LoginModal from "../auth/LoginModal";
+import AuthLinks from "../navbar/AuthLinks";
+import SignOut from "../navbar/SignOut";
 
 const NavBar = () => {
   const [collapsed, setCollapse] = useState(false);
+
+  const [isLoggedIn] = useState(false);
 
   const collapseHandler = () => {
     collapsed ? setCollapse(false) : setCollapse(true);
@@ -43,32 +42,7 @@ const NavBar = () => {
           </NavItem>
         </Nav>
         <Nav className="navbar-nav mt-2 mt-lg-0">
-          <UncontrolledDropdown nav inNavbar>
-            <DropdownToggle nav className="text-white">
-              Login
-            </DropdownToggle>
-            <DropdownMenu className="bg-dark" right>
-              <DropdownItem>
-                <LoginModal loginType="User" forgotPath="/forgot" />
-              </DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem className="text-white">
-                <LoginModal loginType="Team" forgotPath="/team/forgot" />
-              </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
-          <NavItem>
-            <NavLink className="text-white" href="/signup">
-              Sign Up
-            </NavLink>
-          </NavItem>
-          {/* 
-          <NavItem>
-            <NavLink className="text-white" href="/signout">
-              Sign Out
-            </NavLink>
-          </NavItem>
-          */}
+          {!isLoggedIn ? <AuthLinks /> : <SignOut />}
         </Nav>
       </Collapse>
     </Navbar>
