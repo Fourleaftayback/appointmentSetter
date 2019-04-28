@@ -4,17 +4,19 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button,
   ListGroup,
   ListGroupItem
 } from "reactstrap";
+
+import DatePickerButton from "./DatePickerButton";
 
 const ScheduleDisplayCard = ({ teamName, date }) => {
   return (
     <div>
       <Card>
         <CardHeader>
-          <h5>{teamName}</h5> <Button color="primary">{date}</Button>
+          <h5>{teamName}</h5>
+          <DatePickerButton date={date} />
         </CardHeader>
 
         <CardBody>

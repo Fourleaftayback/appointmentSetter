@@ -1,16 +1,14 @@
 import React from "react";
 import { Container } from "reactstrap";
-import moment from "moment";
+
+import "react-infinite-calendar/styles.css";
 
 import ScheduleDisplayCard from "../schedule/ScheduleDisplayCard";
 
 const ScheduleContainer = () => {
   return (
     <Container>
-      <ScheduleDisplayCard
-        teamName="teamName"
-        date={moment().format("ll dddd")}
-      />
+      <ScheduleDisplayCard teamName="teamName" />
     </Container>
   );
 };
