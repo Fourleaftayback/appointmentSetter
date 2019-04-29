@@ -32,7 +32,7 @@ const DatePickerButton = () => {
         <ModalHeader toggle={toggleModal}>Choose a date</ModalHeader>
         <ModalBody className="m-auto">
           <InfiniteCalendar
-            selected={today} //will change this with function with redux
+            selected={selectedDate}
             disabledDays={null} //arr
             minDate={today}
             maxDate={monthAhead}
