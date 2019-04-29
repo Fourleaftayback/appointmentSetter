@@ -5,12 +5,33 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import store from "./store";
 
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+
+import PrivateRoute from "./components/common/PrivateRoute";
+
+import { setCurrentUser } from "./actions/authActions";
+
 import NavBar from "./components/layouts/NavBar";
 import Landing from "./components/layouts/Landing";
 import Footer from "./components/layouts/Footer";
 import UserRegister from "./components/auth/UserRegister";
 
 import "./App.css";
+
+//set up jwt token auth here
+if (localStorage.jwtToken) {
+  setAuthToken(localStorage.jwtToken);
+  const decoded = jwt_decode(localStorage.jwtToken);
+  store.dispatch(setCurrentUser(decoded));
+  /*
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    store.dispatch(logoutUser());
+    store.dispatch(clearData());
+    window.location.href = "/login";
+  } */
+}
 
 class App extends Component {
   render() {

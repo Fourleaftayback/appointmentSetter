@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import InfiniteCalendar from "react-infinite-calendar";
 import moment from "moment";
@@ -47,6 +48,10 @@ const DatePickerButton = () => {
       </Modal>
     </React.Fragment>
   );
+};
+
+DatePickerButton.propTypes = {
+  //set up proptypes once data fethced is pulled in
 };
 
 export default DatePickerButton;

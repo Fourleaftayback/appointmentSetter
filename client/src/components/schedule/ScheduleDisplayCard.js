@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import {
   Col,
@@ -66,6 +67,11 @@ const ScheduleDisplayCard = ({ teamName, date }) => {
       </Card>
     </Col>
   );
+};
+
+ScheduleDisplayCard.propTypes = {
+  teamName: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired //date
 };
 
 export default ScheduleDisplayCard;
