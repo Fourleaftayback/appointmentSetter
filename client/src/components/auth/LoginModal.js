@@ -24,16 +24,10 @@ const LoginModal = ({
   userModalToggle,
   loginModalIsOpen
 }) => {
-  //const [modalIsOpen, toggleModal] = useState(false);
-
   const [email, setEmail] = useState("");
 
   const [password, setPassword] = useState("");
-  /*
-  const loginToggle = () => {
-    modalIsOpen ? toggleModal(false) : toggleModal(true);
-  };
-  */
+
   const onSubmit = e => {
     e.preventDefault();
     const userData = {

@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
 import {
   Collapse,
   Navbar,
@@ -12,10 +15,8 @@ import {
 import AuthLinks from "../navbar/AuthLinks";
 import SignOut from "../navbar/SignOut";
 
-const NavBar = () => {
+const NavBar = ({ isLoggedIn, userName }) => {
   const [collapsed, setCollapse] = useState(false);
-
-  const [isLoggedIn] = useState(false);
 
   const collapseHandler = () => {
     collapsed ? setCollapse(false) : setCollapse(true);
@@ -36,9 +37,9 @@ const NavBar = () => {
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="text-white" href="/components/">
-              userName
-            </NavLink>
+            <span className="text-white ml-1" href="/components/">
+              <b>{userName}</b>
+            </span>
           </NavItem>
         </Nav>
         <Nav className="navbar-nav mt-2 mt-lg-0">
@@ -49,4 +50,17 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+NavBar.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+  userName: PropTypes.string
+};
+
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isAuthenticated,
+  userName: state.auth.user.first_name
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(NavBar);

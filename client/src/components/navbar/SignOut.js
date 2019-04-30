@@ -1,17 +1,32 @@
 import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-import { NavItem, NavLink } from "reactstrap";
+import { NavItem, Button } from "reactstrap";
 
-const SignOut = () => {
+import { logOutUser } from "../../actions/authActions";
+
+const SignOut = ({ logOutUser }) => {
   return (
     <React.Fragment>
       <NavItem>
-        <NavLink className="text-white" href="/signout">
+        <Button
+          outline
+          color="secondary"
+          className="text-white"
+          onClick={logOutUser}>
           Sign Out
-        </NavLink>
+        </Button>
       </NavItem>
     </React.Fragment>
   );
 };
 
-export default SignOut;
+SignOut.propTypes = {
+  logOutUser: PropTypes.func.isRequired
+};
+
+export default connect(
+  null,
+  { logOutUser }
+)(SignOut);
