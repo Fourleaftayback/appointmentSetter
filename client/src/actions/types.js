@@ -1,4 +1,7 @@
 export const GET_ERRORS = "GET_ERRORS";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const USER_MODAL_TOGGLE = "USER_MODAL_TOGGLE";
+export const USER_MODAL_OPEN = "USER_MODAL_OPEN";
+export const USER_MODAL_CLOSE = "USER_MODAL_CLOSE";
 export const LOADING = "LOADING";

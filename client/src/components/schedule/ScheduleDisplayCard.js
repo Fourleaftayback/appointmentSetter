@@ -70,8 +70,7 @@ const ScheduleDisplayCard = ({ teamName, date }) => {
 };
 
 ScheduleDisplayCard.propTypes = {
-  teamName: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired //date
+  teamName: PropTypes.string.isRequired
 };
 
 export default ScheduleDisplayCard;

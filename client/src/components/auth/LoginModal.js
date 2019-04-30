@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import {
@@ -10,36 +11,59 @@ import {
   Form
 } from "reactstrap";
 
+import { loginUser } from "../../actions/authActions";
+import { userModalToggle } from "../../actions/viewsActions";
+
 import FormItem from "../form/FormItem";
 
-const LoginModal = ({ loginType, forgotPath }) => {
-  const [modalIsOpen, toggleModal] = useState(false);
+const LoginModal = ({
+  loginType,
+  forgotPath,
+  loginUser,
+  errors,
+  userModalToggle,
+  loginModalIsOpen
+}) => {
+  //const [modalIsOpen, toggleModal] = useState(false);
 
   const [email, setEmail] = useState("");
 
   const [password, setPassword] = useState("");
-
+  /*
   const loginToggle = () => {
     modalIsOpen ? toggleModal(false) : toggleModal(true);
+  };
+  */
+  const onSubmit = e => {
+    e.preventDefault();
+    const userData = {
+      email: email,
+      password: password
+    };
+    loginUser(userData);
+  };
+
+  const toggleModal = () => {
+    userModalToggle();
   };
 
   return (
     <React.Fragment>
-      <NavLink className="text-white text-center p-0" onClick={loginToggle}>
+      <NavLink className="text-white text-center p-0" onClick={toggleModal}>
         {loginType} Login
       </NavLink>
-      <Modal isOpen={modalIsOpen} toggle={loginToggle}>
-        <ModalHeader toggle={loginToggle} className="p-3">
+      <Modal isOpen={loginModalIsOpen} toggle={toggleModal}>
+        <ModalHeader toggle={toggleModal} className="p-3">
           {loginType} Login
         </ModalHeader>
-        <ModalBody toggle={loginToggle}>
+        <ModalBody>
           <Form>
             <FormItem
               type="email"
               name="email"
               placeholder="Email"
               value={email}
-              error={null}
+              error={errors.email}
               onChange={e => setEmail(e.target.value)}
             />
             <FormItem
@@ -47,10 +71,10 @@ const LoginModal = ({ loginType, forgotPath }) => {
               name="password"
               placeholder="Password"
               value={password}
-              error={null}
+              error={errors.password}
               onChange={e => setPassword(e.target.value)}
             />
-            <Button color="info" block={true}>
+            <Button color="info" block={true} onClick={onSubmit}>
               Login
             </Button>
           </Form>
@@ -67,7 +91,20 @@ const LoginModal = ({ loginType, forgotPath }) => {
 
 LoginModal.propTypes = {
   loginType: PropTypes.string.isRequired,
-  forgotPath: PropTypes.string.isRequired
+  forgotPath: PropTypes.string.isRequired,
+  loginUser: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  loginModalIsOpen: PropTypes.bool.isRequired,
+  userModalToggle: PropTypes.func.isRequired
 };
 
-export default LoginModal;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors,
+  loginModalIsOpen: state.views.userLoginIsOpen
+});
+
+export default connect(
+  mapStateToProps,
+  { loginUser, userModalToggle }
+)(LoginModal);

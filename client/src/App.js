@@ -8,9 +8,9 @@ import store from "./store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 
-import PrivateRoute from "./components/common/PrivateRoute";
+//import PrivateRoute from "./components/common/PrivateRoute";
 
-import { setCurrentUser } from "./actions/authActions";
+import { setCurrentUser, logOutUser } from "./actions/authActions";
 
 import NavBar from "./components/layouts/NavBar";
 import Landing from "./components/layouts/Landing";
@@ -24,13 +24,13 @@ if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
   const decoded = jwt_decode(localStorage.jwtToken);
   store.dispatch(setCurrentUser(decoded));
-  /*
+
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
-    store.dispatch(logoutUser());
-    store.dispatch(clearData());
-    window.location.href = "/login";
-  } */
+    store.dispatch(logOutUser());
+    //store.dispatch(clearData());
+    window.location.href = "/"; //this may need to get refactored
+  }
 }
 
 class App extends Component {

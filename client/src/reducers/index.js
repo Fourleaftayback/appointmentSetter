@@ -3,8 +3,10 @@ import { combineReducers } from "redux";
 
 import authReducer from "./authReducer";
 import errorsReducer from "./errorsReducer";
+import viewsReducer from "./viewsReducer";
 
 export default combineReducers({
   auth: authReducer,
-  errors: errorsReducer
+  errors: errorsReducer,
+  views: viewsReducer
 });
