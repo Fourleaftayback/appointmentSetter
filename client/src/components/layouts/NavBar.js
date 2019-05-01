@@ -2,18 +2,11 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink
-} from "reactstrap";
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav } from "reactstrap";
 
 import AuthLinks from "../navbar/AuthLinks";
 import SignOut from "../navbar/SignOut";
+import Profile from "../profile/Profile";
 
 const NavBar = ({ isLoggedIn, userName }) => {
   const [collapsed, setCollapse] = useState(false);
@@ -31,16 +24,7 @@ const NavBar = ({ isLoggedIn, userName }) => {
 
       <Collapse isOpen={collapsed} navbar>
         <Nav className="navbar-nav mr-auto mt-2 mt-lg-0">
-          <NavItem>
-            <NavLink className="text-white" href="/components/">
-              <i className="fas fa-user-circle fa-2x" />
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <span className="text-white ml-1" href="/components/">
-              <b>{userName}</b>
-            </span>
-          </NavItem>
+          {isLoggedIn ? <Profile userName={userName} /> : null}
         </Nav>
         <Nav className="navbar-nav mt-2 mt-lg-0">
           {!isLoggedIn ? <AuthLinks /> : <SignOut />}

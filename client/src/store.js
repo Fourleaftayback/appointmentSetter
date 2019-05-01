@@ -5,22 +5,31 @@ import thunk from "redux-thunk";
 import {
   USER_MODAL_TOGGLE,
   USER_MODAL_OPEN,
-  USER_MODAL_CLOSE
+  USER_MODAL_CLOSE,
+  PROFILE_MODAL_TOGGLE,
+  PROFILE_MODAL_OPEN,
+  PROFILE_MODAL_CLOSE
 } from "./actions/types";
 
 const initialState = {};
 
-const userModalToggle = store => next => action => {
+const modalToggle = store => next => action => {
   const current = store.getState();
+
   if (action.type === USER_MODAL_TOGGLE) {
     current.views.userLoginIsOpen
       ? (action.type = USER_MODAL_CLOSE)
       : (action.type = USER_MODAL_OPEN);
   }
+  if (action.type === PROFILE_MODAL_TOGGLE) {
+    current.views.profileModalIsOpen
+      ? (action.type = PROFILE_MODAL_CLOSE)
+      : (action.type = PROFILE_MODAL_OPEN);
+  }
   next(action);
 };
 
-const middleware = [thunk, userModalToggle];
+const middleware = [thunk, modalToggle];
 
 const store = createStore(
   rootReducer,

@@ -34,6 +34,7 @@ const LoginModal = ({
       email: email,
       password: password
     };
+
     loginUser(userData);
   };
 
@@ -47,10 +48,8 @@ const LoginModal = ({
         {loginType} Login
       </NavLink>
       <Modal isOpen={loginModalIsOpen} toggle={toggleModal}>
-        <ModalHeader toggle={toggleModal} className="p-3">
-          {loginType} Login
-        </ModalHeader>
-        <ModalBody>
+        <ModalHeader toggle={toggleModal}>Login</ModalHeader>
+        <ModalBody className="mt-3">
           <Form>
             <FormItem
               type="email"

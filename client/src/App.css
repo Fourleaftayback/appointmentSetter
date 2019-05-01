@@ -13,7 +13,11 @@ body {
   min-height: 79vh;
 }
 
+.modal-dialog {
+  margin-top: 5rem;
+}
+
 .modal-title {
   display: block;
-  margin-left: 6.5em;
+  margin-left: 43%;
 }
