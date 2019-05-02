@@ -1,15 +1,14 @@
-/*
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-import { createBrowserHistory } from "history";
 import { connect } from "react-redux";
 import { Row, Col, Form, Button } from "reactstrap";
 import { registerUser } from "../../actions/authActions";
+import history from "../../history/History";
 
 import FormItem from "../form/FormItem";
 
-const UserRegister = ({ errors, registerUser, isAuthenticated }) => {
+const UserRegister = ({ errors, registerUser, isAuthenticated, history }) => {
   const [email, setEmail] = useState("");
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
@@ -18,11 +17,8 @@ const UserRegister = ({ errors, registerUser, isAuthenticated }) => {
   const [password2, setPassword2] = useState("");
   const [isLoggedIn] = useState(isAuthenticated);
 
-  const history = createBrowserHistory();
-
   useEffect(() => {
     if (isLoggedIn) {
-      console.log("k");
       history.push("/");
     }
   }, [isLoggedIn]);
@@ -118,15 +114,16 @@ UserRegister.propTypes = {
 
 const mapStateToProps = state => ({
   errors: state.errors,
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  history: history
 });
 
 export default connect(
   mapStateToProps,
   { registerUser }
 )(withRouter(UserRegister));
-*/
 
+/*
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
@@ -267,3 +264,4 @@ export default connect(
   mapStateToProps,
   { registerUser }
 )(withRouter(UserRegister));
+*/

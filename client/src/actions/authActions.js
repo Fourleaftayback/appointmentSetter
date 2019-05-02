@@ -14,6 +14,11 @@ export const registerUser = (userData, history) => dispatch => {
   axios
     .post("/user/register", userData)
     .then(res => history.push("/"))
+    .then(() => {
+      dispatch({
+        type: CLEAR_ERRORS
+      });
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
