@@ -7,7 +7,7 @@ const Landing = () => {
   //const [test] = useState("test");
 
   return (
-    <Container className="landing">
+    <Container className="landing mt-4">
       <ScheduleContainer />
     </Container>
   );

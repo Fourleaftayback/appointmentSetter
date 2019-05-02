@@ -40,12 +40,12 @@ class App extends Component {
         <Router>
           <Container fluid={true} className="App bg-light">
             <NavBar />
-            <Container fluid={true} className="main-container">
-              <Switch>
-                <Route exact path="/" component={Landing} />
-                <Route exact path="/signup" component={UserRegister} />
-              </Switch>
-            </Container>
+
+            <Switch>
+              <Route exact path="/" component={Landing} />
+              <Route exact path="/signup" component={UserRegister} />
+            </Switch>
+
             <Footer />
           </Container>
         </Router>

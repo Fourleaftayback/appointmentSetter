@@ -9,6 +9,19 @@ import {
   USER_MODAL_TOGGLE
 } from "./types";
 
+// Register User
+export const registerUser = (userData, history) => dispatch => {
+  axios
+    .post("/user/register", userData)
+    .then(res => history.push("/"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 // Login - Get User Token
 export const loginUser = userData => dispatch => {
   axios
