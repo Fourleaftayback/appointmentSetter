@@ -1,7 +1,7 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
-import History from "../history/History";
+import history from "../history/History";
 
 import {
   GET_ERRORS,
@@ -11,7 +11,7 @@ import {
 } from "./types";
 
 // Register User
-export const registerUser = (userData, history) => dispatch => {
+export const registerUser = userData => dispatch => {
   axios
     .post("/user/register", userData)
     .then(res => history.push("/"))
@@ -72,8 +72,7 @@ export const loginTeam = userData => dispatch => {
       });
     })
     .then(() => {
-      console.log(History);
-      History.push("/team");
+      history.push("/team");
     })
     .catch(err =>
       dispatch({

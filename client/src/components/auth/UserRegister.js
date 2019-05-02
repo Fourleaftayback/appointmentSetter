@@ -33,7 +33,7 @@ const UserRegister = ({ errors, registerUser, isAuthenticated, history }) => {
       password: password,
       password2: password2
     };
-    registerUser(newUser, history);
+    registerUser(newUser);
   };
 
   return (

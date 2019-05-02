@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { Container } from "reactstrap";
 
 import { Provider } from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import store from "./store";
-
+import history from "./history/History";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 
-import PrivateRoute from "./components/common/PrivateRoute";
+//import PrivateRoute from "./components/common/PrivateRoute";
 
 import { setCurrentUser, logOutUser } from "./actions/authActions";
 
@@ -38,7 +38,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router>
+        <Router history={history}>
           <Container fluid={true} className="App bg-light">
             <NavBar />
             <Container>

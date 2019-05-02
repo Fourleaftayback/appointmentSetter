@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import history from "../../history/History";
 
 import {
   NavLink,
@@ -22,8 +21,7 @@ const LoginModal = ({
   login,
   errors,
   loginModalToggle,
-  loginModalIsOpen,
-  history
+  loginModalIsOpen
 }) => {
   const [email, setEmail] = useState("");
 
@@ -95,8 +93,7 @@ LoginModal.propTypes = {
 const mapStateToProps = state => ({
   auth: state.auth,
   errors: state.errors,
-  loginModalIsOpen: state.views.userLoginIsOpen,
-  history: history
+  loginModalIsOpen: state.views.userLoginIsOpen
 });
 
 const mapDispatchToPorps = {
