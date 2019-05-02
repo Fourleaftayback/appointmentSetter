@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import history from "../../history/History";
 
 import {
   NavLink,
@@ -11,18 +12,18 @@ import {
   Form
 } from "reactstrap";
 
-import { loginUser } from "../../actions/authActions";
-import { userModalToggle } from "../../actions/viewsActions";
+import { loginModalToggle } from "../../actions/viewsActions";
 
 import FormItem from "../form/FormItem";
 
 const LoginModal = ({
   loginType,
   forgotPath,
-  loginUser,
+  login,
   errors,
-  userModalToggle,
-  loginModalIsOpen
+  loginModalToggle,
+  loginModalIsOpen,
+  history
 }) => {
   const [email, setEmail] = useState("");
 
@@ -35,11 +36,11 @@ const LoginModal = ({
       password: password
     };
 
-    loginUser(userData);
+    login(userData);
   };
 
   const toggleModal = () => {
-    userModalToggle();
+    loginModalToggle();
   };
 
   return (
@@ -85,21 +86,21 @@ const LoginModal = ({
 LoginModal.propTypes = {
   loginType: PropTypes.string.isRequired,
   forgotPath: PropTypes.string.isRequired,
-  loginUser: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   loginModalIsOpen: PropTypes.bool.isRequired,
-  userModalToggle: PropTypes.func.isRequired
+  loginModalToggle: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
   errors: state.errors,
-  loginModalIsOpen: state.views.userLoginIsOpen
+  loginModalIsOpen: state.views.userLoginIsOpen,
+  history: history
 });
 
 const mapDispatchToPorps = {
-  loginUser: loginUser,
-  userModalToggle: userModalToggle
+  loginModalToggle: loginModalToggle
 };
 
 export default connect(

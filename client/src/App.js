@@ -8,7 +8,7 @@ import store from "./store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 
-//import PrivateRoute from "./components/common/PrivateRoute";
+import PrivateRoute from "./components/common/PrivateRoute";
 
 import { setCurrentUser, logOutUser } from "./actions/authActions";
 
@@ -16,6 +16,7 @@ import NavBar from "./components/layouts/NavBar";
 import Landing from "./components/layouts/Landing";
 import Footer from "./components/layouts/Footer";
 import UserRegister from "./components/auth/UserRegister";
+import TeamLanding from "./components/layouts/TeamLanding";
 
 import "./App.css";
 
@@ -44,6 +45,8 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={Landing} />
                 <Route exact path="/signup" component={UserRegister} />
+                <Route exact path="/team" component={TeamLanding} />
+                {/*<PrivateRoute exact path="/team" component={TeamLanding} />*/}
               </Switch>
             </Container>
             <Footer />

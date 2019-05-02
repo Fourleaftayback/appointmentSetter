@@ -1,6 +1,6 @@
 import { USER_MODAL_TOGGLE, PROFILE_MODAL_TOGGLE } from "./types";
 
-export const userModalToggle = () => {
+export const loginModalToggle = () => {
   return {
     type: USER_MODAL_TOGGLE
   };

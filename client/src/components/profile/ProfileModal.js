@@ -49,6 +49,7 @@ function ProfileModal({
                 error={errors.first_name}
                 onChange={e => setFirstName(e.target.value)}
               />
+
               <FormItem
                 type="text"
                 name="last_name"

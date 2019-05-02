@@ -1,4 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
 import {
   NavItem,
   NavLink,
@@ -8,9 +11,11 @@ import {
   DropdownItem
 } from "reactstrap";
 
+import { loginUser, loginTeam } from "../../actions/authActions";
+
 import LoginModal from "../auth/LoginModal";
 
-const AuthLinks = () => {
+const AuthLinks = ({ loginUser, loginTeam }) => {
   return (
     <React.Fragment>
       <UncontrolledDropdown nav inNavbar>
@@ -19,11 +24,19 @@ const AuthLinks = () => {
         </DropdownToggle>
         <DropdownMenu className="bg-dark" right>
           <DropdownItem>
-            <LoginModal loginType="User" forgotPath="/forgot" />
+            <LoginModal
+              loginType="User"
+              forgotPath="/forgot"
+              login={loginUser}
+            />
           </DropdownItem>
           <DropdownItem divider />
           <DropdownItem className="text-white">
-            <LoginModal loginType="Team" forgotPath="/team/forgot" />
+            <LoginModal
+              loginType="Team"
+              forgotPath="/team/forgot"
+              login={loginTeam}
+            />
           </DropdownItem>
         </DropdownMenu>
       </UncontrolledDropdown>
@@ -36,4 +49,17 @@ const AuthLinks = () => {
   );
 };
 
-export default AuthLinks;
+AuthLinks.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  loginTeam: PropTypes.func.isRequired
+};
+
+const mapDispatchToProps = {
+  loginUser: loginUser,
+  loginTeam: loginTeam
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(AuthLinks);

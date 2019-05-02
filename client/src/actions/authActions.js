@@ -1,6 +1,7 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
+import History from "../history/History";
 
 import {
   GET_ERRORS,
@@ -44,6 +45,35 @@ export const loginUser = userData => dispatch => {
       dispatch({
         type: USER_MODAL_TOGGLE
       });
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+// Login - Get Team Token
+export const loginTeam = userData => dispatch => {
+  axios
+    .post("/team/login", userData)
+    .then(res => {
+      const { token } = res.data;
+      localStorage.setItem("jwtToken", token);
+      setAuthToken(token);
+      const decoded = jwt_decode(token);
+
+      dispatch(setCurrentUser(decoded));
+      dispatch({
+        type: CLEAR_ERRORS
+      });
+      dispatch({
+        type: USER_MODAL_TOGGLE
+      });
+    })
+    .then(() => {
+      console.log(History);
+      History.push("/team");
     })
     .catch(err =>
       dispatch({
