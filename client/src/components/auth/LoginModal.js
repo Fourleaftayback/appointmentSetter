@@ -97,7 +97,12 @@ const mapStateToProps = state => ({
   loginModalIsOpen: state.views.userLoginIsOpen
 });
 
+const mapDispatchToPorps = {
+  loginUser: loginUser,
+  userModalToggle: userModalToggle
+};
+
 export default connect(
   mapStateToProps,
-  { loginUser, userModalToggle }
+  mapDispatchToPorps
 )(LoginModal);

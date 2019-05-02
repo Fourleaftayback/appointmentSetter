@@ -102,7 +102,11 @@ const mapStateToProps = state => ({
   profileModalIsOpen: state.views.profileModalIsOpen
 });
 
+const mapDispatchToProps = {
+  profileModalToggle: profileModalToggle
+};
+
 export default connect(
   mapStateToProps,
-  { profileModalToggle }
+  mapDispatchToProps
 )(ProfileModal);

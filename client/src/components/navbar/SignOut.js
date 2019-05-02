@@ -26,7 +26,11 @@ SignOut.propTypes = {
   logOutUser: PropTypes.func.isRequired
 };
 
+const mapDispatchToProps = {
+  logOutUser: logOutUser
+};
+
 export default connect(
   null,
-  { logOutUser }
+  mapDispatchToProps
 )(SignOut);
