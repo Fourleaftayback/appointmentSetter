@@ -11,8 +11,6 @@ import {
   Form
 } from "reactstrap";
 
-import { loginModalToggle } from "../../actions/viewsActions";
-
 import FormItem from "../form/FormItem";
 
 const LoginModal = ({
@@ -20,8 +18,8 @@ const LoginModal = ({
   forgotPath,
   login,
   errors,
-  loginModalToggle,
-  loginModalIsOpen
+  modalToggle,
+  modalIsOpen
 }) => {
   const [email, setEmail] = useState("");
 
@@ -38,7 +36,7 @@ const LoginModal = ({
   };
 
   const toggleModal = () => {
-    loginModalToggle();
+    modalToggle();
   };
 
   return (
@@ -46,8 +44,8 @@ const LoginModal = ({
       <NavLink className="text-white text-center p-0" onClick={toggleModal}>
         {loginType} Login
       </NavLink>
-      <Modal isOpen={loginModalIsOpen} toggle={toggleModal}>
-        <ModalHeader toggle={toggleModal}>Login</ModalHeader>
+      <Modal isOpen={modalIsOpen} toggle={toggleModal}>
+        <ModalHeader toggle={toggleModal}>{loginType} Login</ModalHeader>
         <ModalBody className="mt-3">
           <Form>
             <FormItem
@@ -85,22 +83,17 @@ LoginModal.propTypes = {
   loginType: PropTypes.string.isRequired,
   forgotPath: PropTypes.string.isRequired,
   errors: PropTypes.object.isRequired,
-  loginModalIsOpen: PropTypes.bool.isRequired,
-  loginModalToggle: PropTypes.func.isRequired,
+  modalIsOpen: PropTypes.bool.isRequired,
+  modalToggle: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors,
-  loginModalIsOpen: state.views.userLoginIsOpen
+  errors: state.errors
 });
-
-const mapDispatchToPorps = {
-  loginModalToggle: loginModalToggle
-};
 
 export default connect(
   mapStateToProps,
-  mapDispatchToPorps
+  null
 )(LoginModal);

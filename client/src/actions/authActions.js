@@ -7,7 +7,8 @@ import {
   GET_ERRORS,
   SET_CURRENT_USER,
   CLEAR_ERRORS,
-  USER_MODAL_TOGGLE
+  USERLOGIN_MODAL_TOGGLE,
+  TEAMLOGIN_MODAL_TOGGLE
 } from "./types";
 
 // Register User
@@ -43,7 +44,7 @@ export const loginUser = userData => dispatch => {
         type: CLEAR_ERRORS
       });
       dispatch({
-        type: USER_MODAL_TOGGLE
+        type: USERLOGIN_MODAL_TOGGLE
       });
     })
     .catch(err =>
@@ -68,7 +69,7 @@ export const loginTeam = userData => dispatch => {
         type: CLEAR_ERRORS
       });
       dispatch({
-        type: USER_MODAL_TOGGLE
+        type: TEAMLOGIN_MODAL_TOGGLE
       });
     })
     .then(() => {

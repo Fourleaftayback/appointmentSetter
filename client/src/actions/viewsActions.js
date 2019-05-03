@@ -1,8 +1,18 @@
-import { USER_MODAL_TOGGLE, PROFILE_MODAL_TOGGLE } from "./types";
+import {
+  USERLOGIN_MODAL_TOGGLE,
+  PROFILE_MODAL_TOGGLE,
+  TEAMLOGIN_MODAL_TOGGLE
+} from "./types";
 
-export const loginModalToggle = () => {
+export const userLoginModalToggle = () => {
   return {
-    type: USER_MODAL_TOGGLE
+    type: USERLOGIN_MODAL_TOGGLE
+  };
+};
+
+export const teamLoginModalToggle = () => {
+  return {
+    type: TEAMLOGIN_MODAL_TOGGLE
   };
 };
 

@@ -13,9 +13,21 @@ import {
 
 import { loginUser, loginTeam } from "../../actions/authActions";
 
+import {
+  userLoginModalToggle,
+  teamLoginModalToggle
+} from "../../actions/viewsActions";
+
 import LoginModal from "../auth/LoginModal";
 
-const AuthLinks = ({ loginUser, loginTeam }) => {
+const AuthLinks = ({
+  loginUser,
+  loginTeam,
+  userLoginModalToggle,
+  userLoginIsOpen,
+  teamLoginModalToggle,
+  teamLoginIsOpen
+}) => {
   return (
     <React.Fragment>
       <UncontrolledDropdown nav inNavbar>
@@ -28,6 +40,8 @@ const AuthLinks = ({ loginUser, loginTeam }) => {
               loginType="User"
               forgotPath="/forgot"
               login={loginUser}
+              modalToggle={userLoginModalToggle}
+              modalIsOpen={userLoginIsOpen}
             />
           </DropdownItem>
           <DropdownItem divider />
@@ -36,6 +50,8 @@ const AuthLinks = ({ loginUser, loginTeam }) => {
               loginType="Team"
               forgotPath="/team/forgot"
               login={loginTeam}
+              modalToggle={teamLoginModalToggle}
+              modalIsOpen={teamLoginIsOpen}
             />
           </DropdownItem>
         </DropdownMenu>
@@ -51,15 +67,26 @@ const AuthLinks = ({ loginUser, loginTeam }) => {
 
 AuthLinks.propTypes = {
   loginUser: PropTypes.func.isRequired,
-  loginTeam: PropTypes.func.isRequired
+  loginTeam: PropTypes.func.isRequired,
+  userLoginModalToggle: PropTypes.func.isRequired,
+  teamLoginModalToggle: PropTypes.func.isRequired,
+  userLoginIsOpen: PropTypes.bool.isRequired,
+  teamLoginIsOpen: PropTypes.bool.isRequired
 };
+
+const mapStateToProps = state => ({
+  userLoginIsOpen: state.views.userLoginIsOpen,
+  teamLoginIsOpen: state.views.teamLoginIsOpen
+});
 
 const mapDispatchToProps = {
   loginUser: loginUser,
-  loginTeam: loginTeam
+  loginTeam: loginTeam,
+  userLoginModalToggle: userLoginModalToggle,
+  teamLoginModalToggle: teamLoginModalToggle
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(AuthLinks);
