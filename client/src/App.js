@@ -18,6 +18,7 @@ import Landing from "./components/layouts/Landing";
 import Footer from "./components/layouts/Footer";
 import UserRegister from "./components/auth/UserRegister";
 import TeamLanding from "./components/layouts/TeamLanding";
+import RegisterTeam from "./components/auth/team/RegisterTeam";
 
 import NotAuthorized from "./components/common/NotAuthorized";
 
@@ -50,6 +51,7 @@ class App extends Component {
                 <Route exact path="/signup" component={UserRegister} />
                 <TeamPrivateRoute exact path="/team" component={TeamLanding} />
 
+                <Route path="/team/register" component={RegisterTeam} />
                 <Route exact path="/not-authorized" component={NotAuthorized} />
               </Switch>
             </Container>

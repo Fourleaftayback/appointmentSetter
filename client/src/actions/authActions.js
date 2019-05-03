@@ -82,6 +82,32 @@ export const loginTeam = userData => dispatch => {
       })
     );
 };
+//Team - complete team registration //get token from url to hold the token in the body
+
+export const completeTeamRegistration = teamData => dispatch => {
+  axios
+    .post("/team/register", teamData)
+    .then(res => {
+      //push to landing page, open login modal for team, clear errors
+      dispatch({
+        type: CLEAR_ERRORS
+      });
+      history.push("/");
+    })
+    .then(() => {
+      setTimeout(() => {
+        dispatch({
+          type: TEAMLOGIN_MODAL_TOGGLE
+        });
+      }, 400);
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
 
 // Set logged in user
 export const setCurrentUser = decoded => {
