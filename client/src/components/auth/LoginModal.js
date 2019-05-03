@@ -69,7 +69,8 @@ const LoginModal = ({
             </Button>
           </Form>
           <NavLink
-            className="text-primary text-center mt-3 p-0"
+            className="text-primary text-center mt-3 p
+            -0"
             href={forgotPath}>
             Forgot Password
           </NavLink>
