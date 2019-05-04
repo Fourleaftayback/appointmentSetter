@@ -89,7 +89,7 @@ router.put(
   }
 );
 
-// @route   Get team/appointment/delete/:id
+// @route   team/appointment/delete/:id
 // @desc    delete appointment by appointment id
 // @access  private team
 router.delete(

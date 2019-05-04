@@ -4,13 +4,16 @@ import {
   TEAMLOGIN_MODAL_OPEN,
   TEAMLOGIN_MODAL_CLOSE,
   PROFILE_MODAL_OPEN,
-  PROFILE_MODAL_CLOSE
+  PROFILE_MODAL_CLOSE,
+  DATA_LOADING,
+  LOADING_DONE
 } from "../actions/types";
 
 const initialState = {
   userLoginIsOpen: false,
   teamLoginIsOpen: false,
-  profileModalIsOpen: false
+  profileModalIsOpen: false,
+  dataLoading: false
 };
 
 export default function(state = initialState, action) {
@@ -38,6 +41,14 @@ export default function(state = initialState, action) {
     case PROFILE_MODAL_OPEN:
       return Object.assign({}, state, {
         profileModalIsOpen: true
+      });
+    case DATA_LOADING:
+      return Object.assign({}, state, {
+        dataLoading: true
+      });
+    case LOADING_DONE:
+      return Object.assign({}, state, {
+        dataLoading: false
       });
     default:
       return state;
