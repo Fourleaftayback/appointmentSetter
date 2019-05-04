@@ -9,17 +9,20 @@ import "react-infinite-calendar/styles.css";
 import Spinner from "../common/Spinner";
 import ScheduleDisplayCard from "../schedule/ScheduleDisplayCard";
 
-const ScheduleContainer = ({ getAllAppointments, schedules, loading }) => {
+const ScheduleContainer = ({
+  getAllAppointments,
+  schedules,
+  teamMembers,
+  loading
+}) => {
   let content;
 
   useEffect(() => {
     getAllAppointments();
   }, []);
-  //console.log(schedules);
-  const testData = ["Mary" /*, "Karen", "Michelle", "Sarah", "Roy" */];
 
-  let daySchedules = testData.map((name, i) => (
-    <ScheduleDisplayCard teamName={name} key={i} />
+  let daySchedules = teamMembers.map(item => (
+    <ScheduleDisplayCard teamName={item.name} key={item.id} />
   ));
 
   loading ? (content = <Spinner />) : (content = daySchedules);
@@ -34,11 +37,13 @@ const ScheduleContainer = ({ getAllAppointments, schedules, loading }) => {
 ScheduleContainer.propTypes = {
   getAllAppointments: PropTypes.func.isRequired,
   schedules: PropTypes.array.isRequired,
+  teamMembers: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
   schedules: state.clientAppointment.schedules,
+  teamMembers: state.clientAppointment.teamMembers,
   loading: state.views.dataLoading
 });
 

@@ -146,7 +146,9 @@ router.delete(
 // @access  Public
 router.get("/all", (req, res) => {
   Appointment.find({ appointment_end: { $gte: Date.now() } })
-    .select("-client_info -team_member_info -team_member_info -date_updated_on")
+    .select(
+      "-client_info -team_member_info.email -team_member_info._id -team_member_info.last_name -team_member_info.phone -date_updated_on"
+    )
     .then(app => {
       res.status(200).json(app);
     })

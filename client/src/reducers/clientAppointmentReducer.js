@@ -1,7 +1,8 @@
-import { GET_ALL_CLIENTAPP } from "../actions/types";
+import { GET_ALL_CLIENTAPP, SET_TEAM_MEMBERS } from "../actions/types";
 
 const initialState = {
-  schedules: []
+  schedules: [],
+  teamMembers: []
 };
 
 export default function(state = initialState, action) {
@@ -9,6 +10,10 @@ export default function(state = initialState, action) {
     case GET_ALL_CLIENTAPP:
       return Object.assign({}, state, {
         schedules: action.payload
+      });
+    case SET_TEAM_MEMBERS:
+      return Object.assign({}, state, {
+        teamMembers: action.payload
       });
     default:
       return state;
