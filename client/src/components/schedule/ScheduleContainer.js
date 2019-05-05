@@ -16,14 +16,20 @@ const ScheduleContainer = ({
   loading
 }) => {
   let content;
-
   useEffect(() => {
     getAllAppointments();
   }, []);
 
-  let daySchedules = teamMembers.map(item => (
-    <ScheduleDisplayCard teamName={item.first_name} key={item._id} />
-  ));
+  let daySchedules = teamMembers.map(item => {
+    let memberData = schedules.filter(data => data.team_member_id === item._id);
+    return (
+      <ScheduleDisplayCard
+        teamName={item.first_name}
+        key={item._id}
+        data={memberData}
+      />
+    );
+  });
 
   loading ? (content = <Spinner />) : (content = daySchedules);
 

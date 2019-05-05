@@ -12,19 +12,9 @@ import {
 
 import DatePickerButton from "./DatePickerButton";
 
-const ScheduleDisplayCard = ({ teamName, date }) => {
+const ScheduleDisplayCard = ({ teamName, date, data }) => {
+  console.log(data);
   /*
-  let booked = [
-    {
-      start: new Date("2019-05-04T13:00:45.700Z").getTime(),
-      end: new Date("2019-05-04T13:30:45.700Z").getTime()
-    },
-    {
-      start: new Date("2019-05-04T20:00:45.697Z").getTime(),
-      end: new Date("2019-05-04T20:00:45.700Z").getTime()
-    }
-  ];
-
   let earlistTime = new Date("2019-05-04T13:00:45.700Z").getTime();
   let latestTime = new Date("2019-05-04T21:00:45.700Z").getTime();
   const halfHour = 1800000;
@@ -70,7 +60,8 @@ const ScheduleDisplayCard = ({ teamName, date }) => {
 };
 
 ScheduleDisplayCard.propTypes = {
-  teamName: PropTypes.string.isRequired
+  teamName: PropTypes.string.isRequired,
+  data: PropTypes.array.isRequired
 };
 
 export default ScheduleDisplayCard;

@@ -149,6 +149,7 @@ router.get("/all", (req, res) => {
     .select(
       "-client_info -team_member_info.email -team_member_info._id -team_member_info.last_name -team_member_info.phone -date_updated_on"
     )
+    .sort("appointment_start")
     .then(app => {
       res.status(200).json(app);
     })
