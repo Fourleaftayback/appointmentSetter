@@ -195,4 +195,17 @@ router.post("/register", (req, res) => {
   });
 });
 
+// @route   GET /team/allmembers
+// @desc    get array of all team members
+// @access  Public
+
+router.get("/allmembers", (req, res) => {
+  Team.find()
+    .select("first_name id")
+    .then(members => {
+      res.status(200).json(members);
+    })
+    .catch(err => res.status(400).json({ errors: err }));
+});
+
 module.exports = router;

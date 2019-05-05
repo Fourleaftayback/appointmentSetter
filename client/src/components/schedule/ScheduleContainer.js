@@ -22,7 +22,7 @@ const ScheduleContainer = ({
   }, []);
 
   let daySchedules = teamMembers.map(item => (
-    <ScheduleDisplayCard teamName={item.name} key={item.id} />
+    <ScheduleDisplayCard teamName={item.first_name} key={item._id} />
   ));
 
   loading ? (content = <Spinner />) : (content = daySchedules);
