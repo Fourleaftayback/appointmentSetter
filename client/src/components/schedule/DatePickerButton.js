@@ -4,17 +4,18 @@ import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import InfiniteCalendar from "react-infinite-calendar";
 import moment from "moment";
 
-const DatePickerButton = () => {
+const DatePickerButton = ({ selectedDate, pickDate }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleModal = () => {
     isOpen ? setIsOpen(false) : setIsOpen(true);
   };
 
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  //const [selectedDate, setSelectedDate] = useState(new Date());
 
   const changeDate = date => {
-    setSelectedDate(date);
+    //setSelectedDate(date);
+    pickDate(date);
     toggleModal();
   };
 
@@ -49,9 +50,9 @@ const DatePickerButton = () => {
     </React.Fragment>
   );
 };
-
+/*
 DatePickerButton.propTypes = {
   //set up proptypes once data fethced is pulled in
-};
+}; */
 
 export default DatePickerButton;

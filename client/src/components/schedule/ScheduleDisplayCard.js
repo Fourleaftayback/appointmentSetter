@@ -1,5 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import {
+  roundToDay,
+  setAvailableTimes,
+  checkAlltimes
+} from "../../controller/dataConverter";
 
 import {
   Col,
@@ -12,40 +17,43 @@ import {
 
 import DatePickerButton from "./DatePickerButton";
 
-const ScheduleDisplayCard = ({ teamName, date, data }) => {
-  console.log(data);
-  /*
-  let earlistTime = new Date("2019-05-04T13:00:45.700Z").getTime();
-  let latestTime = new Date("2019-05-04T21:00:45.700Z").getTime();
-  const halfHour = 1800000;
+const ScheduleDisplayCard = ({ teamName, data }) => {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  //const [todaysAppointments, setTodaysAppointments] = useState([]);
+  // const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
 
-  const timeBlock = [];
-  let i = earlistTime;
-  for (i; i < latestTime; i += halfHour) {
-    timeBlock.push(i);
-  }
+  const changeDate = date => {
+    setSelectedDate(date);
+  };
 
-  console.log(new Date(booked[1].start));
-
-  let avail = timeBlock.filter(time => {
-    return time >= booked[1].start && time < booked[1].end;
-    
-    booked.map(book => {
-      if (time >= book.start && time < book.end) {
-        console.log(true);
-        console.log(time);
+  const getAvaliableTimes = (bookedTimes, day) => {
+    const today = roundToDay(day).toString();
+    const earlistTime = setAvailableTimes(today, 13);
+    const latestTime = setAvailableTimes(today, 21);
+    const halfHour = 1800000;
+    const timeBlock = [];
+    let i = earlistTime;
+    for (i; i < latestTime; i += halfHour) {
+      timeBlock.push(i);
+    }
+    let arr = timeBlock.filter(time => {
+      if (!checkAlltimes(time, bookedTimes)) {
+        return time;
       }
-    }); 
-  });
- 
-  console.log(avail);
-  */
+    });
+    console.log(arr);
+  };
+
+  useEffect(() => {
+    getAvaliableTimes(data, selectedDate);
+  }, [selectedDate]);
+
   return (
     <Col md={4}>
       <Card>
         <CardHeader>
           <h5>{teamName}</h5>
-          <DatePickerButton date={date} />
+          <DatePickerButton selectedDate={selectedDate} pickDate={changeDate} />
         </CardHeader>
 
         <CardBody>
