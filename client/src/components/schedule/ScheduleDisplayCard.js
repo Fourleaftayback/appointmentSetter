@@ -44,7 +44,12 @@ const ScheduleDisplayCard = ({ teamName, data, teamId }) => {
   }, []);
 
   let listItems = availableTimeSlots.map(item => (
-    <AvailableTimeItem time={item} teamId={teamId} key={uniqId()} />
+    <AvailableTimeItem
+      time={item}
+      teamId={teamId}
+      teamName={teamName}
+      key={uniqId()}
+    />
   ));
 
   return (

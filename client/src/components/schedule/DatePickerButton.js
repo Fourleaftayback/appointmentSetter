@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-//import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import InfiniteCalendar from "react-infinite-calendar";
 import moment from "moment";
@@ -47,9 +47,10 @@ const DatePickerButton = ({ selectedDate, pickDate }) => {
     </React.Fragment>
   );
 };
-/*
+
 DatePickerButton.propTypes = {
-  //set up proptypes once data fethced is pulled in
-}; */
+  selectedDate: PropTypes.instanceOf(Date).isRequired,
+  pickDate: PropTypes.func.isRequired
+};
 
 export default DatePickerButton;
