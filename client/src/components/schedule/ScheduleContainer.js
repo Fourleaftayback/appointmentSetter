@@ -26,6 +26,7 @@ const ScheduleContainer = ({
       <ScheduleDisplayCard
         teamName={item.first_name}
         key={item._id}
+        teamId={item._id}
         data={memberData}
       />
     );

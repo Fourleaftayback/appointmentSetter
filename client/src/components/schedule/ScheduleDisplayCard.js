@@ -1,26 +1,20 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import uniqId from "uniqid";
 import {
   roundToDay,
   setAvailableTimes,
   checkAlltimes
 } from "../../controller/dataConverter";
 
-import {
-  Col,
-  Card,
-  CardHeader,
-  CardBody,
-  ListGroup,
-  ListGroupItem
-} from "reactstrap";
+import { Col, Card, CardHeader, CardBody, ListGroup } from "reactstrap";
 
 import DatePickerButton from "./DatePickerButton";
+import AvailableTimeItem from "./AvailableTimeItem";
 
-const ScheduleDisplayCard = ({ teamName, data }) => {
+const ScheduleDisplayCard = ({ teamName, data, teamId }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  //const [todaysAppointments, setTodaysAppointments] = useState([]);
-  // const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
+  const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
 
   const changeDate = date => {
     setSelectedDate(date);
@@ -28,25 +22,30 @@ const ScheduleDisplayCard = ({ teamName, data }) => {
 
   const getAvaliableTimes = (bookedTimes, day) => {
     const today = roundToDay(day).toString();
-    const earlistTime = setAvailableTimes(today, 13);
-    const latestTime = setAvailableTimes(today, 21);
+    const earlistTime = setAvailableTimes(today, 9);
+    const latestTime = setAvailableTimes(today, 17);
     const halfHour = 1800000;
     const timeBlock = [];
     let i = earlistTime;
     for (i; i < latestTime; i += halfHour) {
       timeBlock.push(i);
     }
-    let arr = timeBlock.filter(time => {
-      if (!checkAlltimes(time, bookedTimes)) {
-        return time;
-      }
-    });
-    console.log(arr);
+    return timeBlock.filter(time => !checkAlltimes(time, bookedTimes));
   };
 
   useEffect(() => {
-    getAvaliableTimes(data, selectedDate);
+    let times = getAvaliableTimes(data, selectedDate);
+    setAvailableTimeSlots(times);
   }, [selectedDate]);
+
+  useEffect(() => {
+    let times = getAvaliableTimes(data, selectedDate);
+    setAvailableTimeSlots(times);
+  }, []);
+
+  let listItems = availableTimeSlots.map(item => (
+    <AvailableTimeItem time={item} teamId={teamId} key={uniqId()} />
+  ));
 
   return (
     <Col md={4}>
@@ -57,10 +56,7 @@ const ScheduleDisplayCard = ({ teamName, data }) => {
         </CardHeader>
 
         <CardBody>
-          <ListGroup>
-            <ListGroupItem>loop thrh times</ListGroupItem>
-            <ListGroupItem>loop thrh times</ListGroupItem>
-          </ListGroup>
+          <ListGroup>{listItems}</ListGroup>
         </CardBody>
       </Card>
     </Col>
@@ -69,7 +65,8 @@ const ScheduleDisplayCard = ({ teamName, data }) => {
 
 ScheduleDisplayCard.propTypes = {
   teamName: PropTypes.string.isRequired,
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  teamId: PropTypes.string.isRequired
 };
 
 export default ScheduleDisplayCard;

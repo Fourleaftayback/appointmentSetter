@@ -6,25 +6,22 @@ import moment from "moment";
 
 const DatePickerButton = ({ selectedDate, pickDate }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const toggleModal = () => {
-    isOpen ? setIsOpen(false) : setIsOpen(true);
-  };
-
-  //const [selectedDate, setSelectedDate] = useState(new Date());
-
-  const changeDate = date => {
-    //setSelectedDate(date);
-    pickDate(date);
-    toggleModal();
-  };
-
   const today = new Date();
   const monthAhead = new Date(
     today.getFullYear(),
     today.getMonth(),
     today.getDate() + 31
   );
+
+  const toggleModal = () => {
+    isOpen ? setIsOpen(false) : setIsOpen(true);
+  };
+
+  const changeDate = date => {
+    pickDate(date);
+    toggleModal();
+  };
+
   return (
     <React.Fragment>
       <Button color="primary" onClick={toggleModal}>
