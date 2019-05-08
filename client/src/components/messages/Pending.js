@@ -1,20 +1,23 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { Row, Col, Badge } from "reactstrap";
 
 import DefaultMessage from "./DefaultMessage";
-import JustMade from "./JustMade";
+const JustMade = React.lazy(() => import("./JustMade"));
 
 const Pending = ({ appJustMade }) => {
-  let message;
-  Object.keys(appJustMade).length === 0
-    ? (message = <DefaultMessage />)
-    : (message = <JustMade />);
   return (
     <React.Fragment>
-      {message}
+      {Object.keys(appJustMade).length === 0 ? (
+        <DefaultMessage />
+      ) : (
+        <Suspense
+          fallback={<div className="text-center">Something went wrong...</div>}>
+          <JustMade appJustMade={appJustMade} />
+        </Suspense>
+      )}
       <Row>
         <Col>
           <h3 className="text-center mt-3">
