@@ -3,6 +3,7 @@ import React from "react";
 import { NavItem } from "reactstrap";
 
 import ProfileModal from "./ProfileModal";
+import Notifications from "./Notifications";
 
 function Profile({ userName }) {
   return (
@@ -13,6 +14,7 @@ function Profile({ userName }) {
           <b>{userName}</b>
         </span>
       </NavItem>
+      <Notifications />
     </React.Fragment>
   );
 }

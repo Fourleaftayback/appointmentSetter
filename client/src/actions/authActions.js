@@ -38,11 +38,15 @@ export const loginUser = userData => dispatch => {
       localStorage.setItem("jwtToken", token);
       setAuthToken(token);
       const decoded = jwt_decode(token);
-
       dispatch(setCurrentUser(decoded));
+    })
+    .then(() => {
       dispatch({
         type: CLEAR_ERRORS
       });
+    })
+
+    .then(() => {
       dispatch({
         type: USERLOGIN_MODAL_TOGGLE
       });

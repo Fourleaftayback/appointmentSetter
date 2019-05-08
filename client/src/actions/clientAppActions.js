@@ -7,7 +7,8 @@ import {
   GET_ALL_CLIENTAPP,
   GET_ERRORS,
   SET_TEAM_MEMBERS,
-  SET_APP_JUSTMADE
+  SET_APP_JUSTMADE,
+  SET_USER_APPS
 } from "./types";
 
 export const getAllAppointments = () => dispatch => {
@@ -40,6 +41,23 @@ export const getAllTeamMembers = () => dispatch => {
     .then(res => {
       dispatch({
         type: SET_TEAM_MEMBERS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response
+      });
+    });
+};
+
+export const getUserApps = () => dispatch => {
+  axios
+    .get("/appointment/user")
+    .then(res => {
+      dispatch({
+        type: SET_USER_APPS,
         payload: res.data
       });
     })

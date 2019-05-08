@@ -162,19 +162,24 @@ router.get("/all", (req, res) => {
     .catch(err => res.status(400).json({ errors: err }));
 });
 
-// @route   Get appointment/team/id
-// @desc    get All data for client side only (might now need this feature eventually)
-// @access  Public
-router.get("/appointment/team/:id", (req, res) => {
-  Appointment.find({
-    team_member_id: params.id,
-    appointment_end: { $gte: Date.now() }
-  })
-    .select("-client_info -team_member_info -team_member_info -date_updated_on")
-    .then(app => {
-      res.status(200).json(app);
+// @route   Get /appointment/user
+// @desc    get All data for specific client only
+// @access  Private
+router.get(
+  "/user",
+  passport.authenticate("userPass", { session: false }),
+  (req, res) => {
+    Appointment.find({
+      user: req.user.id,
+      appointment_start: { $gte: Date.now() }
     })
-    .catch(err => res.status(400).json({ errors: err }));
-});
+      .select("-user -client_info -team_member_id -date_updated_on")
+      .sort("appointment_start")
+      .then(apps => {
+        res.status(200).json(apps);
+      })
+      .catch(err => res.status(400).json({ errors: err }));
+  }
+);
 
 module.exports = router;
