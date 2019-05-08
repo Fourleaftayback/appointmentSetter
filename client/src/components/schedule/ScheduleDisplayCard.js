@@ -25,12 +25,15 @@ const ScheduleDisplayCard = ({ teamName, data, teamId }) => {
     const earlistTime = setAvailableTimes(today, 9);
     const latestTime = setAvailableTimes(today, 17);
     const halfHour = 1800000;
+    const currentTime = new Date().getTime();
     const timeBlock = [];
     let i = earlistTime;
     for (i; i < latestTime; i += halfHour) {
       timeBlock.push(i);
     }
-    return timeBlock.filter(time => !checkAlltimes(time, bookedTimes));
+    return timeBlock.filter(
+      time => !checkAlltimes(time, bookedTimes) && time > currentTime
+    );
   };
 
   useEffect(() => {

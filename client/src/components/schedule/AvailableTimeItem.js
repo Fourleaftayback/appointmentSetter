@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import moment from "moment";
 import {
@@ -12,17 +13,26 @@ import {
   Input
 } from "reactstrap";
 
-//import state auth state here to verify that they are logged in
-//import veiws action to open modal
-//if they are not logged in then open login modal or collapsed
-//if they are logged in open request appointment modal (this will have to managed from a local state)
+import { userLoginModalToggle } from "../../actions/viewsActions";
+import { reqAppointment } from "../../actions/clientAppActions";
 
-const AvailableTimeItem = ({ teamId, teamName, time }) => {
+const AvailableTimeItem = ({
+  teamId,
+  teamName,
+  time,
+  isLoggedIn,
+  userLoginModalToggle,
+  reqAppointment
+}) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [typeOfAppointment, setTypeOfAppointment] = useState("hair_cut");
 
   const toggleModal = () => {
     modalIsOpen ? setModalIsOpen(false) : setModalIsOpen(true);
+  };
+
+  const openModal = () => {
+    isLoggedIn ? toggleModal() : userLoginModalToggle();
   };
 
   const onSelect = e => {
@@ -52,7 +62,8 @@ const AvailableTimeItem = ({ teamId, teamName, time }) => {
       appointment_end: new Date(endTime),
       teamId: teamId
     };
-    console.log(newAppointment);
+
+    reqAppointment(newAppointment);
   };
 
   return (
@@ -62,7 +73,7 @@ const AvailableTimeItem = ({ teamId, teamName, time }) => {
         color="secondary"
         block
         className="mb-1"
-        onClick={toggleModal}>
+        onClick={openModal}>
         {moment(time).format("LT")}
       </Button>
       <Modal isOpen={modalIsOpen} toggle={toggleModal}>
@@ -98,7 +109,22 @@ const AvailableTimeItem = ({ teamId, teamName, time }) => {
 AvailableTimeItem.propTypes = {
   teamId: PropTypes.string.isRequired,
   teamName: PropTypes.string.isRequired,
-  time: PropTypes.number.isRequired
+  time: PropTypes.number.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  userLoginModalToggle: PropTypes.func.isRequired,
+  reqAppointment: PropTypes.func.isRequired
 };
 
-export default AvailableTimeItem;
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isAuthenticated
+});
+
+const mapDispatchToProps = {
+  userLoginModalToggle: userLoginModalToggle,
+  reqAppointment: reqAppointment
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AvailableTimeItem);

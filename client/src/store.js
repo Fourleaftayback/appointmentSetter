@@ -18,7 +18,6 @@ const initialState = {};
 
 const modalToggle = store => next => action => {
   const current = store.getState();
-
   if (action.type === USERLOGIN_MODAL_TOGGLE) {
     current.views.userLoginIsOpen
       ? (action.type = USERLOGIN_MODAL_CLOSE)

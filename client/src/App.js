@@ -8,7 +8,7 @@ import history from "./history/History";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 
-//import PrivateRoute from "./components/common/PrivateRoute";
+import PrivateRoute from "./components/common/PrivateRoute";
 import TeamPrivateRoute from "./components/common/TeamPrivateRoute";
 
 import { setCurrentUser, logOutUser } from "./actions/authActions";
@@ -19,6 +19,7 @@ import Footer from "./components/layouts/Footer";
 import UserRegister from "./components/auth/UserRegister";
 import TeamLanding from "./components/layouts/TeamLanding";
 import RegisterTeam from "./components/auth/team/RegisterTeam";
+import Pending from "./components/messages/Pending";
 
 import NotAuthorized from "./components/common/NotAuthorized";
 import NotFound from "./components/common/NotFound";
@@ -54,6 +55,8 @@ class App extends Component {
 
                 <Route path="/team/register" component={RegisterTeam} />
                 <Route exact path="/not-authorized" component={NotAuthorized} />
+                <PrivateRoute exact path="/pending" component={Pending} />
+
                 <Route component={NotFound} />
               </Switch>
             </Container>

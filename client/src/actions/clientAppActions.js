@@ -1,11 +1,13 @@
 import axios from "axios";
+import history from "../history/History";
 
 import {
   DATA_LOADING,
   LOADING_DONE,
   GET_ALL_CLIENTAPP,
   GET_ERRORS,
-  SET_TEAM_MEMBERS
+  SET_TEAM_MEMBERS,
+  SET_APP_JUSTMADE
 } from "./types";
 
 export const getAllAppointments = () => dispatch => {
@@ -40,6 +42,29 @@ export const getAllTeamMembers = () => dispatch => {
         type: SET_TEAM_MEMBERS,
         payload: res.data
       });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response
+      });
+    });
+};
+
+export const reqAppointment = appData => dispatch => {
+  axios
+    .post("/appointment/add", appData)
+    .then(res => {
+      dispatch({
+        type: SET_APP_JUSTMADE,
+        payload: res.data
+      });
+    })
+    .then(() => {
+      dispatch(getAllAppointments());
+    })
+    .then(() => {
+      history.push("/pending");
     })
     .catch(err => {
       dispatch({

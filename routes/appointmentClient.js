@@ -53,10 +53,16 @@ router.post(
           app.id,
           req.hostname
         );
+        app.client_info = undefined;
+        app.date_updated_on = undefined;
+        app.team_member_id = undefined;
+        app.__v = undefined;
+        res.status(200).json(app); //delete for prod testing
+        /*
         sgMail
           .send(email)
-          .then(() => {
-            res.status(200).json({ status: "appointment saved" });
+          .then(app => {
+            res.status(200).json(app);
           })
           .catch(err => {
             let emailErr = new EmailErrors(
@@ -67,7 +73,7 @@ router.post(
             emailErr.save();
             errors.email = "Sorry email could not be sent";
             return res.status(400).json(errors);
-          });
+          }); */
       })
       .catch(err => res.status(400).json({ errors: "failed to save" }));
   }
