@@ -20,6 +20,7 @@ import UserRegister from "./components/auth/UserRegister";
 import TeamLanding from "./components/layouts/TeamLanding";
 import RegisterTeam from "./components/auth/team/RegisterTeam";
 import Pending from "./components/messages/Pending";
+import MyAppContainer from "./components/myAppointments/MyAppContainer";
 
 import NotAuthorized from "./components/common/NotAuthorized";
 import NotFound from "./components/common/NotFound";
@@ -56,6 +57,11 @@ class App extends Component {
                 <Route path="/team/register" component={RegisterTeam} />
                 <Route exact path="/not-authorized" component={NotAuthorized} />
                 <PrivateRoute exact path="/pending" component={Pending} />
+                <PrivateRoute
+                  exact
+                  path="/myappointments"
+                  component={MyAppContainer}
+                />
 
                 <Route component={NotFound} />
               </Switch>
