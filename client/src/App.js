@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Container } from "reactstrap";
 
 import { Provider } from "react-redux";
@@ -41,37 +41,35 @@ if (localStorage.jwtToken) {
   }
 }
 
-class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <Router history={history}>
-          <Container fluid={true} className="App bg-light">
-            <NavBar />
-            <Container>
-              <Switch>
-                <Route exact path="/" component={Landing} />
-                <Route exact path="/signup" component={UserRegister} />
-                <TeamPrivateRoute exact path="/team" component={TeamLanding} />
+const App = () => {
+  return (
+    <Provider store={store}>
+      <Router history={history}>
+        <Container fluid={true} className="App bg-light">
+          <NavBar />
+          <Container>
+            <Switch>
+              <Route exact path="/" component={Landing} />
+              <Route exact path="/signup" component={UserRegister} />
+              <TeamPrivateRoute exact path="/team" component={TeamLanding} />
 
-                <Route path="/team/register" component={RegisterTeam} />
-                <Route exact path="/not-authorized" component={NotAuthorized} />
-                <PrivateRoute exact path="/pending" component={Pending} />
-                <PrivateRoute
-                  exact
-                  path="/myappointments"
-                  component={MyAppContainer}
-                />
+              <Route path="/team/register" component={RegisterTeam} />
+              <Route exact path="/not-authorized" component={NotAuthorized} />
+              <PrivateRoute exact path="/pending" component={Pending} />
+              <PrivateRoute
+                exact
+                path="/myappointments"
+                component={MyAppContainer}
+              />
 
-                <Route component={NotFound} />
-              </Switch>
-            </Container>
-            <Footer />
+              <Route component={NotFound} />
+            </Switch>
           </Container>
-        </Router>
-      </Provider>
-    );
-  }
-}
+          <Footer />
+        </Container>
+      </Router>
+    </Provider>
+  );
+};
 
 export default App;

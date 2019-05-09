@@ -64,7 +64,16 @@ const ScheduleDisplayCard = ({ teamName, data, teamId }) => {
         </CardHeader>
 
         <CardBody>
-          <ListGroup>{listItems}</ListGroup>
+          <ListGroup>
+            {availableTimeSlots.length !== 0 ? (
+              listItems
+            ) : (
+              <p>
+                Sorry but this team member is not available for the rest of
+                today. Please check another date for their availability.
+              </p>
+            )}
+          </ListGroup>
         </CardBody>
       </Card>
     </Col>
