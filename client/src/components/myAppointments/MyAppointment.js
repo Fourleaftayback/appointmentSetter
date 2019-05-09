@@ -1,16 +1,18 @@
 import React from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import moment from "moment";
 import {
   Col,
   Card,
-  Button,
   CardHeader,
   CardFooter,
   CardBody,
   CardTitle,
   CardText
 } from "reactstrap";
+
+import ContactButtonModal from "../common/Buttons/ContactButton";
+import CancelButtonModal from "../common/Buttons/CancelButtonModal";
 
 const MyAppointment = ({ data }) => {
   const getType = type => {
@@ -39,16 +41,27 @@ const MyAppointment = ({ data }) => {
               With: <b>{data.team_member_info.first_name}</b>
             </CardTitle>
             <CardText>
-              With supporting text below as a natural lead-in to additional
-              content.
+              {data.confirmed
+                ? "Your appointment has been confirmed for"
+                : "You will recieve an Email once the appointment has been confirmed"}
+            </CardText>
+            <CardText>
+              Appointment Time:{" "}
+              <b>{moment(data.appointment_start).format("llll")}</b>
+            </CardText>
+            <CardText>
+              Appointment End:{" "}
+              <b>{moment(data.appointment_end).format("llll")}</b>
             </CardText>
           </CardBody>
           {/*this will be seperate component*/}
           <CardFooter>
-            <Button color="danger">Cancel</Button>
-            <Button color="info" className="float-right">
-              Contact
-            </Button>
+            <CancelButtonModal appId={data._id} />
+            <ContactButtonModal
+              name={data.team_member_info.first_name}
+              phone={data.team_member_info.phone}
+              email={data.team_member_info.email}
+            />
           </CardFooter>
         </Card>
       </Col>
@@ -60,7 +73,4 @@ MyAppointment.propTypes = {
   data: PropTypes.object.isRequired
 };
 
-export default connect(
-  null,
-  null
-)(MyAppointment);
+export default MyAppointment;
