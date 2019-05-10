@@ -14,6 +14,7 @@ import {
 } from "reactstrap";
 
 import { profileModalToggle } from "../../actions/viewsActions";
+import { modifyUser } from "../../actions/commonAppActions";
 
 import FormItem from "../form/FormItem";
 
@@ -21,7 +22,8 @@ function ProfileModal({
   errors,
   profileModalIsOpen,
   profileModalToggle,
-  user
+  user,
+  modifyUser
 }) {
   const [first_name, setFirstName] = useState(user.first_name);
   const [last_name, setLastName] = useState(user.last_name);
@@ -30,6 +32,16 @@ function ProfileModal({
 
   const toggleModal = () => {
     profileModalToggle();
+  };
+
+  const onSubmit = () => {
+    const userInfo = {
+      email: email,
+      first_name: first_name,
+      last_name: last_name,
+      phone: phone
+    };
+    modifyUser("/user/modify", userInfo);
   };
   return (
     <React.Fragment>
@@ -77,7 +89,7 @@ function ProfileModal({
             </Form>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={() => console.log("save clicked")}>
+            <Button color="primary" onClick={onSubmit}>
               Save
             </Button>{" "}
             <Button color="secondary" onClick={toggleModal}>
@@ -94,7 +106,8 @@ ProfileModal.propTypes = {
   errors: PropTypes.object.isRequired,
   profileModalIsOpen: PropTypes.bool.isRequired,
   profileModalToggle: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  modifyUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -104,7 +117,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  profileModalToggle: profileModalToggle
+  profileModalToggle: profileModalToggle,
+  modifyUser: modifyUser
 };
 
 export default connect(

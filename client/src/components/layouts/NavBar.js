@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav } from "reactstrap";
 
 import AuthLinks from "../navbar/AuthLinks";
-import SignOut from "../navbar/SignOut";
 import Profile from "../profile/Profile";
+
+const SignOut = React.lazy(() => import("../navbar/SignOut"));
 
 const NavBar = ({ isLoggedIn, userName }) => {
   const [collapsed, setCollapse] = useState(false);
@@ -27,7 +28,13 @@ const NavBar = ({ isLoggedIn, userName }) => {
           {isLoggedIn ? <Profile userName={userName} /> : null}
         </Nav>
         <Nav className="navbar-nav mt-2 mt-lg-0">
-          {!isLoggedIn ? <AuthLinks /> : <SignOut />}
+          {isLoggedIn ? (
+            <Suspense fallback={<li>Error</li>}>
+              <SignOut />
+            </Suspense>
+          ) : (
+            <AuthLinks />
+          )}
         </Nav>
       </Collapse>
     </Navbar>
@@ -48,3 +55,5 @@ export default connect(
   mapStateToProps,
   null
 )(NavBar);
+/*
+{!isLoggedIn ? <AuthLinks /> : <SignOut />} */

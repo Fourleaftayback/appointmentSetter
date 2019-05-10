@@ -11,23 +11,12 @@ import {
   CardText
 } from "reactstrap";
 
+import { getType } from "../../controller/dataConverter";
+
 import ContactButtonModal from "../common/Buttons/ContactButton";
 import CancelButtonModal from "../common/Buttons/CancelButtonModal";
 
 const MyAppointment = ({ data }) => {
-  const getType = type => {
-    switch (type) {
-      case "hair_cut":
-        return "Hair Cut";
-      case "shave":
-        return "Shave";
-      case "cut_and_shave":
-        return "Cut And Shave";
-      default:
-        return "Other type of";
-    }
-  };
-
   let type = getType(data.appointment_type);
   return (
     <React.Fragment>

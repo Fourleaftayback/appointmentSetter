@@ -1,9 +1,3 @@
-/*
-export const removeDuplicateObj = (myArr, prop) => {
-  return myArr.filter((obj, pos, arr) => {
-    return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
-  });
-}; */
 export const roundToDay = date => {
   let d = new Date(date);
   return new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -45,4 +39,17 @@ export const checkAlltimes = (time, arr) => {
     }
   }
   return result;
+};
+
+export const getType = type => {
+  switch (type) {
+    case "hair_cut":
+      return "Hair Cut";
+    case "shave":
+      return "Shave";
+    case "cut_and_shave":
+      return "Cut And Shave";
+    default:
+      return "Other type of";
+  }
 };

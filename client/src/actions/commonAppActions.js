@@ -1,9 +1,14 @@
 import axios from "axios";
-//import history from "../history/History";
+import setAuthToken from "../utils/setAuthToken";
+import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS } from "./types";
+import { GET_ERRORS, CLEAR_ERRORS } from "./types";
 
 import { getUserApps } from "./clientAppActions";
+
+import { setCurrentUser } from "./authActions";
+
+import { profileModalToggle } from "./viewsActions";
 
 export const deleteAppointment = (url, id) => dispatch => {
   axios
@@ -12,9 +17,37 @@ export const deleteAppointment = (url, id) => dispatch => {
       dispatch(getUserApps());
     })
     .catch(err => {
-      dispatchEvent({
+      dispatch({
         type: GET_ERRORS,
-        payload: err.response
+        payload: err.response.data
+      });
+    });
+};
+
+export const modifyUser = (url, userData) => dispatch => {
+  axios
+    .put(url, userData)
+    .then(res => {
+      localStorage.removeItem("jwtToken");
+      setAuthToken(false);
+      const { token } = res.data;
+      localStorage.setItem("jwtToken", token);
+      setAuthToken(token);
+      const decoded = jwt_decode(token);
+      dispatch(setCurrentUser(decoded));
+    })
+    .then(() => {
+      dispatch({
+        type: CLEAR_ERRORS
+      });
+    })
+    .then(() => {
+      dispatch(profileModalToggle());
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
       });
     });
 };
