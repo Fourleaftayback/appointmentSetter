@@ -25,8 +25,6 @@ function ProfileModal({
   user,
   modifyUser
 }) {
-  const [first_name, setFirstName] = useState(user.first_name);
-  const [last_name, setLastName] = useState(user.last_name);
   const [email, setEmail] = useState(user.email);
   const [phone, setPhone] = useState(user.phone.toString());
 
@@ -37,8 +35,6 @@ function ProfileModal({
   const onSubmit = () => {
     const userInfo = {
       email: email,
-      first_name: first_name,
-      last_name: last_name,
       phone: phone
     };
     modifyUser("/user/modify", userInfo);
@@ -54,23 +50,7 @@ function ProfileModal({
           <ModalBody>
             <Form>
               <FormItem
-                type="text"
-                name="first_name"
-                placeholder="First Name"
-                value={first_name}
-                error={errors.first_name}
-                onChange={e => setFirstName(e.target.value)}
-              />
-
-              <FormItem
-                type="text"
-                name="last_name"
-                placeholder="Last Name"
-                value={last_name}
-                error={errors.last_name}
-                onChange={e => setLastName(e.target.value)}
-              />
-              <FormItem
+                label="Email Address"
                 type="email"
                 name="email"
                 placeholder="Email"
@@ -79,6 +59,7 @@ function ProfileModal({
                 onChange={e => setEmail(e.target.value)}
               />
               <FormItem
+                label="Phone Number"
                 type="tel"
                 name="phone"
                 placeholder="Phone Number"

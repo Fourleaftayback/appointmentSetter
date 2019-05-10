@@ -97,8 +97,6 @@ router.put(
       { _id: req.user.id },
       {
         email: req.body.email,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
         phone: req.body.phone
       }
     )
@@ -108,18 +106,19 @@ router.put(
           errors.user = "Sorry something went wrong";
           return res.status(400).json(errors);
         }
-        user.save();
-        const payload = {
-          id: user.id,
-          first_name: user.first_name,
-          last_name: user.last_name,
-          email: user.email,
-          phone: user.phone
-        };
-        jwt.sign(payload, keys, { expiresIn: 7200 }, (err, token) => {
-          res.json({
-            success: true,
-            token: "Bearer " + token
+        user.save().then(() => {
+          const payload = {
+            id: user.id,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: req.body.email,
+            phone: req.body.phone
+          };
+          jwt.sign(payload, keys, { expiresIn: 7200 }, (err, token) => {
+            res.json({
+              success: true,
+              token: "Bearer " + token
+            });
           });
         });
       })

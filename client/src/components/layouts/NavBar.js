@@ -51,9 +51,4 @@ const mapStateToProps = state => ({
   userName: state.auth.user.first_name
 });
 
-export default connect(
-  mapStateToProps,
-  null
-)(NavBar);
-/*
-{!isLoggedIn ? <AuthLinks /> : <SignOut />} */
+export default connect(mapStateToProps)(NavBar);
