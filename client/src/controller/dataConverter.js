@@ -53,3 +53,7 @@ export const getType = type => {
       return "Other type of";
   }
 };
+
+export const firstUpperCase = str => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
