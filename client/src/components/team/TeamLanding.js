@@ -4,15 +4,21 @@ import PropTypes from "prop-types";
 import { Row, Col, Button } from "reactstrap";
 
 import TeamMemberPicker from "./TeamMemberPicker";
+import DatePickerButton from "../../components/common/Buttons/DatePickerButton";
 
 import { getAllTeamApp } from "../../actions/teamAppActions";
 
 const TeamLanding = ({ getAllTeamApp, user, teamMembers }) => {
   const [currentUserId, setCurrentUserId] = useState("");
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const selectUser = e => {
     const indx = e.target.options.selectedIndex;
     setCurrentUserId(e.target.options[indx].value);
+  };
+
+  const changeDate = date => {
+    setSelectedDate(date);
   };
 
   useEffect(() => {
@@ -31,7 +37,11 @@ const TeamLanding = ({ getAllTeamApp, user, teamMembers }) => {
           />
         </Col>
         <Col>
-          <Button>test</Button>
+          <DatePickerButton
+            selectedDate={selectedDate}
+            pickDate={changeDate}
+            maxDate={90}
+          />
         </Col>
         <Col>
           <Button>test</Button>
