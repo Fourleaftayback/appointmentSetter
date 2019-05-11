@@ -6,10 +6,11 @@ import {
   LOADING_DONE,
   GET_ALL_CLIENTAPP,
   GET_ERRORS,
-  SET_TEAM_MEMBERS,
   SET_APP_JUSTMADE,
   SET_USER_APPS
 } from "./types";
+
+import { getAllTeamMembers } from "./commonAppActions";
 
 export const getAllAppointments = () => dispatch => {
   dispatch({
@@ -25,23 +26,6 @@ export const getAllAppointments = () => dispatch => {
     .then(() => {
       dispatch({
         type: LOADING_DONE
-      });
-    })
-    .catch(err => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response
-      });
-    });
-};
-
-export const getAllTeamMembers = () => dispatch => {
-  axios
-    .get("/team/allmembers")
-    .then(res => {
-      dispatch({
-        type: SET_TEAM_MEMBERS,
-        payload: res.data
       });
     })
     .catch(err => {

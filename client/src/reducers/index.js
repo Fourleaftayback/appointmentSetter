@@ -5,10 +5,12 @@ import authReducer from "./authReducer";
 import errorsReducer from "./errorsReducer";
 import viewsReducer from "./viewsReducer";
 import clientAppointmentReducers from "./clientAppointmentReducer";
+import teamAppointmentReducers from "./teamAppointmentReducer";
 
 export default combineReducers({
   auth: authReducer,
   clientAppointment: clientAppointmentReducers,
+  teamAppointment: teamAppointmentReducers,
   errors: errorsReducer,
   views: viewsReducer
 });

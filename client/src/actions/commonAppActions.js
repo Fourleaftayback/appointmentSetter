@@ -2,7 +2,7 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, CLEAR_ERRORS } from "./types";
+import { GET_ERRORS, CLEAR_ERRORS, SET_TEAM_MEMBERS } from "./types";
 
 import { getUserApps } from "./clientAppActions";
 
@@ -48,6 +48,23 @@ export const modifyUser = (url, userData) => dispatch => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
+      });
+    });
+};
+
+export const getAllTeamMembers = () => dispatch => {
+  axios
+    .get("/team/allmembers")
+    .then(res => {
+      dispatch({
+        type: SET_TEAM_MEMBERS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response
       });
     });
 };

@@ -21,6 +21,8 @@ export const GET_ALL_CLIENTAPP = "GET_ALL_CLIENTAPP";
 export const SET_USER_APPS = "SET_USER_APPS";
 export const SET_TEAM_MEMBERS = "SET_TEAM_MEMBERS";
 
+export const GET_ALL_TEAMAPP = "GET_ALL_TEAMAPP";
+
 export const SET_APP_JUSTMADE = "SET_APP_JUSTMADE";
 
 export const LOADING = "LOADING";

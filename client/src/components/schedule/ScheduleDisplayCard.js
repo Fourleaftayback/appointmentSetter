@@ -9,7 +9,7 @@ import {
 
 import { Col, Card, CardHeader, CardBody, ListGroup } from "reactstrap";
 
-import DatePickerButton from "./DatePickerButton";
+import DatePickerButton from "../common/Buttons/DatePickerButton";
 import AvailableTimeItem from "./AvailableTimeItem";
 
 const ScheduleDisplayCard = ({ teamName, data, teamId }) => {
@@ -60,7 +60,11 @@ const ScheduleDisplayCard = ({ teamName, data, teamId }) => {
       <Card>
         <CardHeader>
           <h5>{teamName}</h5>
-          <DatePickerButton selectedDate={selectedDate} pickDate={changeDate} />
+          <DatePickerButton
+            selectedDate={selectedDate}
+            pickDate={changeDate}
+            maxDate={31}
+          />
         </CardHeader>
 
         <CardBody>

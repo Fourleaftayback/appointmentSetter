@@ -17,7 +17,7 @@ import NavBar from "./components/layouts/NavBar";
 import Landing from "./components/layouts/Landing";
 import Footer from "./components/layouts/Footer";
 import UserRegister from "./components/auth/UserRegister";
-import TeamLanding from "./components/layouts/TeamLanding";
+import TeamLanding from "./components/team/TeamLanding";
 import RegisterTeam from "./components/auth/team/RegisterTeam";
 import Pending from "./components/messages/Pending";
 import MyAppContainer from "./components/myAppointments/MyAppContainer";
@@ -26,6 +26,7 @@ import NotAuthorized from "./components/common/NotAuthorized";
 import NotFound from "./components/common/NotFound";
 
 import "./App.css";
+import "react-infinite-calendar/styles.css";
 
 //set up jwt token auth here
 if (localStorage.jwtToken) {
