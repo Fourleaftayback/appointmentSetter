@@ -154,4 +154,22 @@ router.get(
   }
 );
 
+// @route   Get team/appointment/allclients
+// @desc    get list of all clients
+// @access  private
+
+router.get(
+  "/allclients",
+  passport.authenticate("teamPass", { session: false }),
+  (req, res) => {
+    User.find({})
+      .select("email first_name")
+      .sort({ email: 1 })
+      .then(users => {
+        res.status(200).json(users);
+      })
+      .catch(err => res.status(400).json({ errors: err }));
+  }
+);
+
 module.exports = router;
