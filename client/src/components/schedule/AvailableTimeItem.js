@@ -2,19 +2,12 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import moment from "moment";
-import {
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input
-} from "reactstrap";
+import { Modal, ModalHeader, ModalBody, Button, Form } from "reactstrap";
 
 import { userLoginModalToggle } from "../../actions/viewsActions";
 import { reqAppointment } from "../../actions/clientAppActions";
+
+import FormSelect from "../form/FormSelect";
 
 const AvailableTimeItem = ({
   teamId,
@@ -84,7 +77,7 @@ const AvailableTimeItem = ({
           </p>
           <p>Time: {moment(time).format("llll")}</p>
           <Form>
-            <FormGroup>
+            {/*<FormGroup>
               <Label for="typeOfAppointment">Type of Appointment</Label>
               <Input
                 type="select"
@@ -95,11 +88,18 @@ const AvailableTimeItem = ({
                 <option value="shave">Shave</option>
                 <option value="cut_and_shave">Cut and Shave</option>
               </Input>
-              <Button color="info" onClick={submitReq}>
-                Request
-              </Button>
-            </FormGroup>
+            </FormGroup*/}
+            <FormSelect
+              label="Type of Appointment"
+              onSelect={onSelect}
+              name="typeOfAppointment"
+              valueArr={["hair_cut", "shave", "cut_and_shave"]}
+              nameArr={["Hair Cut", "Shave", "Cut and Shave"]}
+            />
           </Form>
+          <Button color="info" onClick={submitReq}>
+            Request
+          </Button>
         </ModalBody>
       </Modal>
     </React.Fragment>

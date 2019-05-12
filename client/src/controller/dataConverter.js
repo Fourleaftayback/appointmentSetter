@@ -41,6 +41,22 @@ export const checkAlltimes = (time, arr) => {
   return result;
 };
 
+export const getAvaliableTimes = (bookedTimes, day, earliest, latest) => {
+  const today = roundToDay(day).toString();
+  const earlistTime = setAvailableTimes(today, earliest);
+  const latestTime = setAvailableTimes(today, latest);
+  const halfHour = 1800000;
+  const currentTime = new Date().getTime();
+  const timeBlock = [];
+  let i = earlistTime;
+  for (i; i < latestTime; i += halfHour) {
+    timeBlock.push(i);
+  }
+  return timeBlock.filter(
+    time => !checkAlltimes(time, bookedTimes) && time > currentTime
+  );
+};
+
 export const getType = type => {
   switch (type) {
     case "hair_cut":

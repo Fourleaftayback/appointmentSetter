@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import uniqId from "uniqid";
-import {
-  roundToDay,
-  setAvailableTimes,
-  checkAlltimes
-} from "../../controller/dataConverter";
+
+import { getAvaliableTimes } from "../../controller/dataConverter";
 
 import { Col, Card, CardHeader, CardBody, ListGroup } from "reactstrap";
 
@@ -20,29 +17,13 @@ const ScheduleDisplayCard = ({ teamName, data, teamId }) => {
     setSelectedDate(date);
   };
 
-  const getAvaliableTimes = (bookedTimes, day) => {
-    const today = roundToDay(day).toString();
-    const earlistTime = setAvailableTimes(today, 9);
-    const latestTime = setAvailableTimes(today, 17);
-    const halfHour = 1800000;
-    const currentTime = new Date().getTime();
-    const timeBlock = [];
-    let i = earlistTime;
-    for (i; i < latestTime; i += halfHour) {
-      timeBlock.push(i);
-    }
-    return timeBlock.filter(
-      time => !checkAlltimes(time, bookedTimes) && time > currentTime
-    );
-  };
-
   useEffect(() => {
-    let times = getAvaliableTimes(data, selectedDate);
+    let times = getAvaliableTimes(data, selectedDate, 9, 17);
     setAvailableTimeSlots(times);
   }, [selectedDate]);
 
   useEffect(() => {
-    let times = getAvaliableTimes(data, selectedDate);
+    let times = getAvaliableTimes(data, selectedDate, 9, 17);
     setAvailableTimeSlots(times);
   }, []);
 
@@ -73,7 +54,7 @@ const ScheduleDisplayCard = ({ teamName, data, teamId }) => {
               listItems
             ) : (
               <p>
-                Sorry but this team member is not available for the rest of
+                Sorry but this team member is not have any available times
                 today. Please check another date for their availability.
               </p>
             )}
