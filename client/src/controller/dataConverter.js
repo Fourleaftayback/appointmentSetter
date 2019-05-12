@@ -41,6 +41,8 @@ export const checkAlltimes = (time, arr) => {
   return result;
 };
 
+//bookedTimes is array of times already booked for the specific team member for the specific day only
+
 export const getAvaliableTimes = (bookedTimes, day, earliest, latest) => {
   const today = roundToDay(day).toString();
   const earlistTime = setAvailableTimes(today, earliest);

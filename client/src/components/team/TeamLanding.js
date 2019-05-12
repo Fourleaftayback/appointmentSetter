@@ -10,8 +10,8 @@ import AddAppointment from "./buttons/AddAppointment";
 import { getAllTeamApp } from "../../actions/teamAppActions";
 import { roundToDay } from "../../controller/dataConverter";
 
-const TeamLanding = ({ getAllTeamApp, user, teamMembers }) => {
-  const [currentUserId, setCurrentUserId] = useState("");
+const TeamLanding = ({ getAllTeamApp, user, teamMembers, appointments }) => {
+  const [currentUserId, setCurrentUserId] = useState(user.id);
   const [selectedDate, setSelectedDate] = useState(roundToDay(new Date()));
 
   const selectUser = e => {
@@ -27,6 +27,10 @@ const TeamLanding = ({ getAllTeamApp, user, teamMembers }) => {
     getAllTeamApp();
     setCurrentUserId(user.id);
   }, []);
+
+  const appointmentsByTeam = appointments.filter(
+    item => item.team_member_id === currentUserId
+  );
 
   return (
     <React.Fragment>
@@ -46,7 +50,11 @@ const TeamLanding = ({ getAllTeamApp, user, teamMembers }) => {
           />
         </Col>
         <Col md="4">
-          <AddAppointment teamId={currentUserId} day={selectedDate} />
+          <AddAppointment
+            teamId={currentUserId}
+            day={selectedDate}
+            appointmentsByTeam={appointmentsByTeam}
+          />
         </Col>
       </Row>
       <Row className="text-center mt-4">
@@ -61,12 +69,14 @@ const TeamLanding = ({ getAllTeamApp, user, teamMembers }) => {
 TeamLanding.propTypes = {
   user: PropTypes.object.isRequired,
   getAllTeamApp: PropTypes.func.isRequired,
-  teamMembers: PropTypes.array.isRequired
+  teamMembers: PropTypes.array.isRequired,
+  appointments: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
   user: state.auth.user,
-  teamMembers: state.clientAppointment.teamMembers
+  teamMembers: state.clientAppointment.teamMembers,
+  appointments: state.teamAppointment.schedules
 });
 
 const mapDispatchToProps = {

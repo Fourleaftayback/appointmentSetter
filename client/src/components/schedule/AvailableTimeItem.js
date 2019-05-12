@@ -77,18 +77,6 @@ const AvailableTimeItem = ({
           </p>
           <p>Time: {moment(time).format("llll")}</p>
           <Form>
-            {/*<FormGroup>
-              <Label for="typeOfAppointment">Type of Appointment</Label>
-              <Input
-                type="select"
-                name="typeOfAppointment"
-                id="typeOfAppointment"
-                onChange={onSelect}>
-                <option value="hair_cut">Hair Cut</option>
-                <option value="shave">Shave</option>
-                <option value="cut_and_shave">Cut and Shave</option>
-              </Input>
-            </FormGroup*/}
             <FormSelect
               label="Type of Appointment"
               onSelect={onSelect}

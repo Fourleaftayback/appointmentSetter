@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 //import { connect } from "react-redux";
+import moment from "moment";
 import PropTypes from "prop-types";
 import {
   Button,
@@ -12,7 +13,9 @@ import {
 
 import FormSelect from "../../form/FormSelect";
 
-const AddAppointment = ({ teamId, day }) => {
+import { getAvaliableTimes } from "../../../controller/dataConverter";
+
+const AddAppointment = ({ teamId, day, appointmentsByTeam }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [typeOfAppointment, setTypeOfAppointment] = useState("hair_cut");
 
@@ -23,6 +26,9 @@ const AddAppointment = ({ teamId, day }) => {
     const indx = e.target.options.selectedIndex;
     setTypeOfAppointment(e.target.options[indx].value);
   };
+
+  const times = getAvaliableTimes(appointmentsByTeam, day, 9, 17);
+
   return (
     <React.Fragment>
       <Button color="primary" onClick={toggleModal}>
@@ -31,7 +37,11 @@ const AddAppointment = ({ teamId, day }) => {
       <Modal isOpen={modalIsOpen} toggle={toggleModal}>
         <ModalHeader toggle={toggleModal}>Modal title</ModalHeader>
         <ModalBody>
+          <p>
+            <b>Date:</b> {moment(day).format("ll dddd")}
+          </p>
           <Form>
+            {/*the days time slots will go here*/}
             <FormSelect
               label="Type of Appointment"
               onSelect={onSelect}
@@ -42,11 +52,7 @@ const AddAppointment = ({ teamId, day }) => {
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button
-            color="primary"
-            onClick={() =>
-              console.log(teamId + " " + day + " " + typeOfAppointment)
-            }>
+          <Button color="primary" onClick={() => console.log(times)}>
             Add
           </Button>{" "}
           <Button color="secondary" onClick={toggleModal}>
@@ -60,7 +66,8 @@ const AddAppointment = ({ teamId, day }) => {
 
 AddAppointment.propTypes = {
   teamId: PropTypes.string.isRequired,
-  day: PropTypes.instanceOf(Date).isRequired
+  day: PropTypes.instanceOf(Date).isRequired,
+  appointmentsByTeam: PropTypes.array.isRequired
 };
 
 export default AddAppointment;

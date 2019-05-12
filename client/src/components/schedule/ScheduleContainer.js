@@ -22,6 +22,7 @@ const ScheduleContainer = ({
 
   let daySchedules = teamMembers.map(item => {
     let memberData = schedules.filter(data => data.team_member_id === item._id);
+
     return (
       <ScheduleDisplayCard
         teamName={item.first_name}

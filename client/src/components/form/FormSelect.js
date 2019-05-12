@@ -1,13 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FormGroup, Label, Input } from "reactstrap";
-import uniqid from "uniqid";
 
 //must wrap component around <form></form> tag
 
 const FormSelect = ({ onSelect, label, name, valueArr, nameArr }) => {
   let choices = valueArr.map((item, i) => (
-    <option value={item} key={uniqid()}>
+    <option value={item} key={i}>
       {nameArr[i]}
     </option>
   ));
@@ -15,12 +14,7 @@ const FormSelect = ({ onSelect, label, name, valueArr, nameArr }) => {
     <React.Fragment>
       <FormGroup>
         <Label for={name}>{label}</Label>
-        <Input
-          type="select"
-          name={name}
-          id={name}
-          onSelect={() => {}}
-          onChange={onSelect}>
+        <Input type="select" name={name} id={name} onChange={onSelect}>
           {choices}
         </Input>
       </FormGroup>
