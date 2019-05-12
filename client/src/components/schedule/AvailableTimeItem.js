@@ -6,6 +6,7 @@ import { Modal, ModalHeader, ModalBody, Button, Form } from "reactstrap";
 
 import { userLoginModalToggle } from "../../actions/viewsActions";
 import { reqAppointment } from "../../actions/clientAppActions";
+import { getEndTime } from "../../controller/dataConverter";
 
 import FormSelect from "../form/FormSelect";
 
@@ -31,19 +32,6 @@ const AvailableTimeItem = ({
   const onSelect = e => {
     const indx = e.target.options.selectedIndex;
     setTypeOfAppointment(e.target.options[indx].value);
-  };
-
-  const getEndTime = (start, type) => {
-    switch (type) {
-      case "hair_cut":
-        return start + 1800000;
-      case "shave":
-        return start + 1800000;
-      case "cut_and_shave":
-        return start + 3600000;
-      default:
-        return start;
-    }
   };
 
   const submitReq = e => {

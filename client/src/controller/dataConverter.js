@@ -72,6 +72,19 @@ export const getType = type => {
   }
 };
 
+export const getEndTime = (start, type) => {
+  switch (type) {
+    case "hair_cut":
+      return start + 1800000;
+    case "shave":
+      return start + 1800000;
+    case "cut_and_shave":
+      return start + 3600000;
+    default:
+      return start;
+  }
+};
+
 export const firstUpperCase = str => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
