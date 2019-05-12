@@ -9,6 +9,7 @@ import {
 } from "./types";
 
 import { getAllTeamMembers } from "./commonAppActions";
+import { addAppointmentModalToggle } from "./viewsActions";
 
 export const getAllTeamApp = () => dispatch => {
   dispatch({
@@ -19,9 +20,6 @@ export const getAllTeamApp = () => dispatch => {
     .get("/team/appointment/all")
     .then(res => {
       dispatch({ type: GET_ALL_TEAMAPP, payload: res.data });
-    })
-    .then(() => {
-      dispatch(getAllClients());
     })
     .then(() => {
       dispatch({
@@ -44,6 +42,23 @@ export const getAllClients = () => dispatch => {
         type: GET_ALL_CLIENTS,
         payload: res.data
       });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response
+      });
+    });
+};
+
+export const addTeamAppoinment = appData => dispatch => {
+  axios
+    .post("/team/appointment/add", appData)
+    .then(res => {
+      dispatch(addAppointmentModalToggle());
+    })
+    .then(() => {
+      dispatch(getAllTeamApp());
     })
     .catch(err => {
       dispatch({

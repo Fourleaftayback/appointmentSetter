@@ -11,7 +11,10 @@ import {
   TEAMLOGIN_MODAL_CLOSE,
   PROFILE_MODAL_TOGGLE,
   PROFILE_MODAL_OPEN,
-  PROFILE_MODAL_CLOSE
+  PROFILE_MODAL_CLOSE,
+  ADD_APPOINTMENT_MODAL_TOGGLE,
+  ADD_APPOINTMENT_MODAL_OPEN,
+  ADD_APPOINTMENT_MODAL_CLOSE
 } from "./actions/types";
 
 const initialState = {};
@@ -32,6 +35,11 @@ const modalToggle = store => next => action => {
     current.views.profileModalIsOpen
       ? (action.type = PROFILE_MODAL_CLOSE)
       : (action.type = PROFILE_MODAL_OPEN);
+  }
+  if (action.type === ADD_APPOINTMENT_MODAL_TOGGLE) {
+    current.views.addAppointmentModalisOpen
+      ? (action.type = ADD_APPOINTMENT_MODAL_CLOSE)
+      : (action.type = ADD_APPOINTMENT_MODAL_OPEN);
   }
   next(action);
 };

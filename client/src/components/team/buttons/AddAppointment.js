@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-//import { connect } from "react-redux";
+import { connect } from "react-redux";
 import moment from "moment";
 import PropTypes from "prop-types";
 import {
@@ -13,19 +13,31 @@ import {
 
 import FormSelect from "../../form/FormSelect";
 
+import { addTeamAppoinment } from "../../../actions/teamAppActions";
+import { addAppointmentModalToggle } from "../../../actions/viewsActions";
+
 import {
   getAvaliableTimes,
   getEndTime
 } from "../../../controller/dataConverter";
 
-const AddAppointment = ({ teamId, day, appointmentsByTeam }) => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+const AddAppointment = ({
+  teamId,
+  day,
+  appointmentsByTeam,
+  clientList,
+  addTeamAppoinment,
+  modalIsOpen,
+  addAppointmentModalToggle
+}) => {
   const [timeOfApp, setTimeOfApp] = useState();
   const [typeOfAppointment, setTypeOfAppointment] = useState("hair_cut");
+  const [clientId, setClientId] = useState();
 
   const toggleModal = () => {
-    modalIsOpen ? setModalIsOpen(false) : setModalIsOpen(true);
+    addAppointmentModalToggle();
   };
+
   const selectType = e => {
     const indx = e.target.options.selectedIndex;
     setTypeOfAppointment(e.target.options[indx].value);
@@ -36,15 +48,20 @@ const AddAppointment = ({ teamId, day, appointmentsByTeam }) => {
     setTimeOfApp(Number(e.target.options[indx].value));
   };
 
+  const selectClient = e => {
+    const indx = e.target.options.selectedIndex;
+    setClientId(e.target.options[indx].value);
+  };
+
   const onSubmit = () => {
     const appData = {
-      user: "",
+      clientId: clientId,
       appointment_type: typeOfAppointment,
       appointment_start: new Date(timeOfApp),
       appointment_end: new Date(getEndTime(timeOfApp, typeOfAppointment)),
-      team_member_id: teamId
+      teamId: teamId
     };
-    console.log(appData);
+    addTeamAppoinment(appData);
   };
 
   const times = getAvaliableTimes(appointmentsByTeam, day, 9, 17);
@@ -56,6 +73,12 @@ const AddAppointment = ({ teamId, day, appointmentsByTeam }) => {
   useEffect(() => {
     setTimeOfApp(times[0]);
   }, [day, teamId]);
+
+  useEffect(() => {
+    if (clientList.length !== 0) {
+      setClientId(clientList[0]._id);
+    }
+  }, [clientList]);
 
   return (
     <React.Fragment>
@@ -83,6 +106,13 @@ const AddAppointment = ({ teamId, day, appointmentsByTeam }) => {
               valueArr={["hair_cut", "shave", "cut_and_shave"]}
               nameArr={["Hair Cut", "Shave", "Cut and Shave"]}
             />
+            <FormSelect
+              label="Pick a client"
+              onSelect={selectClient}
+              name="pickClient"
+              valueArr={clientList.map(item => item._id)}
+              nameArr={clientList.map(item => item.email)}
+            />
           </Form>
         </ModalBody>
         <ModalFooter>
@@ -101,7 +131,24 @@ const AddAppointment = ({ teamId, day, appointmentsByTeam }) => {
 AddAppointment.propTypes = {
   teamId: PropTypes.string.isRequired,
   day: PropTypes.instanceOf(Date).isRequired,
-  appointmentsByTeam: PropTypes.array.isRequired
+  appointmentsByTeam: PropTypes.array.isRequired,
+  clientList: PropTypes.array.isRequired,
+  addTeamAppoinment: PropTypes.func.isRequired,
+  addAppointmentModalToggle: PropTypes.func.isRequired,
+  modalIsOpen: PropTypes.bool.isRequired
 };
 
-export default AddAppointment;
+const mapStateToProps = state => ({
+  clientList: state.teamAppointment.listOfClient,
+  modalIsOpen: state.views.addAppointmentModalisOpen
+});
+
+const mapDispatchToProps = {
+  addTeamAppoinment: addTeamAppoinment,
+  addAppointmentModalToggle: addAppointmentModalToggle
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddAppointment);

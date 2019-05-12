@@ -20,10 +20,12 @@ router.post(
     const { errors, isValid } = validateAppointment(req.body);
 
     if (!isValid) return res.status(400).json(errors);
+
     let userInfo = await User.findById(
       req.body.clientId,
       "email first_name last_name phone"
     );
+
     let teamInfo = await Team.findById(
       req.body.teamId,
       "email first_name last_name phone"

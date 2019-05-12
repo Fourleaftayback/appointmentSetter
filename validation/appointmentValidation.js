@@ -15,8 +15,6 @@ module.exports = function validateAppointmentInput(data) {
     ? data.appointment_end
     : "";
 
-  //data.teamId = !isEmpty(data.teamId) ? data.teamId : "";
-
   if (Validator.isEmpty(data.appointment_type))
     errors.appointment_type = "Apppointment type is required";
 
@@ -25,10 +23,7 @@ module.exports = function validateAppointmentInput(data) {
 
   if (Validator.isEmpty(data.appointment_end))
     errors.appointment_end = "Apppointment end date is required";
-  /*
-  if (Validator.isEmpty(data.teamId))
-    errors.teamId = "The team member Id is required";
-  */
+
   return {
     errors,
     isValid: isEmpty(errors)

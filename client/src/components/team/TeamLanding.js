@@ -7,10 +7,16 @@ import TeamMemberPicker from "./TeamMemberPicker";
 import DatePickerButton from "../../components/common/Buttons/DatePickerButton";
 import AddAppointment from "./buttons/AddAppointment";
 
-import { getAllTeamApp } from "../../actions/teamAppActions";
+import { getAllTeamApp, getAllClients } from "../../actions/teamAppActions";
 import { roundToDay } from "../../controller/dataConverter";
 
-const TeamLanding = ({ getAllTeamApp, user, teamMembers, appointments }) => {
+const TeamLanding = ({
+  getAllTeamApp,
+  user,
+  teamMembers,
+  appointments,
+  getAllClients
+}) => {
   const [currentUserId, setCurrentUserId] = useState(user.id);
   const [selectedDate, setSelectedDate] = useState(roundToDay(new Date()));
 
@@ -25,6 +31,7 @@ const TeamLanding = ({ getAllTeamApp, user, teamMembers, appointments }) => {
 
   useEffect(() => {
     getAllTeamApp();
+    getAllClients();
     setCurrentUserId(user.id);
   }, []);
 
@@ -70,7 +77,8 @@ TeamLanding.propTypes = {
   user: PropTypes.object.isRequired,
   getAllTeamApp: PropTypes.func.isRequired,
   teamMembers: PropTypes.array.isRequired,
-  appointments: PropTypes.array.isRequired
+  appointments: PropTypes.array.isRequired,
+  getAllClients: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -80,7 +88,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  getAllTeamApp: getAllTeamApp
+  getAllTeamApp: getAllTeamApp,
+  getAllClients: getAllClients
 };
 
 export default connect(
