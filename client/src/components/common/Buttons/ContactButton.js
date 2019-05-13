@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import classnames from "classnames";
 import { Button, Modal, ModalHeader, ModalBody, NavLink } from "reactstrap";
 
-const ContactButtonModal = ({ name, phone, email }) => {
+const ContactButtonModal = ({ name, phone, email, floatRight }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleModal = () => {
@@ -10,7 +11,12 @@ const ContactButtonModal = ({ name, phone, email }) => {
   };
   return (
     <React.Fragment>
-      <Button color="info" className="float-right" onClick={toggleModal}>
+      <Button
+        color="info"
+        className={classnames("", {
+          "float-right": floatRight
+        })}
+        onClick={toggleModal}>
         Contact
       </Button>
       <Modal isOpen={isOpen} toggle={toggleModal}>
@@ -30,9 +36,10 @@ const ContactButtonModal = ({ name, phone, email }) => {
 };
 
 ContactButtonModal.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   phone: PropTypes.number.isRequired,
-  email: PropTypes.string.isRequired
+  email: PropTypes.string.isRequired,
+  floatRight: PropTypes.string
 };
 
 export default ContactButtonModal;

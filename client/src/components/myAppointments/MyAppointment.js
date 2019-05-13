@@ -43,13 +43,13 @@ const MyAppointment = ({ data }) => {
               <b>{moment(data.appointment_end).format("llll")}</b>
             </CardText>
           </CardBody>
-          {/*this will be seperate component*/}
           <CardFooter>
             <CancelButtonModal appId={data._id} />
             <ContactButtonModal
               name={data.team_member_info.first_name}
               phone={data.team_member_info.phone}
               email={data.team_member_info.email}
+              floatRight={"floatRight"}
             />
           </CardFooter>
         </Card>

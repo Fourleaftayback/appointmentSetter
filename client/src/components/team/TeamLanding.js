@@ -40,8 +40,8 @@ const TeamLanding = ({
     item => item.team_member_id === currentUserId
   );
 
-  const cards = appointmentsByTeam.map((item, i) => (
-    <AppointmentCard key={i} />
+  const cards = appointmentsByTeam.map(item => (
+    <AppointmentCard data={item} key={item._id} currentDate={selectedDate} />
   ));
 
   return (
