@@ -6,6 +6,7 @@ import { Row, Col } from "reactstrap";
 import TeamMemberPicker from "./TeamMemberPicker";
 import DatePickerButton from "../../components/common/Buttons/DatePickerButton";
 import AddAppointment from "./buttons/AddAppointment";
+import AppointmentCard from "./appointmentCard/AppointmentCard";
 
 import { getAllTeamApp, getAllClients } from "../../actions/teamAppActions";
 import { roundToDay } from "../../controller/dataConverter";
@@ -39,6 +40,10 @@ const TeamLanding = ({
     item => item.team_member_id === currentUserId
   );
 
+  const cards = appointmentsByTeam.map((item, i) => (
+    <AppointmentCard key={i} />
+  ));
+
   return (
     <React.Fragment>
       <Row className="text-center mt-4">
@@ -64,11 +69,7 @@ const TeamLanding = ({
           />
         </Col>
       </Row>
-      <Row className="text-center mt-4">
-        <Col md="4"> Cards goes Here</Col>
-        <Col md="4"> Cards goes Here</Col>
-        <Col md="4"> Cards goes Here</Col>
-      </Row>
+      <Row className="mt-4">{cards}</Row>
     </React.Fragment>
   );
 };
