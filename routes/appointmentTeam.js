@@ -100,18 +100,7 @@ router.delete(
   (req, res) => {
     Appointment.findById(req.params.id)
       .then(data => {
-        if (req.user.isAdmin) {
-          data.remove();
-          return res.status(200).json({ success: true });
-        }
-        if (data.team_member_id !== req.user._id.toString()) {
-          return res.status(401).json({
-            errors: "You are not authorized to change this appointment"
-          });
-        }
-
-        data.remove();
-        res.status(200).json({ success: true });
+        data.remove().then(() => res.status(200).json({ success: true }));
       })
       .catch(err =>
         res.status(404).json({ errors: "This appointment was not found" })

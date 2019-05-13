@@ -5,7 +5,7 @@ import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 
 import { deleteAppointment } from "../../../actions/commonAppActions";
 
-const CancelButtonModal = ({ appId, deleteAppointment }) => {
+const CancelButtonModal = ({ appId, deleteAppointment, url }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleModal = () => {
@@ -13,7 +13,7 @@ const CancelButtonModal = ({ appId, deleteAppointment }) => {
   };
 
   const confirmDelete = () => {
-    deleteAppointment("/appointment/delete", appId);
+    deleteAppointment(url, appId);
   };
 
   return (
@@ -41,7 +41,8 @@ const CancelButtonModal = ({ appId, deleteAppointment }) => {
 
 CancelButtonModal.propTypes = {
   appId: PropTypes.string.isRequired,
-  deleteAppointment: PropTypes.func.isRequired
+  deleteAppointment: PropTypes.func.isRequired,
+  url: PropTypes.string.isRequired
 };
 
 const mapDispatchToProps = {

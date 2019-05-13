@@ -20,6 +20,8 @@ const TeamLanding = ({
 }) => {
   const [currentUserId, setCurrentUserId] = useState(user.id);
   const [selectedDate, setSelectedDate] = useState(roundToDay(new Date()));
+  const [appointmentsByTeamId, setAppointmentsByTeamId] = useState([]);
+  const [appointmentsFiltered, setAppointmentsFiltered] = useState([]);
 
   const selectUser = e => {
     const indx = e.target.options.selectedIndex;
@@ -36,12 +38,24 @@ const TeamLanding = ({
     setCurrentUserId(user.id);
   }, []);
 
-  const appointmentsByTeam = appointments.filter(
-    item => item.team_member_id === currentUserId
-  );
+  useEffect(() => {
+    const filteredData = appointments.filter(
+      item => item.team_member_id === currentUserId
+    );
+    setAppointmentsByTeamId(filteredData);
+  }, [currentUserId]);
 
-  const cards = appointmentsByTeam.map(item => (
-    <AppointmentCard data={item} key={item._id} currentDate={selectedDate} />
+  useEffect(() => {
+    const filteredData = appointments.filter(
+      item =>
+        roundToDay(item.appointment_start).getTime() ===
+          selectedDate.getTime() && item.team_member_id === currentUserId
+    );
+    setAppointmentsFiltered(filteredData);
+  }, [currentUserId, selectedDate]);
+
+  const cards = appointmentsFiltered.map(item => (
+    <AppointmentCard data={item} key={item._id} owner={user.id} />
   ));
 
   return (
@@ -65,7 +79,7 @@ const TeamLanding = ({
           <AddAppointment
             teamId={currentUserId}
             day={selectedDate}
-            appointmentsByTeam={appointmentsByTeam}
+            appointmentsByTeam={appointmentsByTeamId}
           />
         </Col>
       </Row>

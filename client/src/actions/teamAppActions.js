@@ -53,3 +53,17 @@ export const addTeamAppoinment = appData => dispatch => {
       });
     });
 };
+
+export const confirmAppointment = id => dispatch => {
+  axios
+    .put(`/confirm/team/appointment/${id}`)
+    .then(res => {
+      dispatch(getAllTeamApp());
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response
+      });
+    });
+};

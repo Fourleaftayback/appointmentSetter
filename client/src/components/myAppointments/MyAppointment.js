@@ -44,7 +44,7 @@ const MyAppointment = ({ data }) => {
             </CardText>
           </CardBody>
           <CardFooter>
-            <CancelButtonModal appId={data._id} />
+            <CancelButtonModal appId={data._id} url="/appointment/delete/" />
             <ContactButtonModal
               name={data.team_member_info.first_name}
               phone={data.team_member_info.phone}

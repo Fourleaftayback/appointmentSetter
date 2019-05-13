@@ -15,6 +15,7 @@ const appointmentApiClient = require("./routes/appointmentClient");
 const appointmentApiTeam = require("./routes/appointmentTeam");
 const userReset = require("./routes/userReset");
 const teamReset = require("./routes/teamReset");
+const confirm = require("./routes/confirm");
 
 mongoose
   .connect(db, { useNewUrlParser: true })
@@ -28,6 +29,7 @@ app.use("/team", teamApi);
 app.use("/team/appointment", appointmentApiTeam);
 app.use("/user", userApi);
 app.use("/appointment", appointmentApiClient);
+app.use("/confirm", confirm);
 app.use("/reset/user", userReset);
 app.use("/reset/team", teamReset);
 

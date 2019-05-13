@@ -13,10 +13,12 @@ import {
 } from "reactstrap";
 
 import ContactButton from "../../common/Buttons/ContactButton";
+import ConfirmButton from "../buttons/ConfirmButton";
+import CancelButtonModal from "../../common/Buttons/CancelButtonModal";
 
 import { getType } from "../../../controller/dataConverter";
 
-const AppointmentCard = ({ data }) => {
+const AppointmentCard = ({ data, owner }) => {
   //body inverse color="primary"
   return (
     <React.Fragment>
@@ -47,14 +49,23 @@ const AppointmentCard = ({ data }) => {
               </CardText>
             )}
           </CardBody>
-          <CardFooter>buttons here </CardFooter>
+          <CardFooter>
+            {!data.confirmed ? <ConfirmButton appId={data._id} /> : null}
+            {data.team_member_info._id === owner ? (
+              <CancelButtonModal
+                appId={data._id}
+                url="/team/appointment/delete/"
+              />
+            ) : null}
+          </CardFooter>
         </Card>
       </Col>
     </React.Fragment>
   );
 };
 AppointmentCard.propTypes = {
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
+  owner: PropTypes.string.isRequired
 };
 
 export default AppointmentCard;
