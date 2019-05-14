@@ -1,8 +1,15 @@
-import { GET_ALL_TEAMAPP, GET_ALL_CLIENTS } from "../actions/types";
+import {
+  GET_ALL_TEAMAPP,
+  GET_ALL_CLIENTS,
+  GET_APPBY_TEAMID,
+  GET_APPBY_DATE_ID
+} from "../actions/types";
 
 const initialState = {
   schedules: [],
-  listOfClient: []
+  listOfClient: [],
+  appByCurrentTeamId: [],
+  appByDateAndId: []
 };
 
 export default function(state = initialState, action) {
@@ -14,6 +21,14 @@ export default function(state = initialState, action) {
     case GET_ALL_CLIENTS:
       return Object.assign({}, state, {
         listOfClient: action.payload
+      });
+    case GET_APPBY_TEAMID:
+      return Object.assign({}, state, {
+        appByCurrentTeamId: action.payload
+      });
+    case GET_APPBY_DATE_ID:
+      return Object.assign({}, state, {
+        appByDateAndId: action.payload
       });
     default:
       return state;

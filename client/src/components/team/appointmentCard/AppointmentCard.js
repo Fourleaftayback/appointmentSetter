@@ -16,7 +16,7 @@ import ContactButton from "../../common/Buttons/ContactButton";
 import ConfirmButton from "../buttons/ConfirmButton";
 import CancelButtonModal from "../../common/Buttons/CancelButtonModal";
 
-import { getType } from "../../../controller/dataConverter";
+import { getType, firstUpperCase } from "../../../controller/dataConverter";
 
 const AppointmentCard = ({ data, owner }) => {
   //body inverse color="primary"
@@ -37,6 +37,7 @@ const AppointmentCard = ({ data, owner }) => {
               <ContactButton
                 phone={data.client_info.phone}
                 email={data.client_info.email}
+                name={firstUpperCase(data.client_info.first_name)}
               />
             </CardText>
             {data.confirmed ? (

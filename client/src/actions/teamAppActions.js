@@ -1,9 +1,17 @@
 import axios from "axios";
 
-import { GET_ERRORS, GET_ALL_TEAMAPP, GET_ALL_CLIENTS } from "./types";
+import {
+  GET_ERRORS,
+  GET_ALL_TEAMAPP,
+  GET_ALL_CLIENTS,
+  GET_APPBY_TEAMID,
+  GET_APPBY_DATE_ID
+} from "./types";
 
 import { getAllTeamMembers } from "./commonAppActions";
 import { addAppointmentModalToggle } from "./viewsActions";
+
+import { roundToDay } from "../controller/dataConverter";
 
 export const getAllTeamApp = () => dispatch => {
   dispatch(getAllTeamMembers());
@@ -66,4 +74,26 @@ export const confirmAppointment = id => dispatch => {
         payload: err.response
       });
     });
+};
+
+export const getAppByTeamId = (id, allAppointments) => dispatch => {
+  const appointments = allAppointments.filter(
+    item => item.team_member_id === id
+  );
+  dispatch({
+    type: GET_APPBY_TEAMID,
+    payload: appointments
+  });
+};
+
+export const filterByDateAndId = (id, date, allAppointments) => dispatch => {
+  const appointments = allAppointments.filter(
+    item =>
+      item.team_member_id === id &&
+      roundToDay(item.appointment_start).getTime() === date.getTime()
+  );
+  dispatch({
+    type: GET_APPBY_DATE_ID,
+    payload: appointments
+  });
 };

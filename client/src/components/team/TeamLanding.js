@@ -8,7 +8,12 @@ import DatePickerButton from "../../components/common/Buttons/DatePickerButton";
 import AddAppointment from "./buttons/AddAppointment";
 import AppointmentCard from "./appointmentCard/AppointmentCard";
 
-import { getAllTeamApp, getAllClients } from "../../actions/teamAppActions";
+import {
+  getAllTeamApp,
+  getAllClients,
+  getAppByTeamId,
+  filterByDateAndId
+} from "../../actions/teamAppActions";
 import { roundToDay } from "../../controller/dataConverter";
 
 const TeamLanding = ({
@@ -16,12 +21,14 @@ const TeamLanding = ({
   user,
   teamMembers,
   appointments,
-  getAllClients
+  getAllClients,
+  getAppByTeamId,
+  appByCurrentTeamId,
+  filterByDateAndId,
+  appByDateAndId
 }) => {
   const [currentUserId, setCurrentUserId] = useState(user.id);
   const [selectedDate, setSelectedDate] = useState(roundToDay(new Date()));
-  const [appointmentsByTeamId, setAppointmentsByTeamId] = useState([]);
-  const [appointmentsFiltered, setAppointmentsFiltered] = useState([]);
 
   const selectUser = e => {
     const indx = e.target.options.selectedIndex;
@@ -39,22 +46,14 @@ const TeamLanding = ({
   }, []);
 
   useEffect(() => {
-    const filteredData = appointments.filter(
-      item => item.team_member_id === currentUserId
-    );
-    setAppointmentsByTeamId(filteredData);
-  }, [currentUserId]);
+    getAppByTeamId(currentUserId, appointments);
+  }, [appointments, currentUserId]);
 
   useEffect(() => {
-    const filteredData = appointments.filter(
-      item =>
-        roundToDay(item.appointment_start).getTime() ===
-          selectedDate.getTime() && item.team_member_id === currentUserId
-    );
-    setAppointmentsFiltered(filteredData);
-  }, [currentUserId, selectedDate]);
+    filterByDateAndId(currentUserId, selectedDate, appointments);
+  }, [currentUserId, selectedDate, appointments]);
 
-  const cards = appointmentsFiltered.map(item => (
+  const cards = appByDateAndId.map(item => (
     <AppointmentCard data={item} key={item._id} owner={user.id} />
   ));
 
@@ -79,7 +78,7 @@ const TeamLanding = ({
           <AddAppointment
             teamId={currentUserId}
             day={selectedDate}
-            appointmentsByTeam={appointmentsByTeamId}
+            appointmentsByTeam={appByCurrentTeamId}
           />
         </Col>
       </Row>
@@ -93,18 +92,25 @@ TeamLanding.propTypes = {
   getAllTeamApp: PropTypes.func.isRequired,
   teamMembers: PropTypes.array.isRequired,
   appointments: PropTypes.array.isRequired,
-  getAllClients: PropTypes.func.isRequired
+  getAllClients: PropTypes.func.isRequired,
+  getAppByTeamId: PropTypes.func.isRequired,
+  appByCurrentTeamId: PropTypes.array.isRequired,
+  filterByDateAndId: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   teamMembers: state.clientAppointment.teamMembers,
-  appointments: state.teamAppointment.schedules
+  appointments: state.teamAppointment.schedules,
+  appByCurrentTeamId: state.teamAppointment.appByCurrentTeamId,
+  appByDateAndId: state.teamAppointment.appByDateAndId
 });
 
 const mapDispatchToProps = {
   getAllTeamApp: getAllTeamApp,
-  getAllClients: getAllClients
+  getAllClients: getAllClients,
+  getAppByTeamId: getAppByTeamId,
+  filterByDateAndId: filterByDateAndId
 };
 
 export default connect(
