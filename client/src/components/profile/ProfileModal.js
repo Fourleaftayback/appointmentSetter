@@ -70,6 +70,9 @@ function ProfileModal({
             </Form>
           </ModalBody>
           <ModalFooter>
+            {user.isAdmin ? (
+              <NavLink href="/manage">Manange Team</NavLink>
+            ) : null}
             <Button color="primary" onClick={onSubmit}>
               Save
             </Button>{" "}
