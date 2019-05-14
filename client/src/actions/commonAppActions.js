@@ -8,13 +8,22 @@ import { getUserApps } from "./clientAppActions";
 
 import { setCurrentUser } from "./authActions";
 
-import { profileModalToggle } from "./viewsActions";
+import { getAllTeamApp } from "./teamAppActions";
+
+import { deleteModalToggle, profileModalToggle } from "./viewsActions";
 
 export const deleteAppointment = (url, id) => dispatch => {
   axios
     .delete(`${url}/${id}`)
     .then(res => {
-      dispatch(getUserApps());
+      dispatch(deleteModalToggle());
+    })
+    .then(() => {
+      if (url === "/team/appointment/delete/") {
+        dispatch(getAllTeamApp());
+      } else {
+        dispatch(getUserApps());
+      }
     })
     .catch(err => {
       dispatch({

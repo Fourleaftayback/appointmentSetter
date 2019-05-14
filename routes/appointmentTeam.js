@@ -94,16 +94,17 @@ router.put(
 // @route   team/appointment/delete/:id
 // @desc    delete appointment by appointment id
 // @access  private team
+
 router.delete(
   "/delete/:id",
   passport.authenticate("teamPass", { session: false }),
   (req, res) => {
     Appointment.findById(req.params.id)
-      .then(data => {
-        data.remove().then(() => res.status(200).json({ success: true }));
+      .then(app => {
+        app.remove().then(() => res.status(200).json({ success: true }));
       })
       .catch(err =>
-        res.status(404).json({ errors: "This appointment was not found" })
+        res.status(400).json({ errors: "Appointment does not exist" })
       );
   }
 );

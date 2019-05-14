@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 
 import { deleteAppointment } from "../../../actions/commonAppActions";
+import { deleteModalToggle } from "../../../actions/viewsActions";
 
-const CancelButtonModal = ({ appId, deleteAppointment, url }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
+const CancelButtonModal = ({
+  appId,
+  deleteAppointment,
+  url,
+  deleteModalToggle,
+  isOpen
+}) => {
   const toggleModal = () => {
-    isOpen ? setIsOpen(false) : setIsOpen(true);
+    deleteModalToggle();
   };
 
   const confirmDelete = () => {
@@ -42,14 +47,20 @@ const CancelButtonModal = ({ appId, deleteAppointment, url }) => {
 CancelButtonModal.propTypes = {
   appId: PropTypes.string.isRequired,
   deleteAppointment: PropTypes.func.isRequired,
-  url: PropTypes.string.isRequired
+  url: PropTypes.string.isRequired,
+  deleteModalToggle: PropTypes.func.isRequired
 };
 
+const mapStateToProps = state => ({
+  isOpen: state.views.deleteModalIsOpen
+});
+
 const mapDispatchToProps = {
-  deleteAppointment: deleteAppointment
+  deleteAppointment: deleteAppointment,
+  deleteModalToggle: deleteModalToggle
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CancelButtonModal);

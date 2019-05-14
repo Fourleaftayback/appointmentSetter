@@ -14,7 +14,10 @@ import {
   PROFILE_MODAL_CLOSE,
   ADD_APPOINTMENT_MODAL_TOGGLE,
   ADD_APPOINTMENT_MODAL_OPEN,
-  ADD_APPOINTMENT_MODAL_CLOSE
+  ADD_APPOINTMENT_MODAL_CLOSE,
+  DELETE_MODAL_TOGGLE,
+  DELETE_MODAL_OPEN,
+  DELETE_MODAL_CLOSE
 } from "./actions/types";
 
 const initialState = {};
@@ -40,6 +43,11 @@ const modalToggle = store => next => action => {
     current.views.addAppointmentModalisOpen
       ? (action.type = ADD_APPOINTMENT_MODAL_CLOSE)
       : (action.type = ADD_APPOINTMENT_MODAL_OPEN);
+  }
+  if (action.type === DELETE_MODAL_TOGGLE) {
+    current.views.deleteModalIsOpen
+      ? (action.type = DELETE_MODAL_CLOSE)
+      : (action.type = DELETE_MODAL_OPEN);
   }
   next(action);
 };
