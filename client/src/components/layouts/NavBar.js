@@ -9,7 +9,7 @@ import Profile from "../profile/Profile";
 
 const SignOut = React.lazy(() => import("../navbar/SignOut"));
 
-const NavBar = ({ isLoggedIn, userName }) => {
+const NavBar = ({ isLoggedIn, userName, isTeam }) => {
   const [collapsed, setCollapse] = useState(false);
 
   const collapseHandler = () => {
@@ -25,7 +25,7 @@ const NavBar = ({ isLoggedIn, userName }) => {
 
       <Collapse isOpen={collapsed} navbar>
         <Nav className="navbar-nav mr-auto mt-2 mt-lg-0">
-          {isLoggedIn ? <Profile userName={userName} /> : null}
+          {isLoggedIn ? <Profile userName={userName} isTeam={isTeam} /> : null}
         </Nav>
         <Nav className="navbar-nav mt-2 mt-lg-0">
           {isLoggedIn ? (
@@ -43,12 +43,14 @@ const NavBar = ({ isLoggedIn, userName }) => {
 
 NavBar.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
-  userName: PropTypes.string
+  userName: PropTypes.string,
+  isTeam: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isAuthenticated,
-  userName: state.auth.user.first_name
+  userName: state.auth.user.first_name,
+  isTeam: state.auth.user.hasOwnProperty("isAdmin")
 });
 
 export default connect(mapStateToProps)(NavBar);

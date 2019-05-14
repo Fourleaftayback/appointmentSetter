@@ -1,11 +1,12 @@
-import React from "react";
-
+import React, { Suspense } from "react";
+import PropTypes from "prop-types";
 import { NavItem } from "reactstrap";
 
 import ProfileModal from "./ProfileModal";
-import Notifications from "./Notifications";
 
-function Profile({ userName }) {
+const Notifications = React.lazy(() => import("./Notifications"));
+
+function Profile({ userName, isTeam }) {
   return (
     <React.Fragment>
       <ProfileModal />
@@ -14,9 +15,18 @@ function Profile({ userName }) {
           <b>{userName}</b>
         </span>
       </NavItem>
-      <Notifications />
+      {!isTeam ? (
+        <Suspense fallback={<li>Error</li>}>
+          <Notifications />
+        </Suspense>
+      ) : null}
     </React.Fragment>
   );
 }
+
+Profile.propTypes = {
+  isTeam: PropTypes.bool.isRequired,
+  userName: PropTypes.string.isRequired
+};
 
 export default Profile;
