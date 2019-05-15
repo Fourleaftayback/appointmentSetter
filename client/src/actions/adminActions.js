@@ -1,6 +1,11 @@
 import axios from "axios";
 
-import { GET_ALL_TEAMADMIN, GET_ERRORS, MESSAGE } from "./types";
+import {
+  GET_ALL_TEAMADMIN,
+  GET_ERRORS,
+  MESSAGE,
+  DELETE_TEAM_TOGGLE
+} from "./types";
 
 export const getAllTeamAdmin = () => dispatch => {
   axios
@@ -19,8 +24,6 @@ export const getAllTeamAdmin = () => dispatch => {
     });
 };
 
-//team/create
-
 export const createNewTeamMate = newUser => dispatch => {
   axios
     .post("/team/create", newUser)
@@ -29,6 +32,26 @@ export const createNewTeamMate = newUser => dispatch => {
         type: MESSAGE,
         payload: res.data
       });
+    })
+    .then(() => dispatch(getAllTeamAdmin()))
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
+export const deleteTeamUser = id => dispatch => {
+  axios
+    .delete(`/team/delete/${id}`)
+    .then(res => {
+      dispatch({
+        type: DELETE_TEAM_TOGGLE
+      });
+    })
+    .then(() => {
+      dispatch(getAllTeamAdmin());
     })
     .catch(err => {
       dispatch({

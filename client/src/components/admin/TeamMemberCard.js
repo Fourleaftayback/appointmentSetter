@@ -11,6 +11,8 @@ import {
   CardFooter
 } from "reactstrap";
 
+import DeleteTeamModal from "./DeleteTeamModal";
+
 import { firstUpperCase } from "../../controller/dataConverter";
 
 const TeamMemberCard = ({ data }) => {
@@ -30,7 +32,9 @@ const TeamMemberCard = ({ data }) => {
               <NavLink href={"mailto:" + data.email}>{data.email}</NavLink>
             </CardText>
           </CardBody>
-          <CardFooter>Button goes here</CardFooter>
+          <CardFooter>
+            <DeleteTeamModal teamId={data._id} />
+          </CardFooter>
         </Card>
       </Col>
     </React.Fragment>

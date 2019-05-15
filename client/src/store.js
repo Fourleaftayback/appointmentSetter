@@ -17,7 +17,10 @@ import {
   ADD_APPOINTMENT_MODAL_CLOSE,
   DELETE_MODAL_TOGGLE,
   DELETE_MODAL_OPEN,
-  DELETE_MODAL_CLOSE
+  DELETE_MODAL_CLOSE,
+  DELETE_TEAM_TOGGLE,
+  DELETE_TEAM_OPEN,
+  DELETE_TEAM_CLOSE
 } from "./actions/types";
 
 const initialState = {};
@@ -48,6 +51,11 @@ const modalToggle = store => next => action => {
     current.views.deleteModalIsOpen
       ? (action.type = DELETE_MODAL_CLOSE)
       : (action.type = DELETE_MODAL_OPEN);
+  }
+  if (action.type === DELETE_TEAM_TOGGLE) {
+    current.views.deleteTeamIsOpen
+      ? (action.type = DELETE_TEAM_CLOSE)
+      : (action.type = DELETE_TEAM_OPEN);
   }
   next(action);
 };

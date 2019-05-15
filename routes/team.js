@@ -136,7 +136,6 @@ router.post(
 
     /*
     let mail = new TeamRegistrationMessage(req.body.email, token, req.hostname);
-
     sgMail
       .send(mail)
       .then(() => {
@@ -152,6 +151,34 @@ router.post(
         return res.status(400).json(errors);
       });
       */
+  }
+);
+
+// @route   DELETE team/delete
+// @desc    Admin Only can delete
+// @access  private
+
+router.delete(
+  "/delete/:id",
+  passport.authenticate("teamPass", { session: false }),
+  (req, res) => {
+    if (!req.user.isAdmin)
+      return res
+        .status(400)
+        .json({ fail: "Sorry you are not authorized to delete a user" });
+
+    Team.findById(req.params.id)
+      .then(team => {
+        if (!team) {
+          return res.status(400).json({
+            fail: "Sorry we could not locate this user"
+          });
+        }
+        team.remove().then(() => {
+          res.status(200).json({ success: "The team member has been deleted" });
+        });
+      })
+      .catch(err => res.status(400).json({ errors: err }));
   }
 );
 

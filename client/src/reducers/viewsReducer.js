@@ -11,6 +11,8 @@ import {
   DELETE_MODAL_CLOSE,
   DATA_LOADING,
   LOADING_DONE,
+  DELETE_TEAM_OPEN,
+  DELETE_TEAM_CLOSE,
   MESSAGE
 } from "../actions/types";
 
@@ -21,6 +23,7 @@ const initialState = {
   dataLoading: false,
   addAppointmentModalisOpen: false,
   deleteModalIsOpen: false,
+  deleteTeamIsOpen: false,
   message: {}
 };
 
@@ -73,6 +76,14 @@ export default function(state = initialState, action) {
     case LOADING_DONE:
       return Object.assign({}, state, {
         dataLoading: false
+      });
+    case DELETE_TEAM_OPEN:
+      return Object.assign({}, state, {
+        deleteTeamIsOpen: true
+      });
+    case DELETE_TEAM_CLOSE:
+      return Object.assign({}, state, {
+        deleteTeamIsOpen: false
       });
     case MESSAGE:
       return Object.assign({}, state, {

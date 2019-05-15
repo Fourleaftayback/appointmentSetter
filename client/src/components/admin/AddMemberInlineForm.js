@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-//import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import classnames from "classnames";
 import { Col, Button, Form, FormGroup, Label, Input } from "reactstrap";
 
@@ -61,6 +61,12 @@ const AddMemberInlineForm = ({ error, createNewTeamMate, message }) => {
       </Col>
     </React.Fragment>
   );
+};
+
+AddMemberInlineForm.propTypes = {
+  error: PropTypes.object,
+  createNewTeamMate: PropTypes.func.isRequired,
+  message: PropTypes.object
 };
 
 const mapStateToProps = state => ({
