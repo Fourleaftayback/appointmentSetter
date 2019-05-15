@@ -5,10 +5,11 @@ import classnames from "classnames";
 import { Col, Button, Form, FormGroup, Label, Input } from "reactstrap";
 
 import FormSelect from "../form/FormSelect";
+import Message from "../common/Message";
 
 import { createNewTeamMate } from "../../actions/adminActions";
 
-const AddMemberInlineForm = ({ error, createNewTeamMate }) => {
+const AddMemberInlineForm = ({ error, createNewTeamMate, message }) => {
   const [email, setEmail] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -24,10 +25,10 @@ const AddMemberInlineForm = ({ error, createNewTeamMate }) => {
     };
     createNewTeamMate(newUser);
   };
-  console.log(error);
+
   return (
     <React.Fragment>
-      <Col md={{ size: 8, order: 2, offset: 2 }}>
+      <Col md={{ size: 8, order: 2, offset: 3 }}>
         <Form inline>
           <FormGroup className="mb-2 mr-sm-3 mb-sm-0">
             <Label for="email" className="mr-sm-2">
@@ -56,13 +57,15 @@ const AddMemberInlineForm = ({ error, createNewTeamMate }) => {
             Submit
           </Button>
         </Form>
+        <Message error={error.email} message={message.success} />
       </Col>
     </React.Fragment>
   );
 };
 
 const mapStateToProps = state => ({
-  error: state.errors
+  error: state.errors,
+  message: state.views.message
 });
 
 const mapDispatchToProps = {
@@ -73,4 +76,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AddMemberInlineForm);
-/* set up a response handler here on success   {error.email && <div className="invalid-feedback">{error.email}</div>} */

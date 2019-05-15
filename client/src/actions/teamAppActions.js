@@ -23,7 +23,7 @@ export const getAllTeamApp = () => dispatch => {
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
-        payload: err.response
+        payload: err.response.data
       });
     });
 };
@@ -40,7 +40,7 @@ export const getAllClients = () => dispatch => {
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
-        payload: err.response
+        payload: err.response.data
       });
     });
 };
@@ -57,7 +57,7 @@ export const addTeamAppoinment = appData => dispatch => {
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
-        payload: err.response
+        payload: err.response.data
       });
     });
 };
@@ -71,7 +71,7 @@ export const confirmAppointment = id => dispatch => {
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
-        payload: err.response
+        payload: err.response.data
       });
     });
 };

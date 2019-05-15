@@ -31,7 +31,7 @@ export const getAllAppointments = () => dispatch => {
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
-        payload: err.response
+        payload: err.response.data
       });
     });
 };
@@ -48,7 +48,7 @@ export const getUserApps = () => dispatch => {
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
-        payload: err.response
+        payload: err.response.data
       });
     });
 };
@@ -71,7 +71,7 @@ export const reqAppointment = appData => dispatch => {
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
-        payload: err.response
+        payload: err.response.data
       });
     });
 };

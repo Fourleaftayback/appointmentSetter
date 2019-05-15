@@ -128,8 +128,8 @@ router.post(
       //this is only for testing
       newTeam.save().then(() => {
         return res.status(200).json({
-          message:
-            "please have the team member check thier email to complete the registration process"
+          success:
+            "Please have the team member check thier email to complete the registration process"
         });
       });
     });
