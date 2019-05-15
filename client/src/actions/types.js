@@ -35,6 +35,7 @@ export const GET_APPBY_DATE_ID = "GET_APPBY_DATE_ID";
 export const GET_ALL_CLIENTS = "GET_ALL_CLIENTS";
 
 export const GET_ALL_TEAMAPP = "GET_ALL_TEAMAPP";
+export const GET_ALL_TEAMADMIN = "GET_ALL_TEAMADMIN";
 
 export const SET_APP_JUSTMADE = "SET_APP_JUSTMADE";
 

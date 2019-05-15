@@ -208,4 +208,21 @@ router.get("/allmembers", (req, res) => {
     .catch(err => res.status(400).json({ errors: err }));
 });
 
+// @route   GET /team/allteam
+// @desc    get array of all team members
+// @access  Private
+
+router.get(
+  "/allteam",
+  passport.authenticate("teamPass", { session: false }),
+  (req, res) => {
+    Team.find()
+      .select("-password -created_on -resetPasswordToken -resetPasswordExp")
+      .then(members => {
+        res.status(200).json(members);
+      })
+      .catch(err => res.status(400).json({ errors: err }));
+  }
+);
+
 module.exports = router;
