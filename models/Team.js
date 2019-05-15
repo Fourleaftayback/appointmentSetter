@@ -8,13 +8,16 @@ const TeamSchema = new Schema({
     required: true
   },
   first_name: {
-    type: String
+    type: String,
+    default: "new team"
   },
   last_name: {
-    type: String
+    type: String,
+    default: "new team"
   },
   phone: {
-    type: Number
+    type: Number,
+    default: 0
   },
   password: {
     type: String,

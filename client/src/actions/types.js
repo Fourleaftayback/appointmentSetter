@@ -37,6 +37,8 @@ export const GET_ALL_CLIENTS = "GET_ALL_CLIENTS";
 export const GET_ALL_TEAMAPP = "GET_ALL_TEAMAPP";
 export const GET_ALL_TEAMADMIN = "GET_ALL_TEAMADMIN";
 
+export const MESSAGE = "MESSAGE";
+
 export const SET_APP_JUSTMADE = "SET_APP_JUSTMADE";
 
 export const LOADING = "LOADING";

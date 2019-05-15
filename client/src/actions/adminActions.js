@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_ALL_TEAMADMIN, GET_ERRORS } from "./types";
+import { GET_ALL_TEAMADMIN, GET_ERRORS, MESSAGE } from "./types";
 
 export const getAllTeamAdmin = () => dispatch => {
   axios
@@ -14,7 +14,26 @@ export const getAllTeamAdmin = () => dispatch => {
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
-        payload: err.response
+        payload: err.response.data
+      });
+    });
+};
+
+//team/create
+
+export const createNewTeamMate = newUser => dispatch => {
+  axios
+    .post("/team/create", newUser)
+    .then(res => {
+      dispatch({
+        type: MESSAGE,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
       });
     });
 };

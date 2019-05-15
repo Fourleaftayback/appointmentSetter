@@ -103,30 +103,38 @@ router.post(
   "/create",
   passport.authenticate("teamPass", { session: false }),
   (req, res) => {
-    if (!req.user.isAdmin)
-      return res
-        .status(400)
-        .json({ errors: "Sorry you are authorized to create a new user" });
-
     const { errors, isValid } = validateEmail(req.body);
     if (!isValid) return res.status(400).json(errors);
 
-    let randomStr = randomstring.generate({
-      length: 10,
-      charset: "alphanumeric"
+    Team.findOne({ email: req.body.email }).then(team => {
+      if (team) {
+        errors.email = "This Email already Exist";
+        return res.status(400).json(errors);
+      }
+      let randomStr = randomstring.generate({
+        length: 10,
+        charset: "alphanumeric"
+      });
+
+      let isAmdin = req.body.isAdmin === "true" ? true : false;
+      let token = crypto.randomBytes(20).toString("hex");
+
+      let newTeam = new Team({
+        email: req.body.email,
+        isAmdin: isAmdin,
+        password: randomStr,
+        resetPasswordToken: token
+      });
+      //this is only for testing
+      newTeam.save().then(() => {
+        return res.status(200).json({
+          message:
+            "please have the team member check thier email to complete the registration process"
+        });
+      });
     });
 
-    let isAmdin = req.body.isAdmin === "true" ? true : false;
-    let token = crypto.randomBytes(20).toString("hex");
-
-    let newTeam = new Team({
-      email: req.body.email,
-      isAmdin: isAmdin,
-      password: randomStr,
-      resetPasswordToken: token
-    });
-
-    newTeam.save();
+    /*
     let mail = new TeamRegistrationMessage(req.body.email, token, req.hostname);
 
     sgMail
@@ -134,7 +142,7 @@ router.post(
       .then(() => {
         return res.status(200).json({
           message:
-            "please have the team memeber check thier Email to finish the registration process"
+            "please have the team member check thier Email to finish the registration process"
         });
       })
       .catch(err => {
@@ -143,6 +151,7 @@ router.post(
         errors.email = "Sorry email could not be sent";
         return res.status(400).json(errors);
       });
+      */
   }
 );
 

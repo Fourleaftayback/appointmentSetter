@@ -10,7 +10,8 @@ import {
   DELETE_MODAL_OPEN,
   DELETE_MODAL_CLOSE,
   DATA_LOADING,
-  LOADING_DONE
+  LOADING_DONE,
+  MESSAGE
 } from "../actions/types";
 
 const initialState = {
@@ -19,7 +20,8 @@ const initialState = {
   profileModalIsOpen: false,
   dataLoading: false,
   addAppointmentModalisOpen: false,
-  deleteModalIsOpen: false
+  deleteModalIsOpen: false,
+  message: {}
 };
 
 export default function(state = initialState, action) {
@@ -71,6 +73,10 @@ export default function(state = initialState, action) {
     case LOADING_DONE:
       return Object.assign({}, state, {
         dataLoading: false
+      });
+    case MESSAGE:
+      return Object.assign({}, state, {
+        message: action.payload
       });
     default:
       return state;

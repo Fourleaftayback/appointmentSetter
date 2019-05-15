@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Row, Col, Button } from "reactstrap";
+import { Row } from "reactstrap";
 import history from "../../history/History";
 
 import { getAllTeamAdmin } from "../../actions/adminActions";
 
 import TeamMemberCard from "./TeamMemberCard";
+import AddMemberInlineForm from "./AddMemberInlineForm";
 
 const AdminLanding = ({ user, isAdmin, getAllTeamAdmin, teamMembers }) => {
   if (!isAdmin) history.push("/not-authorized");
@@ -22,11 +23,7 @@ const AdminLanding = ({ user, isAdmin, getAllTeamAdmin, teamMembers }) => {
   return (
     <React.Fragment>
       <Row className="mt-4">
-        <Col md={{ size: 6, order: 2, offset: 0 }}>
-          <Button outline color="primary">
-            Invite New Member
-          </Button>
-        </Col>
+        <AddMemberInlineForm />
       </Row>
       <Row className="mt-4">{teamCards}</Row>
     </React.Fragment>

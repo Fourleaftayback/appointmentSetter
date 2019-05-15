@@ -1,10 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FormGroup, Label, Input } from "reactstrap";
-
+import classnames from "classnames";
 //must wrap component around <form></form> tag
 
-const FormSelect = ({ onSelect, label, name, valueArr, nameArr }) => {
+const FormSelect = ({
+  onSelect,
+  label,
+  name,
+  valueArr,
+  nameArr,
+  marginRight
+}) => {
   let choices = valueArr.map((item, i) => (
     <option value={item} key={i}>
       {nameArr[i]}
@@ -13,7 +20,9 @@ const FormSelect = ({ onSelect, label, name, valueArr, nameArr }) => {
   return (
     <React.Fragment>
       <FormGroup>
-        <Label for={name}>{label}</Label>
+        <Label for={name} className={classnames({ "mr-2": marginRight })}>
+          {label}
+        </Label>
         <Input type="select" name={name} id={name} onChange={onSelect}>
           {choices}
         </Input>
@@ -27,7 +36,8 @@ FormSelect.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
   valueArr: PropTypes.array.isRequired,
-  nameArr: PropTypes.array.isRequired
+  nameArr: PropTypes.array.isRequired,
+  marginRight: PropTypes.bool
 };
 
 export default FormSelect;
