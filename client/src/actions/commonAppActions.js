@@ -2,7 +2,7 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, CLEAR_ERRORS, SET_TEAM_MEMBERS } from "./types";
+import { GET_ERRORS, CLEAR_ERRORS, SET_TEAM_MEMBERS, MESSAGE } from "./types";
 
 import { getUserApps } from "./clientAppActions";
 
@@ -76,4 +76,21 @@ export const getAllTeamMembers = () => dispatch => {
         payload: err.response.data
       });
     });
+};
+
+export const sendResetRequest = (url, email) => dispatch => {
+  axios
+    .post(url, email)
+    .then(res =>
+      dispatch({
+        type: MESSAGE,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
 };

@@ -18,6 +18,8 @@ sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 // @access  Public
 
 router.post("/forgot", (req, res) => {
+  console.log("running from team ");
+
   const { errors, isValid } = validateEmail(req.body);
   if (!isValid) return res.status(400).json(errors);
 
@@ -33,13 +35,22 @@ router.post("/forgot", (req, res) => {
       errors.email = "Sorry this email does not exist";
       return res.status(400).json(errors);
     }
-    team.save();
-
+    team.save().then(() =>
+      res.status(200).json({
+        success:
+          "Please check your email. You should recieve a link to reset your password"
+      })
+    );
+    //refactor after testing
+    /*
     let email = new PasswordResetMessage(req.body.email, token, req.hostname);
     sgMail
       .send(email)
       .then(() => {
-        return res.status(200).json({ email: "email sent" });
+        return res.status(200).json({
+          success:
+            "Please check your email. You should recieve a link to reset your password"
+        });
       })
       .catch(err => {
         let emailErr = new EmailErrors(
@@ -51,6 +62,7 @@ router.post("/forgot", (req, res) => {
         errors.email = "Sorry email could not be sent";
         return res.status(400).json(errors);
       });
+      */
   });
 });
 

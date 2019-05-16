@@ -23,6 +23,7 @@ import Pending from "./components/messages/Pending";
 import MyAppContainer from "./components/myAppointments/MyAppContainer";
 import AdminLanding from "./components/admin/AdminLanding";
 
+import ResetRequest from "./components/common/ResetRequest";
 import NotAuthorized from "./components/common/NotAuthorized";
 import NotFound from "./components/common/NotFound";
 
@@ -56,6 +57,8 @@ const App = () => {
               <TeamPrivateRoute exact path="/team" component={TeamLanding} />
 
               <Route path="/team/register" component={RegisterTeam} />
+              <Route exact path="/forgot" component={ResetRequest} />
+              <Route exact path="/team/forgot" component={ResetRequest} />
 
               <Route exact path="/not-authorized" component={NotAuthorized} />
               <PrivateRoute exact path="/pending" component={Pending} />
