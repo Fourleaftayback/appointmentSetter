@@ -5,6 +5,7 @@ import { Button, Form, Row, Col } from "reactstrap";
 
 import { sendResetRequest } from "../../actions/commonAppActions";
 import FormItem from "../form/FormItem";
+import Message from "../common/Message";
 
 const ResetRequest = ({ errors, message, sendResetRequest }) => {
   const [email, setEmail] = useState("");
@@ -21,7 +22,7 @@ const ResetRequest = ({ errors, message, sendResetRequest }) => {
   let content;
 
   message.success
-    ? (content = <h4 className="text-center mt-4">{message.success}</h4>)
+    ? (content = <Message message={message.success} />)
     : (content = (
         <React.Fragment>
           <h5 className="text-center mt-4">Reset Your Password</h5>

@@ -4,7 +4,7 @@ const crypto = require("crypto");
 const sgMail = require("@sendgrid/mail");
 const bcrypt = require("bcryptjs");
 
-const Team = require("../models/User");
+const Team = require("../models/Team");
 const EmailErrors = require("../models/EmailErrors");
 
 const validateEmail = require("../validation/emailValidation");
@@ -18,8 +18,6 @@ sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 // @access  Public
 
 router.post("/forgot", (req, res) => {
-  console.log("running from team ");
-
   const { errors, isValid } = validateEmail(req.body);
   if (!isValid) return res.status(400).json(errors);
 
