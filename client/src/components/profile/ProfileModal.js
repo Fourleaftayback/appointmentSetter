@@ -87,7 +87,7 @@ function ProfileModal({
 }
 
 ProfileModal.propTypes = {
-  errors: PropTypes.object.isRequired,
+  errors: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   profileModalIsOpen: PropTypes.bool.isRequired,
   profileModalToggle: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,

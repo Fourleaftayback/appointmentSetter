@@ -43,7 +43,6 @@ const RegisterTeam = ({
       password: password,
       password2: password2
     };
-    console.log(userData);
     completeTeamRegistration(userData);
   };
 

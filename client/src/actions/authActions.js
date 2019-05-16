@@ -45,7 +45,6 @@ export const loginUser = userData => dispatch => {
         type: CLEAR_ERRORS
       });
     })
-
     .then(() => {
       dispatch({
         type: USERLOGIN_MODAL_TOGGLE
@@ -92,7 +91,6 @@ export const completeTeamRegistration = teamData => dispatch => {
   axios
     .post("/team/register", teamData)
     .then(res => {
-      //push to landing page, open login modal for team, clear errors
       dispatch({
         type: CLEAR_ERRORS
       });
@@ -126,4 +124,6 @@ export const logOutUser = () => dispatch => {
   localStorage.removeItem("jwtToken");
   setAuthToken(false);
   dispatch(setCurrentUser({}));
+  dispatch({ type: CLEAR_ERRORS });
+  history.push("/");
 };

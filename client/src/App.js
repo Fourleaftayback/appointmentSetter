@@ -56,6 +56,7 @@ const App = () => {
               <TeamPrivateRoute exact path="/team" component={TeamLanding} />
 
               <Route path="/team/register" component={RegisterTeam} />
+
               <Route exact path="/not-authorized" component={NotAuthorized} />
               <PrivateRoute exact path="/pending" component={Pending} />
               <PrivateRoute
