@@ -1,5 +1,6 @@
 const Validator = require("validator");
 const isEmpty = require("./isEmptyChecker");
+const checkUSnumber = require("./phoneNumChecker");
 
 module.exports = function validateProfile(data) {
   let errors = {};
@@ -13,8 +14,9 @@ module.exports = function validateProfile(data) {
 
   if (Validator.isEmpty(data.phone)) errors.phone = "Phone number is required";
 
-  if (!Validator.isInt(data.phone))
-    errors.phone = "Phone number can not contain letters";
+  if (!checkUSnumber(data.phone))
+    errors.phone =
+      "The phone number must be in US format. Example 555-555-5555, 5555555555, (555)5555555";
 
   return {
     errors,

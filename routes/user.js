@@ -28,7 +28,7 @@ router.post("/register", (req, res) => {
         email: req.body.email,
         first_name: req.body.first_name,
         last_name: req.body.last_name,
-        phone: req.body.phone,
+        phone: req.body.phone.replace(/\(|\)|-/g, ""),
         password: req.body.password
       });
 
@@ -97,7 +97,7 @@ router.put(
       { _id: req.user.id },
       {
         email: req.body.email,
-        phone: req.body.phone
+        phone: req.body.phone.replace(/\(|\)|-/g, "")
       }
     )
       .select("-password -created_on")

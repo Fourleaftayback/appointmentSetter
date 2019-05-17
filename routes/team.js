@@ -37,7 +37,7 @@ router.post("/test/register", (req, res) => {
         email: req.body.email,
         first_name: req.body.first_name,
         last_name: req.body.last_name,
-        phone: req.body.phone,
+        phone: req.body.phone.replace(/\(|\)|-/g, ""),
         password: req.body.password
       });
 
@@ -217,7 +217,7 @@ router.post("/register", (req, res) => {
         team.password = hash;
         team.first_name = req.body.first_name;
         team.last_name = req.body.last_name;
-        team.phone = req.body.phone;
+        team.phone = req.body.phone.replace(/\(|\)|-/g, "");
         team.resetPasswordToken = undefined;
         team
           .save()

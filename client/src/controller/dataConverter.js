@@ -3,6 +3,11 @@ export const roundToDay = date => {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate());
 };
 
+export const getLastMinute = date => {
+  let d = new Date(date);
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59);
+};
+
 export const setAvailableTimes = (date, hour) => {
   let d = new Date(date);
   return new Date(d.getFullYear(), d.getMonth(), d.getDate(), hour).getTime();

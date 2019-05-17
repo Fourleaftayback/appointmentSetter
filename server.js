@@ -16,6 +16,7 @@ const appointmentApiTeam = require("./routes/appointmentTeam");
 const userReset = require("./routes/userReset");
 const teamReset = require("./routes/teamReset");
 const confirm = require("./routes/confirm");
+const daysOff = require("./routes/daysOff");
 
 mongoose
   .connect(db, { useNewUrlParser: true })
@@ -32,5 +33,6 @@ app.use("/appointment", appointmentApiClient);
 app.use("/confirm", confirm);
 app.use("/reset/user", userReset);
 app.use("/reset/team", teamReset);
+app.use("/daysoff", daysOff);
 
 app.listen(port, () => console.log(`server connected on ${port}`));
