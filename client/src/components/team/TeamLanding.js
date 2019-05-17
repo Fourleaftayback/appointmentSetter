@@ -7,6 +7,7 @@ import TeamMemberPicker from "./TeamMemberPicker";
 import DatePickerButton from "../../components/common/Buttons/DatePickerButton";
 import AddAppointment from "./buttons/AddAppointment";
 import AppointmentCard from "./appointmentCard/AppointmentCard";
+import DayOffCard from "./appointmentCard/DayOffCard";
 
 import {
   getAllTeamApp,
@@ -53,9 +54,14 @@ const TeamLanding = ({
     filterByDateAndId(currentUserId, selectedDate, appointments);
   }, [currentUserId, selectedDate, appointments]);
 
-  const cards = appByDateAndId.map(item => (
-    <AppointmentCard data={item} key={item._id} owner={user.id} />
-  ));
+  const cards = appByDateAndId.map(item => {
+    //console.log(appByDateAndId);
+    if (!item.day_off) {
+      return <AppointmentCard data={item} key={item._id} owner={user.id} />;
+    } else {
+      return <DayOffCard key={item._id} />;
+    }
+  });
 
   return (
     <React.Fragment>

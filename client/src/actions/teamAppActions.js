@@ -92,6 +92,7 @@ export const filterByDateAndId = (id, date, allAppointments) => dispatch => {
       item.team_member_id === id &&
       roundToDay(item.appointment_start).getTime() === date.getTime()
   );
+
   dispatch({
     type: GET_APPBY_DATE_ID,
     payload: appointments

@@ -36,6 +36,9 @@ const AppointmentSchema = new Schema({
     required: true,
     default: false
   },
+  days_off_group: {
+    type: String
+  },
   team_member_id: {
     type: String,
     required: true

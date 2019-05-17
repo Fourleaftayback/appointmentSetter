@@ -1,6 +1,6 @@
 const Appointment = require("../models/Appointment");
 
-const createDaysOffArray = (id, startDate, endDate, weeks) => {
+const createDaysOffArray = (id, startDate, endDate, weeks, groupId) => {
   let newAppointment = new Appointment({
     user: "5cddfcf01de6df0b4669ff3e",
     client_info: {},
@@ -10,6 +10,7 @@ const createDaysOffArray = (id, startDate, endDate, weeks) => {
     day_off: true,
     team_member_id: id,
     team_member_info: {},
+    days_off_group: groupId,
     date_requested_on: Date.now()
   });
   const daysOffArr = [newAppointment];
@@ -31,6 +32,7 @@ const createDaysOffArray = (id, startDate, endDate, weeks) => {
         day_off: true,
         team_member_id: id,
         team_member_info: {},
+        days_off_group: groupId,
         date_requested_on: Date.now()
       })
     );
