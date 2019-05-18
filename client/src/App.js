@@ -22,6 +22,7 @@ import RegisterTeam from "./components/auth/team/RegisterTeam";
 import Pending from "./components/messages/Pending";
 import MyAppContainer from "./components/myAppointments/MyAppContainer";
 import AdminLanding from "./components/admin/AdminLanding";
+import TimeOffLanding from "./components/timeOff/TimeOffLanding";
 
 import ResetRequest from "./components/common/ResetRequest";
 import NotAuthorized from "./components/common/NotAuthorized";
@@ -68,6 +69,11 @@ const App = () => {
                 component={MyAppContainer}
               />
               <TeamPrivateRoute exact path="/manage" component={AdminLanding} />
+              <TeamPrivateRoute
+                exact
+                path="/timeoff"
+                component={TimeOffLanding}
+              />
 
               <Route component={NotFound} />
             </Switch>

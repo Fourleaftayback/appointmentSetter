@@ -1,20 +1,25 @@
 export const roundToDay = date => {
-  let d = new Date(date);
+  const d = new Date(date);
   return new Date(d.getFullYear(), d.getMonth(), d.getDate());
 };
 
 export const getLastMinute = date => {
-  let d = new Date(date);
+  const d = new Date(date);
   return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59);
 };
 
 export const setAvailableTimes = (date, hour) => {
-  let d = new Date(date);
+  const d = new Date(date);
   return new Date(d.getFullYear(), d.getMonth(), d.getDate(), hour).getTime();
 };
 
+export const setTime = (date, hour, minute) => {
+  const d = new Date(date);
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate(), hour, minute);
+};
+
 const roundToMinutes = date => {
-  let d = new Date(date);
+  const d = new Date(date);
   return new Date(
     d.getFullYear(),
     d.getMonth(),
