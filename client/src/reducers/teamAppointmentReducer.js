@@ -2,14 +2,16 @@ import {
   GET_ALL_TEAMAPP,
   GET_ALL_CLIENTS,
   GET_APPBY_TEAMID,
-  GET_APPBY_DATE_ID
+  GET_APPBY_DATE_ID,
+  GET_DAYS_OFF_TEAM
 } from "../actions/types";
 
 const initialState = {
   schedules: [],
   listOfClient: [],
   appByCurrentTeamId: [],
-  appByDateAndId: []
+  appByDateAndId: [],
+  daysOff: []
 };
 
 export default function(state = initialState, action) {
@@ -29,6 +31,10 @@ export default function(state = initialState, action) {
     case GET_APPBY_DATE_ID:
       return Object.assign({}, state, {
         appByDateAndId: action.payload
+      });
+    case GET_DAYS_OFF_TEAM:
+      return Object.assign({}, state, {
+        daysOff: action.payload
       });
     default:
       return state;

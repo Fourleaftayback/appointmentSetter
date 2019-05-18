@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-//import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import { Row, Col } from "reactstrap";
 import InfiniteCalendar from "react-infinite-calendar";
 
 import TimeOffForm from "./TimeOffForm";
+import TimeOffCard from "./TimeOffCard";
 
-const TimeOffLanding = () => {
+import { getAllDaysOff } from "../../actions/daysOffActions";
+
+import { roundToDay } from "../../controller/dataConverter";
+
+const TimeOffLanding = ({ getAllDaysOff, daysOff }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const today = new Date();
-
+  const [today] = useState(new Date());
+  let message, cards;
   const changeDate = date => {
     setSelectedDate(date);
   };
@@ -18,6 +23,16 @@ const TimeOffLanding = () => {
     today.getMonth() + 3,
     today.getDate()
   );
+
+  useEffect(() => {
+    getAllDaysOff();
+  }, []);
+
+  daysOff.length === 0
+    ? (message = "You have not set any days off.")
+    : (message = "Your Days Off");
+
+  cards = daysOff.map(item => <TimeOffCard key={item._id} data={item} />);
   return (
     <React.Fragment>
       <Row className="mt-5">
@@ -26,6 +41,9 @@ const TimeOffLanding = () => {
             selected={selectedDate}
             minDate={today}
             maxDate={threeMonthes}
+            disabledDates={daysOff.map(item =>
+              roundToDay(item.appointment_start)
+            )}
             width={350}
             height={250}
             displayOptions={{
@@ -36,15 +54,27 @@ const TimeOffLanding = () => {
         </Col>
         <TimeOffForm date={selectedDate} />
       </Row>
+      <Row className="my-4">
+        <Col md="6" className="m-auto">
+          <h5 className="text-center">{message}</h5>
+        </Col>
+      </Row>
+      <Row>{cards}</Row>
     </React.Fragment>
   );
 };
 
-TimeOffLanding.propTypes = {};
+TimeOffLanding.propTypes = {
+  getAllDaysOff: PropTypes.func.isRequired
+};
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  daysOff: state.teamAppointment.daysOff
+});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  getAllDaysOff: getAllDaysOff
+};
 
 export default connect(
   mapStateToProps,

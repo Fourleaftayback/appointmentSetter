@@ -65,9 +65,36 @@ router.post(
   }
 );
 
+// @route   GET /daysoff/all
+// @desc    get days off for team member
+// @access  Private
+router.get(
+  "/all",
+  passport.authenticate("teamPass", { session: false }),
+  (req, res) => {
+    Appointment.find({ team_member_id: req.user.id, day_off: true })
+      .select("-confirmed -user")
+      .sort("appointment_start")
+      .then(daysOff => res.status(200).json(daysOff))
+      .catch(err => res.status(400).json({ errors: err }));
+  }
+);
+// @route   Delete /daysoff/removeone
+// @desc    removes one by id
+// @access  Private
+router.delete(
+  "/removeone",
+  passport.authenticate("teamPass", { session: false }),
+  (req, res) => {
+    Appointment.findByIdAndRemove(req.body._id)
+      .then(() => {
+        return res.status(200).json({ success: "day off was removed" });
+      })
+      .catch(err => res.status(400).json({ errors: "could not be removed" }));
+  }
+);
+
 // @route   Delete /daysoff/removemany
-//need to passin an adjusted date due to time difference
-//2019-05-18T04:00:38.793Z - 2019-05-19T03:59:38.793Z
 // @desc    removes days off by days_off_group
 // @access  Private
 router.delete(

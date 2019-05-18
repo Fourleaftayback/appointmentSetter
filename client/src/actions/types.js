@@ -41,6 +41,8 @@ export const GET_ALL_CLIENTS = "GET_ALL_CLIENTS";
 export const GET_ALL_TEAMAPP = "GET_ALL_TEAMAPP";
 export const GET_ALL_TEAMADMIN = "GET_ALL_TEAMADMIN";
 
+export const GET_DAYS_OFF_TEAM = "GET_DAYS_OFF_TEAM";
+
 export const MESSAGE = "MESSAGE";
 
 export const SET_APP_JUSTMADE = "SET_APP_JUSTMADE";

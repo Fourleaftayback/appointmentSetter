@@ -36,6 +36,7 @@ const checkRange = (time, min, max) => {
 export const checkAlltimes = (time, arr) => {
   let result = false;
   let i = 0;
+
   for (i; i < arr.length; i++) {
     if (
       checkRange(
@@ -48,6 +49,7 @@ export const checkAlltimes = (time, arr) => {
       break;
     }
   }
+
   return result;
 };
 
@@ -64,6 +66,7 @@ export const getAvaliableTimes = (bookedTimes, day, earliest, latest) => {
   for (i; i < latestTime; i += halfHour) {
     timeBlock.push(i);
   }
+
   return timeBlock.filter(
     time => !checkAlltimes(time, bookedTimes) && time > currentTime
   );

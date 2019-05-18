@@ -19,7 +19,6 @@ import CancelButtonModal from "../../common/Buttons/CancelButtonModal";
 import { getType, firstUpperCase } from "../../../controller/dataConverter";
 
 const AppointmentCard = ({ data, owner }) => {
-  //body inverse color="primary"
   return (
     <React.Fragment>
       <Col md={4}>
