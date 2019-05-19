@@ -39,3 +39,16 @@ export const getAllDaysOff = () => dispatch => {
       });
     });
 };
+
+export const deleteDaysOff = (url, id) => dispatch => {
+  axios
+    .delete(`${url}${id}`)
+    .then(res => dispatch(getAllTeamApp()))
+    .then(() => dispatch(getAllDaysOff()))
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};

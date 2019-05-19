@@ -72,21 +72,25 @@ router.get(
   "/all",
   passport.authenticate("teamPass", { session: false }),
   (req, res) => {
-    Appointment.find({ team_member_id: req.user.id, day_off: true })
+    Appointment.find({
+      team_member_id: req.user.id,
+      day_off: true,
+      appointment_end: { $gte: Date.now() }
+    })
       .select("-confirmed -user")
       .sort("appointment_start")
       .then(daysOff => res.status(200).json(daysOff))
       .catch(err => res.status(400).json({ errors: err }));
   }
 );
-// @route   Delete /daysoff/removeone
+// @route   Delete /daysoff/removeone/:id
 // @desc    removes one by id
 // @access  Private
 router.delete(
-  "/removeone",
+  "/removeone/:id",
   passport.authenticate("teamPass", { session: false }),
   (req, res) => {
-    Appointment.findByIdAndRemove(req.body._id)
+    Appointment.findByIdAndRemove(req.params.id)
       .then(() => {
         return res.status(200).json({ success: "day off was removed" });
       })
@@ -94,14 +98,14 @@ router.delete(
   }
 );
 
-// @route   Delete /daysoff/removemany
+// @route   Delete /daysoff/removemany/:id
 // @desc    removes days off by days_off_group
 // @access  Private
 router.delete(
-  "/removemany",
+  "/removemany/:id",
   passport.authenticate("teamPass", { session: false }),
   (req, res) => {
-    Appointment.deleteMany({ days_off_group: req.body.days_off_group })
+    Appointment.deleteMany({ days_off_group: req.params.id })
       .then(del => {
         if (del.n === 0)
           return res

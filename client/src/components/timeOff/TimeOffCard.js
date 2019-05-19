@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import moment from "moment";
 
@@ -13,9 +14,15 @@ import {
   Button
 } from "reactstrap";
 
-const TimeOffCard = ({ data }) => {
+import { deleteDaysOff } from "../../actions/daysOffActions";
+
+const TimeOffCard = ({ data, deleteDaysOff }) => {
   const onSubmit = () => {
-    data.days_off_group ? console.log(true) : console.log(false);
+    if (data.days_off_group) {
+      deleteDaysOff("/daysoff/removemany/", data.days_off_group);
+    } else {
+      deleteDaysOff("/daysoff/removeone/", data._id);
+    }
   };
   return (
     <React.Fragment>
@@ -44,4 +51,11 @@ TimeOffCard.propTypes = {
   data: PropTypes.object.isRequired
 };
 
-export default TimeOffCard;
+const mapDispatchToProps = {
+  deleteDaysOff: deleteDaysOff
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(TimeOffCard);
