@@ -53,7 +53,8 @@ export const checkAlltimes = (time, arr) => {
   return result;
 };
 
-//bookedTimes is array of times already booked for the specific team member for the specific day only
+//bookedTimes is array of times already booked for the specific team member
+//the issue is its gonna be hard to check if days off is true cause the data is being checked againt whole array
 
 export const getAvaliableTimes = (bookedTimes, day, earliest, latest) => {
   const today = roundToDay(day).toString();
@@ -100,4 +101,16 @@ export const getEndTime = (start, type) => {
 
 export const firstUpperCase = str => {
   return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+export const checkDayOff = (arrApps, id, date) => {
+  const filter = arrApps.filter(
+    item =>
+      item.day_off === true &&
+      roundToDay(item.appointment_start).getTime() ===
+        roundToDay(date).getTime() &&
+      item.team_member_id === id
+  );
+  if (filter.length === 0) return false;
+  return true;
 };

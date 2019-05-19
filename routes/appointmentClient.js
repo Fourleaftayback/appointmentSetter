@@ -8,6 +8,8 @@ const Team = require("../models/Team");
 const User = require("../models/User");
 const EmailErrors = require("../models/EmailErrors");
 
+const converter = require("../controller/dataConverter");
+
 const validateAppointment = require("../validation/appointmentValidation");
 
 const { TeamConfirmAppMessage } = require("../emails/Emails");
@@ -151,7 +153,9 @@ router.delete(
 // @desc    get All data for client side only
 // @access  Public
 router.get("/all", (req, res) => {
-  Appointment.find({ appointment_end: { $gte: Date.now() } })
+  Appointment.find({
+    appointment_start: { $gte: converter.setTime(Date.now(), 0, 0) }
+  })
     .select(
       "-client_info -team_member_info.email -team_member_info._id -team_member_info.last_name -team_member_info.phone -date_updated_on"
     )

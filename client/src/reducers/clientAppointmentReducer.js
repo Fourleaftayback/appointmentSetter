@@ -30,6 +30,7 @@ export default function(state = initialState, action) {
       return Object.assign({}, state, {
         userOnlySched: action.payload
       });
+
     default:
       return state;
   }

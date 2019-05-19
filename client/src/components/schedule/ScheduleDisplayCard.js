@@ -6,12 +6,15 @@ import { getAvaliableTimes } from "../../controller/dataConverter";
 
 import { Col, Card, CardHeader, CardBody, ListGroup } from "reactstrap";
 
+import { checkDayOff } from "../../controller/dataConverter";
+
 import DatePickerButton from "../common/Buttons/DatePickerButton";
 import AvailableTimeItem from "./AvailableTimeItem";
 
 const ScheduleDisplayCard = ({ teamName, data, teamId }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
+  const [isDayOff, setIsDayOff] = useState(false);
 
   const changeDate = date => {
     setSelectedDate(date);
@@ -20,6 +23,7 @@ const ScheduleDisplayCard = ({ teamName, data, teamId }) => {
   useEffect(() => {
     let times = getAvaliableTimes(data, selectedDate, 9, 17);
     setAvailableTimeSlots(times);
+    setIsDayOff(checkDayOff(data, teamId, selectedDate));
   }, [selectedDate]);
 
   useEffect(() => {
@@ -35,7 +39,7 @@ const ScheduleDisplayCard = ({ teamName, data, teamId }) => {
       key={uniqId()}
     />
   ));
-
+  console.log(isDayOff);
   return (
     <Col md={4}>
       <Card>
@@ -50,7 +54,7 @@ const ScheduleDisplayCard = ({ teamName, data, teamId }) => {
 
         <CardBody>
           <ListGroup>
-            {availableTimeSlots.length !== 0 ? (
+            {availableTimeSlots.length !== 0 && !isDayOff ? (
               listItems
             ) : (
               <p>

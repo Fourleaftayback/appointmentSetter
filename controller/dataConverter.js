@@ -40,4 +40,9 @@ const createDaysOffArray = (id, startDate, endDate, weeks, groupId) => {
   return daysOffArr;
 };
 
-module.exports = createDaysOffArray;
+const setTime = (date, hour, minute) => {
+  const d = new Date(date);
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate(), hour, minute);
+};
+
+module.exports = { createDaysOffArray: createDaysOffArray, setTime: setTime };

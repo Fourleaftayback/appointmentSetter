@@ -6,7 +6,7 @@ const randonstring = require("randomstring");
 const Appointment = require("../models/Appointment");
 //const Team = require("../models/Team");
 
-const createDaysOffArray = require("../controller/dataConverter");
+const converter = require("../controller/dataConverter");
 
 require("../config/passportTeam")(passport);
 
@@ -50,7 +50,7 @@ router.post(
   "/addmany",
   passport.authenticate("teamPass", { session: false }),
   (req, res) => {
-    const daysOffArr = createDaysOffArray(
+    const daysOffArr = converter.createDaysOffArray(
       req.user.id,
       req.body.appointment_start,
       req.body.appointment_end,
@@ -72,10 +72,11 @@ router.get(
   "/all",
   passport.authenticate("teamPass", { session: false }),
   (req, res) => {
+    console.log(new Date());
     Appointment.find({
       team_member_id: req.user.id,
       day_off: true,
-      appointment_end: { $gte: Date.now() }
+      appointment_start: { $gte: converter.setTime(new Date(), 0, 0) }
     })
       .select("-confirmed -user")
       .sort("appointment_start")

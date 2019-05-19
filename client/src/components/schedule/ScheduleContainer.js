@@ -13,7 +13,8 @@ const ScheduleContainer = ({
   getAllAppointments,
   schedules,
   teamMembers,
-  loading
+  loading,
+  daysOff
 }) => {
   let content;
   useEffect(() => {

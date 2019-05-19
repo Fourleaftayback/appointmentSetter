@@ -70,8 +70,11 @@ function ProfileModal({
             </Form>
           </ModalBody>
           <ModalFooter>
+            {user.hasOwnProperty("isAdmin") ? (
+              <NavLink href="/timeoff">Time Off</NavLink>
+            ) : null}
             {user.isAdmin ? (
-              <NavLink href="/manage">Manange Team</NavLink>
+              <NavLink href="/manage">Manage Team</NavLink>
             ) : null}
             <Button color="primary" onClick={onSubmit}>
               Save
