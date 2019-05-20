@@ -2,6 +2,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+//for test
+const busboy = require("connect-busboy");
+const busboyBodyParser = require("busboy-body-parser");
+
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
@@ -17,6 +21,7 @@ const userReset = require("./routes/userReset");
 const teamReset = require("./routes/teamReset");
 const confirm = require("./routes/confirm");
 const daysOff = require("./routes/daysOff");
+const test = require("./routes/test");
 
 mongoose
   .connect(db, { useNewUrlParser: true })
@@ -26,6 +31,10 @@ mongoose
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//testing
+app.use(busboy());
+app.use(busboyBodyParser());
+
 app.use("/team", teamApi);
 app.use("/team/appointment", appointmentApiTeam);
 app.use("/user", userApi);
@@ -34,5 +43,7 @@ app.use("/confirm", confirm);
 app.use("/reset/user", userReset);
 app.use("/reset/team", teamReset);
 app.use("/daysoff", daysOff);
+
+app.use("/test", test);
 
 app.listen(port, () => console.log(`server connected on ${port}`));
