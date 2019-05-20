@@ -2,11 +2,13 @@ const express = require("express");
 const router = express.Router();
 const AWS = require("aws-sdk");
 const Busboy = require("busboy");
+const User = require("../models/User");
 
 const BUCKET_NAME = process.env.S3NAME;
 const IAM_USER_KEY = process.env.IAMUSER;
 const IAM_USER_SECRET = process.env.IAMSECRET;
 
+/*
 function uploadToS3(file) {
   let s3bucket = new AWS.S3({
     accessKeyId: IAM_USER_KEY,
@@ -19,16 +21,45 @@ function uploadToS3(file) {
       Key: `profileimage/${file.name}`,
       Body: file.data
     };
-    s3bucket.upload(params, function(err, data) {
+    s3bucket.upload(params, (err, data) => {
       if (err) {
-        console.log("error in callback");
         console.log(err);
       }
-      console.log("success");
       console.log(data);
     });
   });
 }
+*/
+const uploadToS3 = file => {
+  return new Promise((resolve, reject) => {
+    let s3bucket = new AWS.S3({
+      accessKeyId: IAM_USER_KEY,
+      secretAccessKey: IAM_USER_SECRET,
+      Bucket: BUCKET_NAME
+    });
+    s3bucket.createBucket(function() {
+      var params = {
+        Bucket: BUCKET_NAME,
+        Key: `profileimage/${file.name}`,
+        Body: file.data
+      };
+      s3bucket.upload(params, (err, data) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(data);
+      });
+    });
+  });
+};
+/*
+{ ETag: '"8c6495ad632576918894c65cdf083dd7"',
+   Location:
+    'https://appointmentbooker.s3.amazonaws.com/profileimage/jayShong.png',
+   key: 'profileimage/jayShong.png',
+   Key: 'profileimage/jayShong.png',
+   Bucket: 'appointmentbooker' }
+*/
 
 // The following is an example of making file upload with
 // additional body parameters.
@@ -39,31 +70,41 @@ function uploadToS3(file) {
 // Put the body with "element1": "test", "element2": image file
 
 //post /test/upload
-router.post("/upload", function(req, res, next) {
+router.post("/upload", (req, res) => {
+  const mimes = ["image/png", "image/jpeg", "image/jpg"];
   // This grabs the additional parameters so in this case passing
   // in "element1" with a value.
-  const element1 = req.body.element1;
-  var busboy = new Busboy({ headers: req.headers });
+  const fileName = req.body.fileName;
+  var busboy = new Busboy({
+    headers: req.headers,
+    limits: { files: 1, fileSize: 40000 }
+  });
   // The file upload has completed
   busboy.on("finish", function() {
-    console.log("Upload finished");
-    // Your files are stored in req.files. In this case,
-    // you only have one and it's req.files.element2:
-    // This returns:
-    // {
-    //    element2: {
-    //      data: ...contents of the file...,
-    //      name: 'Example.jpg',
-    //      encoding: '7bit',
-    //      mimetype: 'image/png',
-    //      truncated: false,
-    //      size: 959480
-    //    }
-    // }
-    // Grabs your file object from the request.
-    const file = req.files.element2;
-    console.log(file);
-    uploadToS3(file);
+    const image = req.files.image;
+    if (image.size > 3000000) {
+      return res
+        .status(413)
+        .json({ filesize: "The Image file size can not exceed 3mbs" });
+    }
+    if (!mimes.includes(image.mimetype)) {
+      return res.status(422).json({
+        format: "This image format is not supported"
+      });
+    }
+    let aws = uploadToS3(image);
+
+    aws
+      .then(dataAWS => {
+        User.findOneAndUpdate(
+          { _id: "5cddeb33dc4f9b03c93ab424" },
+          { image_url: dataAWS.Location }
+        ).then(user => {
+          user.save();
+          res.status(200).json({ message: "Save successful" });
+        });
+      })
+      .catch(err => res.status(400).json({ errors: "Something went wrong" }));
   });
   req.pipe(busboy);
 });
