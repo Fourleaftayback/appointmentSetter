@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import classnames from "classnames";
 
 import {
   NavLink,
@@ -10,7 +11,10 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  Form
+  Form,
+  FormGroup,
+  Label,
+  Input
 } from "reactstrap";
 
 import { profileModalToggle } from "../../actions/viewsActions";
@@ -27,17 +31,21 @@ function ProfileModal({
 }) {
   const [email, setEmail] = useState(user.email);
   const [phone, setPhone] = useState(user.phone.toString());
+  const [image, setImage] = useState("");
 
   const toggleModal = () => {
     profileModalToggle();
   };
 
   const onSubmit = () => {
-    const userInfo = {
-      email: email,
-      phone: phone
-    };
-    modifyUser("/user/modify", userInfo);
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    modifyUser("/user/modify", formData);
+  };
+  const changeImage = e => {
+    setImage(e.target.files[0]);
   };
   return (
     <React.Fragment>
@@ -48,7 +56,7 @@ function ProfileModal({
         <Modal isOpen={profileModalIsOpen} toggle={toggleModal}>
           <ModalHeader toggle={toggleModal}>Profile</ModalHeader>
           <ModalBody>
-            <Form>
+            <Form name="form">
               <FormItem
                 label="Email Address"
                 type="email"
@@ -67,6 +75,20 @@ function ProfileModal({
                 error={errors.phone}
                 onChange={e => setPhone(e.target.value)}
               />
+              <FormGroup>
+                <Label>Profile Image</Label>
+                <Input
+                  type="file"
+                  name="image"
+                  className={classnames("form-control", {
+                    "is-invalid": errors.image
+                  })}
+                  onChange={changeImage}
+                />
+                {errors.image && (
+                  <div className="invalid-feedback">{errors.image}</div>
+                )}
+              </FormGroup>
             </Form>
           </ModalBody>
           <ModalFooter>

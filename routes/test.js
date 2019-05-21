@@ -95,10 +95,10 @@ router.post("/upload", (req, res) => {
     let aws = uploadToS3(image);
 
     aws
-      .then(dataAWS => {
+      .then(data => {
         User.findOneAndUpdate(
           { _id: "5cddeb33dc4f9b03c93ab424" },
-          { image_url: dataAWS.Location }
+          { image_url: data.Location }
         ).then(user => {
           user.save();
           res.status(200).json({ message: "Save successful" });

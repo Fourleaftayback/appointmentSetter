@@ -39,7 +39,7 @@ const ScheduleDisplayCard = ({ teamName, data, teamId }) => {
       key={uniqId()}
     />
   ));
-  console.log(isDayOff);
+
   return (
     <Col md={4}>
       <Card>
