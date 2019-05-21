@@ -1,4 +1,5 @@
 const AWS = require("aws-sdk");
+const uniqid = require("uniqid");
 
 const BUCKET_NAME = process.env.S3NAME;
 const IAM_USER_KEY = process.env.IAMUSER;
@@ -14,8 +15,9 @@ const uploadToS3 = file => {
     s3bucket.createBucket(function() {
       var params = {
         Bucket: BUCKET_NAME,
-        Key: `profileimage/${file.name}`,
-        Body: file.data
+        Key: `profileimage/${uniqid("profile-image-")}`,
+        Body: file.data,
+        ACL: "public-read-write"
       };
       s3bucket.upload(params, (err, data) => {
         if (err) {

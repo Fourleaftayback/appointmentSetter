@@ -71,7 +71,8 @@ router.post("/login", (req, res) => {
           first_name: user.first_name,
           last_name: user.last_name,
           email: user.email,
-          phone: user.phone
+          phone: user.phone,
+          profileImage: user.image_url
         };
 
         jwt.sign(payload, keys, { expiresIn: 7200 }, (err, token) => {
@@ -121,27 +122,25 @@ router.put(
         aws
           .then(data => {
             newData.image_url = data.Location;
-            User.findOneAndUpdate({ _id: req.user.id }, newData)
+            User.findOneAndUpdate({ _id: req.user.id }, newData, { new: true })
               .select("-password -created_on")
               .then(user => {
                 if (!user) {
                   errors.user = "Sorry something went wrong";
                   return res.status(400).json(errors);
                 }
-                user.save().then(() => {
-                  const payload = {
-                    id: user.id,
-                    first_name: user.first_name,
-                    last_name: user.last_name,
-                    email: req.body.email,
-                    phone: req.body.phone,
-                    profileImage: user.image_url
-                  };
-                  jwt.sign(payload, keys, { expiresIn: 7200 }, (err, token) => {
-                    res.json({
-                      success: true,
-                      token: "Bearer " + token
-                    });
+                const payload = {
+                  id: user.id,
+                  first_name: user.first_name,
+                  last_name: user.last_name,
+                  email: user.email,
+                  phone: user.phone,
+                  profileImage: user.image_url
+                };
+                jwt.sign(payload, keys, { expiresIn: 7200 }, (err, token) => {
+                  res.json({
+                    success: true,
+                    token: "Bearer " + token
                   });
                 });
               })
@@ -153,27 +152,26 @@ router.put(
           });
       });
     } else {
-      User.findOneAndUpdate({ _id: req.user.id }, newData)
+      User.findOneAndUpdate({ _id: req.user.id }, newData, { new: true })
         .select("-password -created_on")
         .then(user => {
           if (!user) {
             errors.user = "Sorry something went wrong";
             return res.status(400).json(errors);
           }
-          user.save().then(() => {
-            const payload = {
-              id: user.id,
-              first_name: user.first_name,
-              last_name: user.last_name,
-              email: req.body.email,
-              phone: req.body.phone,
-              profileImage: user.image_url
-            };
-            jwt.sign(payload, keys, { expiresIn: 7200 }, (err, token) => {
-              res.json({
-                success: true,
-                token: "Bearer " + token
-              });
+
+          const payload = {
+            id: user.id,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            phone: user.phone,
+            profileImage: user.image_url
+          };
+          jwt.sign(payload, keys, { expiresIn: 7200 }, (err, token) => {
+            res.json({
+              success: true,
+              token: "Bearer " + token
             });
           });
         })

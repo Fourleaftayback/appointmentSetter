@@ -27,7 +27,8 @@ function ProfileModal({
   profileModalIsOpen,
   profileModalToggle,
   user,
-  modifyUser
+  modifyUser,
+  isTeam
 }) {
   const [email, setEmail] = useState(user.email);
   const [phone, setPhone] = useState(user.phone.toString());
@@ -42,7 +43,11 @@ function ProfileModal({
     formData.append("image", image);
     formData.append("email", email);
     formData.append("phone", phone);
-    modifyUser("/user/modify", formData);
+    console.log(email, phone, image);
+    /*
+    isTeam
+      ? modifyUser("/team/modify", formData)
+      : modifyUser("/user/modify", formData); */
   };
   const changeImage = e => {
     setImage(e.target.files[0]);
@@ -116,13 +121,15 @@ ProfileModal.propTypes = {
   profileModalIsOpen: PropTypes.bool.isRequired,
   profileModalToggle: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  modifyUser: PropTypes.func.isRequired
+  modifyUser: PropTypes.func.isRequired,
+  isTeam: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   errors: state.errors,
-  profileModalIsOpen: state.views.profileModalIsOpen
+  profileModalIsOpen: state.views.profileModalIsOpen,
+  isTeam: state.auth.user.hasOwnProperty("isAdmin")
 });
 
 const mapDispatchToProps = {

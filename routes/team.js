@@ -6,6 +6,7 @@ const passport = require("passport");
 const randomstring = require("randomstring");
 const crypto = require("crypto");
 const sgMail = require("@sendgrid/mail");
+const Busboy = require("busboy");
 
 const Team = require("../models/Team");
 const EmailErrors = require("../models/EmailErrors");
@@ -16,6 +17,9 @@ const validateLoginInput = require("../validation/loginValidation");
 const validateRegisterInput = require("../validation/registerValidation");
 const validateEmail = require("../validation/emailValidation");
 const validateTeamRegister = require("../validation/registerTeamValidation");
+const validateProfile = require("../validation/profileValidation");
+
+const uploadToS3 = require("../aws/s3bucket");
 
 const { TeamRegistrationMessage } = require("../emails/Emails");
 sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
@@ -259,6 +263,104 @@ router.get(
       })
       .catch(err => res.status(400).json({ errors: err }));
   }
+);
+
+// @route   PUT /team/modify
+// @desc    Change Team Info
+// @access  Private
+
+router.put(
+  "/modify",
+  passport.authenticate("teamPass", { session: false }, (req, res) => {
+    console.log(req.body);
+    /*
+    const { errors, isValid } = validateProfile(req.body);
+    if (!isValid) return res.status(400).json(errors);
+    const mimes = ["image/png", "image/jpeg", "image/jpg"];
+    let newData = {
+      email: req.body.email,
+      phone: req.body.phone.replace(/\(|\)|-/g, "")
+    };
+    const busboy = new Busboy({
+      headers: req.headers
+    });
+
+    if (req.files.image !== undefined) {
+      busboy.on("finish", () => {
+        const image = req.files.image;
+        if (image.size > 3000000) {
+          errors.image = "Image can not be larger than 3mbs";
+          return res.status(413).json(errors);
+        }
+        if (!mimes.includes(image.mimetype)) {
+          errors.image = "This image format is not supported";
+          return res.status(422).json(errors);
+        }
+        let aws = uploadToS3(image);
+        aws
+          .then(data => {
+            newData.image_url = data.Location;
+            Team.findOneAndUpdate({ _id: req.user.id }, newData, { new: true })
+              .select("-password -created_on")
+              .then(user => {
+                if (!user) {
+                  errors.user = "Sorry something went wrong";
+                  return res.status(400).json(errors);
+                }
+
+                const payload = {
+                  id: user.id,
+                  first_name: user.first_name,
+                  last_name: user.last_name,
+                  email: user.email,
+                  phone: user.phone,
+                  profileImage: user.image_url,
+                  isAdmin: user.isAdmin
+                };
+                jwt.sign(payload, keys, { expiresIn: 7200 }, (err, token) => {
+                  res.json({
+                    success: true,
+                    token: "Bearer " + token
+                  });
+                });
+              })
+              .catch(err => res.status(400).json(err));
+          })
+          .catch(err => {
+            errors.image = "Image failed to save. AWS ERROR";
+            res.json(400).json(errors);
+          });
+      });
+    } else {
+      Team.findOneAndUpdate({ _id: req.user.id }, newData, { new: true })
+        .select("-password -created_on")
+        .then(user => {
+          if (!user) {
+            errors.user = "Sorry something went wrong";
+            return res.status(400).json(errors);
+          }
+
+          const payload = {
+            id: user.id,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            phone: user.phone,
+            profileImage: user.image_url,
+            isAdmin: user.isAdmin
+          };
+          jwt.sign(payload, keys, { expiresIn: 7200 }, (err, token) => {
+            res.json({
+              success: true,
+              token: "Bearer " + token
+            });
+          });
+        })
+        .catch(err => res.status(400).json(err));
+    }
+    req.pipe(busboy);
+    */
+  })
 );
 
 module.exports = router;
