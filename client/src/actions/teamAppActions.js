@@ -11,7 +11,7 @@ import {
 import { getAllTeamMembers } from "./commonAppActions";
 import { addAppointmentModalToggle } from "./viewsActions";
 
-import { roundToDay } from "../controller/dataConverter";
+import { setToMinute } from "../controller/dataConverter";
 
 export const getAllTeamApp = () => dispatch => {
   dispatch(getAllTeamMembers());
@@ -90,7 +90,7 @@ export const filterByDateAndId = (id, date, allAppointments) => dispatch => {
   const appointments = allAppointments.filter(
     item =>
       item.team_member_id === id &&
-      roundToDay(item.appointment_start).getTime() === date.getTime()
+      setToMinute(item.appointment_start, 0, 0).getTime() === date.getTime()
   );
 
   dispatch({

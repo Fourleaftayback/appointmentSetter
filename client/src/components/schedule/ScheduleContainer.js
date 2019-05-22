@@ -29,6 +29,7 @@ const ScheduleContainer = ({
         teamName={item.first_name}
         key={item._id}
         teamId={item._id}
+        teamImage={item.image_url}
         data={memberData}
       />
     );

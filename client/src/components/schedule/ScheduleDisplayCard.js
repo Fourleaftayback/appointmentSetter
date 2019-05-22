@@ -10,8 +10,9 @@ import { checkDayOff } from "../../controller/dataConverter";
 
 import DatePickerButton from "../common/Buttons/DatePickerButton";
 import AvailableTimeItem from "./AvailableTimeItem";
+import ProfileImage from "../common/imageComponents/ProfileImage";
 
-const ScheduleDisplayCard = ({ teamName, data, teamId }) => {
+const ScheduleDisplayCard = ({ teamName, data, teamId, teamImage }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   const [isDayOff, setIsDayOff] = useState(false);
@@ -44,7 +45,12 @@ const ScheduleDisplayCard = ({ teamName, data, teamId }) => {
     <Col md={4}>
       <Card>
         <CardHeader>
-          <h5>{teamName}</h5>
+          {teamImage !== "" ? (
+            <ProfileImage imageUrl={teamImage} size="4rem" />
+          ) : (
+            <i className="fas fa-user-circle fa-4x" />
+          )}
+          <h5 className="text-center">{teamName}</h5>
           <DatePickerButton
             selectedDate={selectedDate}
             pickDate={changeDate}
@@ -71,6 +77,7 @@ const ScheduleDisplayCard = ({ teamName, data, teamId }) => {
 
 ScheduleDisplayCard.propTypes = {
   teamName: PropTypes.string.isRequired,
+  teamImage: PropTypes.string,
   data: PropTypes.array.isRequired,
   teamId: PropTypes.string.isRequired
 };

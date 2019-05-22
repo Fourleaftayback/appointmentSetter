@@ -20,7 +20,7 @@ import {
 import { profileModalToggle } from "../../actions/viewsActions";
 import { modifyUser } from "../../actions/commonAppActions";
 
-import ProfileImage from "./ProfileImage";
+import ProfileImage from "../common/imageComponents/ProfileImage";
 import FormItem from "../form/FormItem";
 
 const ProfileModal = ({
@@ -44,7 +44,6 @@ const ProfileModal = ({
     formData.append("image", image);
     formData.append("email", email);
     formData.append("phone", phone);
-    //console.log(email, phone, image);
 
     isTeam
       ? modifyUser("/team/modify", formData)
@@ -58,14 +57,24 @@ const ProfileModal = ({
     <React.Fragment>
       <NavItem>
         {user.profileImage !== undefined ? (
-          <ProfileImage imageUrl={user.profileImage} onClick={toggleModal} />
+          <ProfileImage
+            imageUrl={user.profileImage}
+            onClick={toggleModal}
+            size="2.75rem"
+          />
         ) : (
           <NavLink className="text-white" onClick={toggleModal}>
             <i className="fas fa-user-circle fa-2x" />
           </NavLink>
         )}
         <Modal isOpen={profileModalIsOpen} toggle={toggleModal}>
-          <ModalHeader toggle={toggleModal}>Profile</ModalHeader>
+          <ModalHeader toggle={toggleModal}>
+            {user.profileImage !== undefined ? (
+              <ProfileImage imageUrl={user.profileImage} size="4rem" />
+            ) : (
+              <i className="fas fa-user-circle fa-3x" />
+            )}
+          </ModalHeader>
           <ModalBody>
             <Form name="form">
               <FormItem

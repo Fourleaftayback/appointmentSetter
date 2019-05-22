@@ -241,7 +241,7 @@ router.post("/register", (req, res) => {
 
 router.get("/allmembers", (req, res) => {
   Team.find()
-    .select("first_name id")
+    .select("first_name id image_url")
     .then(members => {
       res.status(200).json(members);
     })
