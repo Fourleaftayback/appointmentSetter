@@ -15,7 +15,7 @@ import {
   getAppByTeamId,
   filterByDateAndId
 } from "../../actions/teamAppActions";
-import { roundToDay } from "../../controller/dataConverter";
+import { setToMinute } from "../../controller/dataConverter";
 
 const TeamLanding = ({
   getAllTeamApp,
@@ -29,7 +29,9 @@ const TeamLanding = ({
   appByDateAndId
 }) => {
   const [currentUserId, setCurrentUserId] = useState(user.id);
-  const [selectedDate, setSelectedDate] = useState(roundToDay(new Date()));
+  const [selectedDate, setSelectedDate] = useState(
+    setToMinute(new Date(), 0, 0)
+  );
 
   const selectUser = e => {
     const indx = e.target.options.selectedIndex;
@@ -55,7 +57,6 @@ const TeamLanding = ({
   }, [currentUserId, selectedDate, appointments]);
 
   const cards = appByDateAndId.map(item => {
-    //console.log(appByDateAndId);
     if (!item.day_off) {
       return <AppointmentCard data={item} key={item._id} owner={user.id} />;
     } else {

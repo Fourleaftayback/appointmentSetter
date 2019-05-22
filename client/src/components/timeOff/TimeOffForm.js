@@ -8,7 +8,7 @@ import FormSelect from "../form/FormSelect";
 
 import { setDaysOff } from "../../actions/daysOffActions";
 
-import { setTime } from "../../controller/dataConverter";
+import { setToMinute } from "../../controller/dataConverter";
 
 const TimeOffForm = ({ date, setDaysOff }) => {
   const [repeatCount, setRepeatCount] = useState(2);
@@ -23,8 +23,8 @@ const TimeOffForm = ({ date, setDaysOff }) => {
   };
 
   const onSubmit = e => {
-    const start = setTime(date, 4, 0);
-    const end = setTime(date, 3, 59);
+    const start = setToMinute(date, 4, 0);
+    const end = setToMinute(date, 3, 59);
     let data = {
       appointment_start: start,
       appointment_end: end

@@ -1,21 +1,6 @@
-export const roundToDay = date => {
-  const d = new Date(date);
-  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
-};
-
-export const getLastMinute = date => {
-  const d = new Date(date);
-  return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59);
-};
-
 export const setAvailableTimes = (date, hour) => {
   const d = new Date(date);
   return new Date(d.getFullYear(), d.getMonth(), d.getDate(), hour).getTime();
-};
-
-export const setTime = (date, hour, minute) => {
-  const d = new Date(date);
-  return new Date(d.getFullYear(), d.getMonth(), d.getDate(), hour, minute);
 };
 
 const roundToMinutes = date => {
@@ -27,6 +12,11 @@ const roundToMinutes = date => {
     d.getHours(),
     d.getMinutes()
   ).getTime();
+};
+
+export const setToMinute = (date, hour, minute) => {
+  const d = new Date(date);
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate(), hour, minute);
 };
 
 const checkRange = (time, min, max) => {
@@ -57,7 +47,7 @@ export const checkAlltimes = (time, arr) => {
 //the issue is its gonna be hard to check if days off is true cause the data is being checked againt whole array
 
 export const getAvaliableTimes = (bookedTimes, day, earliest, latest) => {
-  const today = roundToDay(day).toString();
+  const today = setToMinute(day, 0, 0).toString();
   const earlistTime = setAvailableTimes(today, earliest);
   const latestTime = setAvailableTimes(today, latest);
   const halfHour = 1800000;
@@ -107,8 +97,8 @@ export const checkDayOff = (arrApps, id, date) => {
   const filter = arrApps.filter(
     item =>
       item.day_off === true &&
-      roundToDay(item.appointment_start).getTime() ===
-        roundToDay(date).getTime() &&
+      setToMinute(item.appointment_start, 0, 0).getTime() ===
+        setToMinute(date, 0, 0).getTime() &&
       item.team_member_id === id
   );
   if (filter.length === 0) return false;

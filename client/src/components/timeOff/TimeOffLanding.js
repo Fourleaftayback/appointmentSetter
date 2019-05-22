@@ -9,7 +9,7 @@ import TimeOffCard from "./TimeOffCard";
 
 import { getAllDaysOff } from "../../actions/daysOffActions";
 
-import { roundToDay } from "../../controller/dataConverter";
+import { setToMinute } from "../../controller/dataConverter";
 
 const TimeOffLanding = ({ getAllDaysOff, daysOff }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -42,7 +42,7 @@ const TimeOffLanding = ({ getAllDaysOff, daysOff }) => {
             minDate={today}
             maxDate={threeMonthes}
             disabledDates={daysOff.map(item =>
-              roundToDay(item.appointment_start)
+              setToMinute(item.appointment_start, 0, 0)
             )}
             width={350}
             height={250}
