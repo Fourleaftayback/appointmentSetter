@@ -21,3 +21,7 @@ body {
   display: block;
   margin-left: 3%;
 }
+
+.Cal__Day__disabled {
+  color: red !important;
+}

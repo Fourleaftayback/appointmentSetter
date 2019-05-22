@@ -50,6 +50,9 @@ const TimeOffLanding = ({ getAllDaysOff, daysOff }) => {
               overscanMonthCount: 3
             }}
             onSelect={changeDate}
+            theme={{
+              disabledColor: "rgb(127, 95, 251)"
+            }}
           />
         </Col>
         <TimeOffForm date={selectedDate} />
