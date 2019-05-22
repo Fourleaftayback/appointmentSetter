@@ -18,11 +18,9 @@ import { deleteDaysOff } from "../../actions/daysOffActions";
 
 const TimeOffCard = ({ data, deleteDaysOff }) => {
   const onSubmit = () => {
-    if (data.days_off_group) {
-      deleteDaysOff("/daysoff/removemany/", data.days_off_group);
-    } else {
-      deleteDaysOff("/daysoff/removeone/", data._id);
-    }
+    data.days_off_group
+      ? deleteDaysOff("/daysoff/removemany/", data.days_off_group)
+      : deleteDaysOff("/daysoff/removeone/", data._id);
   };
   return (
     <React.Fragment>

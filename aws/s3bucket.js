@@ -17,7 +17,7 @@ const uploadToS3 = file => {
         Bucket: BUCKET_NAME,
         Key: `profileimage/${uniqid("profile-image-")}`,
         Body: file.data,
-        ACL: "public-read-write"
+        ACL: "public-read"
       };
       s3bucket.upload(params, (err, data) => {
         if (err) {

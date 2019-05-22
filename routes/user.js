@@ -181,49 +181,4 @@ router.put(
   }
 );
 
-// @route   PUT /user/profile/upload
-// @desc    upload user profile image test run
-// @access  Private
-
-router.post(
-  "/profile/upload",
-  passport.authenticate("userPass", { session: false }),
-  (req, res) => {
-    const mimes = ["image/png", "image/jpeg", "image/jpg"];
-    //const fileName = req.body.fileName;
-    var busboy = new Busboy({
-      headers: req.headers,
-      limits: { files: 1, fileSize: 4000000 }
-    });
-    // The file upload has completed
-    busboy.on("finish", function() {
-      const image = req.files.image;
-      if (image.size > 3000000) {
-        return res
-          .status(413)
-          .json({ filesize: "The Image file size can not exceed 3mbs" });
-      }
-      if (!mimes.includes(image.mimetype)) {
-        return res.status(422).json({
-          format: "This image format is not supported"
-        });
-      }
-      let aws = uploadToS3(image);
-
-      aws
-        .then(data => {
-          User.findOneAndUpdate(
-            { _id: "5cddeb33dc4f9b03c93ab424" },
-            { image_url: data.Location }
-          ).then(user => {
-            user.save();
-            res.status(200).json({ message: "Save successful" });
-          });
-        })
-        .catch(err => res.status(400).json({ errors: "Something went wrong" }));
-    });
-    req.pipe(busboy);
-  }
-);
-
 module.exports = router;

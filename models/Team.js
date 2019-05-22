@@ -23,7 +23,7 @@ const TeamSchema = new Schema({
     type: String,
     required: true
   },
-  image_url: String,
+  image_url: { type: String, default: "" },
   isAdmin: {
     type: Boolean,
     required: true,

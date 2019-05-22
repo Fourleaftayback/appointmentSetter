@@ -23,7 +23,7 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  image_url: { type: String },
+  image_url: { type: String, default: "" },
 
   created_on: {
     type: Date,

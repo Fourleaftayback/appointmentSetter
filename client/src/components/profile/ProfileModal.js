@@ -20,16 +20,17 @@ import {
 import { profileModalToggle } from "../../actions/viewsActions";
 import { modifyUser } from "../../actions/commonAppActions";
 
+import ProfileImage from "./ProfileImage";
 import FormItem from "../form/FormItem";
 
-function ProfileModal({
+const ProfileModal = ({
   errors,
   profileModalIsOpen,
   profileModalToggle,
   user,
   modifyUser,
   isTeam
-}) {
+}) => {
   const [email, setEmail] = useState(user.email);
   const [phone, setPhone] = useState(user.phone.toString());
   const [image, setImage] = useState("");
@@ -43,21 +44,26 @@ function ProfileModal({
     formData.append("image", image);
     formData.append("email", email);
     formData.append("phone", phone);
-    console.log(email, phone, image);
-    /*
+    //console.log(email, phone, image);
+
     isTeam
       ? modifyUser("/team/modify", formData)
-      : modifyUser("/user/modify", formData); */
+      : modifyUser("/user/modify", formData);
   };
   const changeImage = e => {
     setImage(e.target.files[0]);
   };
+
   return (
     <React.Fragment>
       <NavItem>
-        <NavLink className="text-white" onClick={toggleModal}>
-          <i className="fas fa-user-circle fa-2x" />
-        </NavLink>
+        {user.profileImage !== undefined ? (
+          <ProfileImage imageUrl={user.profileImage} onClick={toggleModal} />
+        ) : (
+          <NavLink className="text-white" onClick={toggleModal}>
+            <i className="fas fa-user-circle fa-2x" />
+          </NavLink>
+        )}
         <Modal isOpen={profileModalIsOpen} toggle={toggleModal}>
           <ModalHeader toggle={toggleModal}>Profile</ModalHeader>
           <ModalBody>
@@ -114,7 +120,7 @@ function ProfileModal({
       </NavItem>
     </React.Fragment>
   );
-}
+};
 
 ProfileModal.propTypes = {
   errors: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),

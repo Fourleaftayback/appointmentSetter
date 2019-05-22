@@ -271,9 +271,8 @@ router.get(
 
 router.put(
   "/modify",
-  passport.authenticate("teamPass", { session: false }, (req, res) => {
-    console.log(req.body);
-    /*
+  passport.authenticate("teamPass", { session: false }),
+  (req, res) => {
     const { errors, isValid } = validateProfile(req.body);
     if (!isValid) return res.status(400).json(errors);
     const mimes = ["image/png", "image/jpeg", "image/jpg"];
@@ -359,8 +358,7 @@ router.put(
         .catch(err => res.status(400).json(err));
     }
     req.pipe(busboy);
-    */
-  })
+  }
 );
 
 module.exports = router;
