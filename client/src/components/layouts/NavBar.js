@@ -17,7 +17,7 @@ const NavBar = ({ isLoggedIn, userName, isTeam }) => {
   };
 
   return (
-    <Navbar color="dark" light expand="md">
+    <Navbar color="transparent" light expand="md">
       <NavbarBrand className="text-white" href="/">
         Brand
       </NavbarBrand>

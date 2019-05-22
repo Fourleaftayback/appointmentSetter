@@ -56,13 +56,13 @@ const TeamLanding = ({
     filterByDateAndId(currentUserId, selectedDate, appointments);
   }, [currentUserId, selectedDate, appointments]);
 
-  const cards = appByDateAndId.map(item => {
-    if (!item.day_off) {
-      return <AppointmentCard data={item} key={item._id} owner={user.id} />;
-    } else {
-      return <DayOffCard key={item._id} />;
-    }
-  });
+  const cards = appByDateAndId.map(item =>
+    !item.day_off ? (
+      <AppointmentCard data={item} key={item._id} owner={user.id} />
+    ) : (
+      <DayOffCard key={item._id} />
+    )
+  );
 
   return (
     <React.Fragment>
