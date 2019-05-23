@@ -50,6 +50,7 @@ const App = () => {
     <Provider store={store}>
       <Router history={history}>
         <Container fluid={true} className="App bg-light">
+          <div className="dark-overlay" />
           <NavBar />
           <Container>
             <Switch>
