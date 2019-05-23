@@ -1,10 +1,10 @@
+@import "./sass/global.scss";
+@import "./sass/navbar.scss";
+
 body {
   max-width: 100%;
   overflow-x: hidden;
-  font-family: "Helvetica Neue", Helvetica, sans-serif;
-  /*
-  color: rgba(255, 255, 255, 0.8);
-  */
+  font-family: $font-stack;
 }
 
 .App {
@@ -21,24 +21,23 @@ body {
 .dark-overlay {
   background-color: rgba(0, 0, 0, 0.4);
   position: absolute;
-  /* need to add media query to fix */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 }
 
+.main-container {
+  height: 100%;
+}
+
+// custom classes
 .cus-text-light {
-  color: rgba(255, 255, 255, 0.9) !important;
+  color: $white !important;
 }
 
 .cus-bg-secondary {
-  background-color: rgba(108, 117, 125, 0.7) !important;
-}
-
-.dropdown-item:hover {
-  background-color: rgba(108, 117, 125, 0.7) !important;
-  color: rgba(255, 193, 7, 9) !important;
+  background-color: $gray-faded !important;
 }
 
 .landing {
@@ -57,3 +56,5 @@ body {
 .Cal__Day__disabled {
   color: red !important;
 }
+
+@import "./sass/mediaQueries.scss";

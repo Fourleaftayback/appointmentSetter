@@ -28,7 +28,7 @@ import ResetRequest from "./components/common/ResetRequest";
 import NotAuthorized from "./components/common/NotAuthorized";
 import NotFound from "./components/common/NotFound";
 
-import "./App.css";
+import "./App.scss";
 import "react-infinite-calendar/styles.css";
 
 //set up jwt token auth here
@@ -52,7 +52,7 @@ const App = () => {
         <Container fluid={true} className="App bg-light">
           <div className="dark-overlay" />
           <NavBar />
-          <Container>
+          <Container className="main-container">
             <Switch>
               <Route exact path="/" component={Landing} />
               <Route exact path="/signup" component={UserRegister} />

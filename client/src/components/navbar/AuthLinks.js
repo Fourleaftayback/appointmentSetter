@@ -34,8 +34,10 @@ const AuthLinks = ({
         <DropdownToggle nav className="cus-text-light font-weight-bold">
           Login
         </DropdownToggle>
-        <DropdownMenu className="cus-bg-secondary" right>
-          <DropdownItem className="py-0">
+        <DropdownMenu
+          className="bg-transparent menu-dropdown pb-0 rounded"
+          right>
+          <DropdownItem className="py-1 ">
             <LoginModal
               loginType="User"
               forgotPath="/forgot"
@@ -44,8 +46,7 @@ const AuthLinks = ({
               modalIsOpen={userLoginIsOpen}
             />
           </DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem className="text-white">
+          <DropdownItem className="py-1">
             <LoginModal
               loginType="Team"
               forgotPath="/team/forgot"

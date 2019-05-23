@@ -17,7 +17,7 @@ const NavBar = ({ isLoggedIn, userName, isTeam }) => {
   };
 
   return (
-    <Navbar color="transparent" light expand="md">
+    <Navbar color="transparent" dark expand="md">
       <NavbarBrand className="cus-text-light ml-2" href="/">
         <i className="fas fa-cut fa-lg" />
         <span className="ml-2">Scheduler</span>

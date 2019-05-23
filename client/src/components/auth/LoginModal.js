@@ -41,7 +41,7 @@ const LoginModal = ({
 
   return (
     <React.Fragment>
-      <NavLink className="text-white text-center p-0" onClick={toggleModal}>
+      <NavLink className="cus-text-light p-0" onClick={toggleModal}>
         {loginType} Login
       </NavLink>
       <Modal isOpen={modalIsOpen} toggle={toggleModal}>

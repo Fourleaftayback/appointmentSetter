@@ -18,7 +18,7 @@ sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 require("../config/passportUser")(passport);
 
 // @route   Post appointment/add
-// @desc    add new appointment to Data
+// @desc    add new appointment to Data async function
 // @access  Private
 router.post(
   "/add",
@@ -81,6 +81,7 @@ router.post(
   }
 );
 
+// This route might not be needed so possibily delete to prod
 // @route   Put appointment/edit/:id
 // @desc    modify appointment
 // @access  Private
@@ -138,7 +139,7 @@ router.delete(
         if (Date.now() > new Date(app.appointment_start - 3600000)) {
           return res.status(400).json({
             errors:
-              "You care too close to the appointment to cancel online, Please call directly to cancel"
+              "You are too close to the appointment time to cancel online, Please call directly to cancel"
           });
         }
         app.remove().then(() => res.status(200).json({ success: true }));
@@ -182,7 +183,9 @@ router.get(
       .then(apps => {
         res.status(200).json(apps);
       })
-      .catch(err => res.status(400).json({ errors: err }));
+      .catch(err =>
+        res.status(400).json({ errors: { failed: "could not retrieve data" } })
+      );
   }
 );
 
