@@ -31,8 +31,8 @@ const AuthLinks = ({
   return (
     <React.Fragment>
       <UncontrolledDropdown nav inNavbar>
-        <DropdownToggle nav className="cus-text-light font-weight-bold">
-          Login
+        <DropdownToggle nav className="cus-text-light ">
+          <i className="fas fa-sign-in-alt" /> Login
         </DropdownToggle>
         <DropdownMenu
           className="bg-transparent menu-dropdown pb-0 rounded"
@@ -58,8 +58,8 @@ const AuthLinks = ({
         </DropdownMenu>
       </UncontrolledDropdown>
       <NavItem>
-        <NavLink className="cus-text-light font-weight-bold" href="/signup">
-          Sign Up
+        <NavLink className="cus-text-light" href="/signup">
+          <i className="fas fa-user-plus" /> Sign Up
         </NavLink>
       </NavItem>
     </React.Fragment>

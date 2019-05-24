@@ -9,7 +9,7 @@ import { logOutUser } from "../../actions/authActions";
 const SignOut = ({ logOutUser }) => {
   return (
     <React.Fragment>
-      <NavItem>
+      <NavItem className="cus-m-auto">
         <Button
           outline
           color="secondary"

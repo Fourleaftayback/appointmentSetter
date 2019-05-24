@@ -55,12 +55,12 @@ const ProfileModal = ({
 
   return (
     <React.Fragment>
-      <NavItem>
+      <NavItem className="cus-m-auto">
         {user.profileImage !== undefined ? (
           <ProfileImage
             imageUrl={user.profileImage}
             onClick={toggleModal}
-            size="2.75rem"
+            size="3.5em"
           />
         ) : (
           <NavLink className="text-white" onClick={toggleModal}>

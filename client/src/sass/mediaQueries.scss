@@ -18,6 +18,7 @@
 }
 
 @media only screen and (min-width: 768px) {
+  //navbar
   .dropdown-item {
     padding: 1em;
     background-color: rgba(0, 0, 0, 0.8) !important;
@@ -28,6 +29,29 @@
       color: $orange !important;
       background-color: unset;
     }
+  }
+  .cus-m-auto {
+    margin: unset;
+    display: inline;
+  }
+  .navbar {
+    img {
+      height: 2.25em !important;
+      width: 2.25em !important;
+    }
+  }
+  .navbar-nav {
+    li {
+      a {
+        padding: 0;
+      }
+    }
+  }
+  .nav-name {
+    margin: 0 0.5em;
+  }
+  .notificaton {
+    margin-top: 5px;
   }
 }
 

@@ -10,8 +10,8 @@ function Profile({ userName, isTeam }) {
   return (
     <React.Fragment>
       <ProfileModal />
-      <NavItem>
-        <span className="text-white ml-1" href="/components/">
+      <NavItem className="m-auto">
+        <span className="cus-text-light nav-name" href="/components/">
           <b>{userName}</b>
         </span>
       </NavItem>

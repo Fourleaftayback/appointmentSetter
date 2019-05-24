@@ -16,7 +16,7 @@ const Notifications = ({ getUserApps, appCount, userData }) => {
 
   return (
     <React.Fragment>
-      <NavItem>
+      <NavItem className="cus-m-auto notificaton">
         <NavLink href={link}>
           <Button color="light" outline size="sm">
             Appointments <Badge color="warning">{appCount}</Badge>

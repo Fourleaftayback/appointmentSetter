@@ -18,14 +18,14 @@ const NavBar = ({ isLoggedIn, userName, isTeam }) => {
 
   return (
     <Navbar color="transparent" dark expand="md">
-      <NavbarBrand className="cus-text-light ml-2" href="/">
+      <NavbarBrand className="cus-text-light mx-2" href="/">
         <i className="fas fa-cut fa-lg" />
         <span className="ml-2">Scheduler</span>
       </NavbarBrand>
       <NavbarToggler onClick={collapseHandler} />
 
       <Collapse isOpen={collapsed} navbar>
-        <Nav className="navbar-nav mr-auto mt-2 mt-lg-0">
+        <Nav className="navbar-nav mr-auto mt-lg-0">
           {isLoggedIn ? <Profile userName={userName} isTeam={isTeam} /> : null}
         </Nav>
         <Nav className="navbar-nav mt-2 mt-lg-0">
