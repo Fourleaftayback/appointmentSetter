@@ -39,9 +39,9 @@ const UserRegister = ({ errors, registerUser, isAuthenticated, history }) => {
   return (
     <React.Fragment>
       <Row className="mt-3">
-        <Col md={4} className="m-auto pb-3">
-          <h3 className="text-center mt-3">Register</h3>
-          <Form>
+        <Col md={5} className="m-auto pb-3">
+          <h3 className="text-center cus-text-light mt-3">Register</h3>
+          <Form className="register-form">
             <FormItem
               type="email"
               name="email"
@@ -50,8 +50,8 @@ const UserRegister = ({ errors, registerUser, isAuthenticated, history }) => {
               error={errors.email}
               onChange={e => setEmail(e.target.value)}
             />
-            <Row>
-              <Col md={6} className="pr-1">
+            <Row className="form-row">
+              <Col md={6} className="form-group cus-form-group">
                 <FormItem
                   type="text"
                   name="first_name"
@@ -61,7 +61,7 @@ const UserRegister = ({ errors, registerUser, isAuthenticated, history }) => {
                   onChange={e => setFirstName(e.target.value)}
                 />
               </Col>
-              <Col md={6} className="pl-1">
+              <Col md={6} className="form-group cus-form-group">
                 <FormItem
                   type="text"
                   name="last_name"

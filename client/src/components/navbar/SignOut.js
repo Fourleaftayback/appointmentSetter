@@ -12,8 +12,8 @@ const SignOut = ({ logOutUser }) => {
       <NavItem className="cus-m-auto">
         <Button
           outline
-          color="secondary"
-          className="text-white"
+          size="sm"
+          className="cus-text-light cus-btn-transparent"
           onClick={logOutUser}>
           Sign Out
         </Button>

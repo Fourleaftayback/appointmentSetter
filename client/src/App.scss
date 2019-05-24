@@ -28,7 +28,7 @@ body {
 }
 
 .main-container {
-  height: 100%;
+  min-height: 86vh;
 }
 
 // custom classes
@@ -44,6 +44,17 @@ body {
   display: block;
   margin: auto;
 }
+
+.cus-btn-transparent:hover {
+  background-color: $white;
+  color: $black-faded !important;
+}
+
+.cus-form-group {
+  margin-bottom: 0 !important;
+}
+
+@import "./sass/miscPages.scss";
 
 .landing {
   min-height: 79vh;

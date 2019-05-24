@@ -51,7 +51,10 @@
     margin: 0 0.5em;
   }
   .notificaton {
-    margin-top: 5px;
+    margin-top: 4px;
+  }
+  .register-form {
+    margin: 0;
   }
 }
 
@@ -67,10 +70,14 @@
 
 /* Desktops and laptops ----------- */
 @media only screen and (min-width: 1224px) {
-  /* Styles */
+  .register-form {
+    margin: 0 2em 0 2em;
+  }
 }
 
 /* Large screens ----------- */
 @media only screen and (min-width: 1824px) {
-  /* Styles */
+  .register-form {
+    margin: 0;
+  }
 }
