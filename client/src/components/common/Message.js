@@ -8,14 +8,14 @@ const Message = ({ error, message }) => {
     <React.Fragment>
       <Row className="mt-2">
         <Col>
-          <small
+          <p
             className={classnames("text-center", {
               "text-danger": error,
-              "text-primary": message
+              "text-white": message
             })}>
             {message ? message : null}
             {error ? error : null}
-          </small>
+          </p>
         </Col>
       </Row>
     </React.Fragment>

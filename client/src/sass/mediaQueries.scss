@@ -66,6 +66,13 @@
   }
 }
 
+/* ipad pro and up  */
+@media only screen and (min-width: 1024px) {
+  .reset-container {
+    padding: 1rem 3rem 1rem 3rem !important;
+  }
+}
+
 /* Desktops and laptops ----------- */
 @media only screen and (min-width: 1224px) {
   .register-form {

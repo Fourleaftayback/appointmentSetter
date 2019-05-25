@@ -25,7 +25,9 @@ const ResetRequest = ({ errors, message, sendResetRequest }) => {
     ? (content = <Message message={message.success} />)
     : (content = (
         <React.Fragment>
-          <h5 className="text-center mt-4">Reset Your Password</h5>
+          <h5 className="text-center cus-text-light mt-3 mb-2">
+            Reset Your Password
+          </h5>
           <Form>
             <FormItem
               type="email"
@@ -44,10 +46,8 @@ const ResetRequest = ({ errors, message, sendResetRequest }) => {
 
   return (
     <React.Fragment>
-      <Row className="mt-5">
-        <Col className="col-md-6 m-auto border border-secondary rounded p-3">
-          {content}
-        </Col>
+      <Row className="mt-5 mx-2">
+        <Col className="col-md-6 m-auto p-3 reset-container">{content}</Col>
       </Row>
     </React.Fragment>
   );
