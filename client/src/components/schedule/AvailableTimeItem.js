@@ -51,7 +51,7 @@ const AvailableTimeItem = ({
     <React.Fragment>
       <Button
         outline
-        color="secondary"
+        color="primary"
         block
         className="mb-1"
         onClick={openModal}>

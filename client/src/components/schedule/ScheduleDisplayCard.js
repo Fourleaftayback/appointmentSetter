@@ -42,19 +42,24 @@ const ScheduleDisplayCard = ({ teamName, data, teamId, teamImage }) => {
   ));
 
   return (
-    <Col md={4}>
+    <Col md={4} className="mb-3">
       <Card>
         <CardHeader>
           {teamImage !== "" ? (
-            <ProfileImage imageUrl={teamImage} size="4rem" />
+            <ProfileImage
+              imageUrl={teamImage}
+              size="4rem"
+              cusClass="text-center p-0"
+            />
           ) : (
-            <i className="fas fa-user-circle fa-4x" />
+            <i className="fas fa-user-circle fa-4x d-block text-center" />
           )}
-          <h5 className="text-center">{teamName}</h5>
+          <h5 className="text-center mt-2">{teamName}</h5>
           <DatePickerButton
             selectedDate={selectedDate}
             pickDate={changeDate}
             maxDate={31}
+            cusClass="btn-block"
           />
         </CardHeader>
 
