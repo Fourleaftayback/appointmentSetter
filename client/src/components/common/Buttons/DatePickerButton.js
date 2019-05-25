@@ -35,7 +35,7 @@ const DatePickerButton = ({ selectedDate, pickDate, maxDate, cusClass }) => {
             disabledDays={null} //arr
             minDate={today}
             maxDate={monthAhead}
-            //width={300}
+            width={"25.1em"}
             height={300}
             displayOptions={{
               overscanMonthCount: 2

@@ -42,7 +42,7 @@ const ScheduleDisplayCard = ({ teamName, data, teamId, teamImage }) => {
   ));
 
   return (
-    <Col md={4} className="mb-3">
+    <Col lg={4} className="mb-3 schedule-card">
       <Card>
         <CardHeader>
           {teamImage !== "" ? (

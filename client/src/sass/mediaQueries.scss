@@ -25,10 +25,6 @@
     a {
       text-align: center;
     }
-    a:hover {
-      color: $orange !important;
-      background-color: unset;
-    }
   }
   .cus-m-auto {
     margin: unset;
@@ -63,9 +59,11 @@
   /* Styles */
 }
 
-/* iPads (portrait) ----------- */
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
-  /* Styles */
+/* iPads (portrait) */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1023px) and (orientation: portrait) {
+  .schedule-card {
+    margin: 0 3em 0 3em;
+  }
 }
 
 /* Desktops and laptops ----------- */
