@@ -1,22 +1,22 @@
 import React from "react";
-import { Row, Col, Card, CardTitle, CardText } from "reactstrap";
+import { Row, Col, Card, CardText, CardHeader, NavLink } from "reactstrap";
 import PropTypes from "prop-types";
 import moment from "moment";
+
+import { getType } from "../../controller/dataConverter";
 
 const JustMade = ({ appJustMade }) => {
   return (
     <React.Fragment>
-      <Row>
-        <Col>
-          <i className="far fa-smile fa-7x mt-4 mb-4" />
-        </Col>
-      </Row>
-      <Row>
+      <Row className="mt-4">
         <Col sm={7} className="m-auto">
           <Card className="p-2">
-            <CardTitle>Your Appointment is pending</CardTitle>
+            <CardHeader className="text-center">
+              <b>Your Appointment is pending</b>
+            </CardHeader>
             <CardText>
-              <b>Type of Appointment:</b> {appJustMade.appointment_type}
+              <b>Type of Appointment:</b>{" "}
+              {getType(appJustMade.appointment_type)}
             </CardText>
             <CardText>
               <b>Start Time:</b>{" "}
@@ -30,17 +30,27 @@ const JustMade = ({ appJustMade }) => {
               <b>With:</b> {appJustMade.team_member_info.first_name}
             </CardText>
             <CardText>
-              <b>Phone:</b> {appJustMade.team_member_info.phone}
+              <b>Phone:</b>{" "}
+              <NavLink
+                className="d-inline"
+                href={"tel:" + appJustMade.team_member_info.phone}>
+                {appJustMade.team_member_info.phone}
+              </NavLink>
             </CardText>
             <CardText>
-              <b>Email:</b> {appJustMade.team_member_info.email}
+              <b>Email:</b>{" "}
+              <NavLink
+                className="d-inline"
+                href={"tel:" + appJustMade.team_member_info.email}>
+                {appJustMade.team_member_info.email}
+              </NavLink>
             </CardText>
           </Card>
         </Col>
       </Row>
       <Row>
         <Col>
-          <p className="text-center mt-4">
+          <p className="text-center mt-4 cus-text-light">
             You should receive an email shorty once our team member confirms the
             appointment.
           </p>

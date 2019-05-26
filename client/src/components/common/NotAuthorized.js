@@ -12,7 +12,7 @@ const NotAuthorized = () => {
       </Row>
       <Row>
         <Col className="text-center">
-          <i className="fas fa-ban fa-5x cus-text-red mt-3" />
+          <i className="fas fa-ban fa-5x text-warning mt-3" />
         </Col>
       </Row>
       <Row>

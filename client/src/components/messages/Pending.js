@@ -20,7 +20,7 @@ const Pending = ({ appJustMade }) => {
       )}
       <Row>
         <Col>
-          <h3 className="text-center mt-3">
+          <h3 className="text-center mt-4">
             <Badge href="/" color="info">
               Home
             </Badge>

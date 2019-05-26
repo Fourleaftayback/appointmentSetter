@@ -5,13 +5,13 @@ function DefaultMessage() {
   return (
     <React.Fragment>
       <Row>
-        <Col>
-          <i className="far fa-frown fa-7x mt-4" />
+        <Col className="text-center mt-5">
+          <i className="far fa-frown fa-5x text-warning" />
         </Col>
       </Row>
       <Row>
-        <Col>
-          <h5 className="text-center">
+        <Col className="mt-5">
+          <h5 className="text-center cus-text-light">
             Sorry but you do not have an Appointment Just Requested
           </h5>
         </Col>
