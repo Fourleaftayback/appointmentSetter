@@ -1,6 +1,4 @@
 @import "./sass/global.scss";
-@import "./sass/navbar.scss";
-@import "./sass/main.scss";
 
 body {
   max-width: 100%;
@@ -10,6 +8,7 @@ body {
 
 .App {
   min-height: 100vh;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   padding: 0 !important;
   position: relative;
@@ -64,8 +63,6 @@ body {
   height: 3em !important;
 }
 
-@import "./sass/miscPages.scss";
-
 .landing {
   min-height: 79vh;
 }
@@ -82,5 +79,16 @@ body {
 .Cal__Day__disabled {
   color: red !important;
 }
+
+//register page
+
+.register-form {
+  margin: 0 1.75em 0 1.75em;
+}
+
+.admin-inline-form {
+  margin-bottom: 0.5rem;
+}
+@import "./sass/navbar.scss";
 
 @import "./sass/mediaQueries.scss";
