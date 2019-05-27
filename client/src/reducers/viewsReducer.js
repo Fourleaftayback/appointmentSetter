@@ -13,6 +13,8 @@ import {
   LOADING_DONE,
   DELETE_TEAM_OPEN,
   DELETE_TEAM_CLOSE,
+  NAVBAR_OPEN,
+  NAVBAR_CLOSE,
   MESSAGE
 } from "../actions/types";
 
@@ -24,6 +26,7 @@ const initialState = {
   addAppointmentModalisOpen: false,
   deleteModalIsOpen: false,
   deleteTeamIsOpen: false,
+  navBarIsOpen: false,
   message: {}
 };
 
@@ -69,6 +72,14 @@ export default function(state = initialState, action) {
       return Object.assign({}, state, {
         deleteModalIsOpen: false
       });
+    case NAVBAR_OPEN:
+      return Object.assign({}, state, {
+        navBarIsOpen: true
+      });
+    case NAVBAR_CLOSE:
+      return Object.assign({}, state, {
+        navBarIsOpen: false
+      });
     case DATA_LOADING:
       return Object.assign({}, state, {
         dataLoading: true
@@ -89,6 +100,7 @@ export default function(state = initialState, action) {
       return Object.assign({}, state, {
         message: action.payload
       });
+
     default:
       return state;
   }

@@ -18,6 +18,9 @@ import {
   DELETE_MODAL_TOGGLE,
   DELETE_MODAL_OPEN,
   DELETE_MODAL_CLOSE,
+  NAVBAR_TOGGLE,
+  NAVBAR_OPEN,
+  NAVBAR_CLOSE,
   DELETE_TEAM_TOGGLE,
   DELETE_TEAM_OPEN,
   DELETE_TEAM_CLOSE
@@ -46,6 +49,11 @@ const modalToggle = store => next => action => {
     current.views.addAppointmentModalisOpen
       ? (action.type = ADD_APPOINTMENT_MODAL_CLOSE)
       : (action.type = ADD_APPOINTMENT_MODAL_OPEN);
+  }
+  if (action.type === NAVBAR_TOGGLE) {
+    current.views.navBarIsOpen
+      ? (action.type = NAVBAR_CLOSE)
+      : (action.type = NAVBAR_OPEN);
   }
   if (action.type === DELETE_MODAL_TOGGLE) {
     current.views.deleteModalIsOpen

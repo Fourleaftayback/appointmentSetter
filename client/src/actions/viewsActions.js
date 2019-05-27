@@ -4,7 +4,8 @@ import {
   TEAMLOGIN_MODAL_TOGGLE,
   ADD_APPOINTMENT_MODAL_TOGGLE,
   DELETE_MODAL_TOGGLE,
-  DELETE_TEAM_TOGGLE
+  DELETE_TEAM_TOGGLE,
+  NAVBAR_TOGGLE
 } from "./types";
 
 export const userLoginModalToggle = () => {
@@ -28,6 +29,12 @@ export const profileModalToggle = () => {
 export const addAppointmentModalToggle = () => {
   return {
     type: ADD_APPOINTMENT_MODAL_TOGGLE
+  };
+};
+
+export const navBarToggle = () => {
+  return {
+    type: NAVBAR_TOGGLE
   };
 };
 

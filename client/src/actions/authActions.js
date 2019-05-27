@@ -8,7 +8,8 @@ import {
   SET_CURRENT_USER,
   CLEAR_ERRORS,
   USERLOGIN_MODAL_TOGGLE,
-  TEAMLOGIN_MODAL_TOGGLE
+  TEAMLOGIN_MODAL_TOGGLE,
+  NAVBAR_TOGGLE
 } from "./types";
 
 // Register User
@@ -50,6 +51,11 @@ export const loginUser = userData => dispatch => {
         type: USERLOGIN_MODAL_TOGGLE
       });
     })
+    .then(() => {
+      dispatch({
+        type: NAVBAR_TOGGLE
+      });
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -73,6 +79,11 @@ export const loginTeam = userData => dispatch => {
       });
       dispatch({
         type: TEAMLOGIN_MODAL_TOGGLE
+      });
+    })
+    .then(() => {
+      dispatch({
+        type: NAVBAR_TOGGLE
       });
     })
     .then(() => {
