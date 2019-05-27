@@ -36,7 +36,7 @@ const TimeOffLanding = ({ getAllDaysOff, daysOff }) => {
   return (
     <React.Fragment>
       <Row className="mt-5">
-        <Col md={{ size: 4, offset: 1 }}>
+        <Col md="6">
           <InfiniteCalendar
             selected={selectedDate}
             minDate={today}
@@ -44,8 +44,8 @@ const TimeOffLanding = ({ getAllDaysOff, daysOff }) => {
             disabledDates={daysOff.map(item =>
               setToMinute(item.appointment_start, 0, 0)
             )}
-            width={350}
-            height={250}
+            width={"100%"}
+            height={300}
             displayOptions={{
               overscanMonthCount: 3
             }}
@@ -59,7 +59,7 @@ const TimeOffLanding = ({ getAllDaysOff, daysOff }) => {
       </Row>
       <Row className="my-4">
         <Col md="6" className="m-auto">
-          <h5 className="text-center">{message}</h5>
+          <h5 className="text-center cus-text-light">{message}</h5>
         </Col>
       </Row>
       <Row>{cards}</Row>

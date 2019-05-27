@@ -39,16 +39,16 @@ const TimeOffForm = ({ date, setDaysOff }) => {
 
   return (
     <React.Fragment>
-      <Col md={{ size: 4, offset: 2 }}>
-        <Form>
-          <FormGroup check className="">
+      <Col md="6">
+        <Form className="mt-2 text-center">
+          <FormGroup check>
             <Input
               type="checkbox"
               name="repeat"
               id="repeat"
               onChange={onChange}
             />
-            <Label for="repeat" check>
+            <Label for="repeat" check className="cus-text-light">
               Repeat Weekly
             </Label>
           </FormGroup>
@@ -59,6 +59,8 @@ const TimeOffForm = ({ date, setDaysOff }) => {
               name="repeatCount"
               valueArr={[2, 3, 4, 5, 6, 7, 8]}
               nameArr={[2, 3, 4, 5, 6, 7, 8]}
+              isLight={true}
+              controlWidth={true}
             />
           ) : null}
           <Button color="primary" onClick={onSubmit} className="m-auto">
