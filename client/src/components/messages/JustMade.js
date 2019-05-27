@@ -10,26 +10,26 @@ const JustMade = ({ appJustMade }) => {
     <React.Fragment>
       <Row className="mt-4">
         <Col sm={7} className="m-auto">
-          <Card className="p-2">
+          <Card className="pb-2">
             <CardHeader className="text-center">
               <b>Your Appointment is pending</b>
             </CardHeader>
-            <CardText>
+            <CardText className="pl-2 pt-2">
               <b>Type of Appointment:</b>{" "}
               {getType(appJustMade.appointment_type)}
             </CardText>
-            <CardText>
+            <CardText className="pl-2">
               <b>Start Time:</b>{" "}
               {moment(appJustMade.appointment_start).format("llll")}
             </CardText>
-            <CardText>
+            <CardText className="pl-2">
               <b>End Time:</b>{" "}
               {moment(appJustMade.appointment_end).format("llll")}
             </CardText>
-            <CardText>
+            <CardText className="pl-2">
               <b>With:</b> {appJustMade.team_member_info.first_name}
             </CardText>
-            <CardText>
+            <CardText className="pl-2">
               <b>Phone:</b>{" "}
               <NavLink
                 className="d-inline"
@@ -37,7 +37,7 @@ const JustMade = ({ appJustMade }) => {
                 {appJustMade.team_member_info.phone}
               </NavLink>
             </CardText>
-            <CardText>
+            <CardText className="pl-2">
               <b>Email:</b>{" "}
               <NavLink
                 className="d-inline"

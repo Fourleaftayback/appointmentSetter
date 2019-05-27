@@ -15,9 +15,11 @@ const TeamMemberPicker = ({ teamMembers, firstUser, selectUser }) => {
 
   return (
     <React.Fragment>
-      <Form>
+      <Form className="mx-4">
         <FormGroup>
-          <Label for="teamMemberPicker">Choose the Team Member</Label>
+          <Label for="teamMemberPicker" className="cus-text-light">
+            Choose the Team Member
+          </Label>
           <Input
             type="select"
             name="teamMemberPicker"

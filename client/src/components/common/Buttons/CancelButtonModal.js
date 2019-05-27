@@ -23,7 +23,7 @@ const CancelButtonModal = ({
 
   return (
     <React.Fragment>
-      <Button color="danger" onClick={toggleModal}>
+      <Button color="danger" onClick={toggleModal} className="ml-2">
         Cancel
       </Button>
       <Modal isOpen={isOpen} toggle={toggleModal}>

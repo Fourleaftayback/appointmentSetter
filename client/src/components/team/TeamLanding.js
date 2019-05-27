@@ -8,6 +8,7 @@ import DatePickerButton from "../../components/common/Buttons/DatePickerButton";
 import AddAppointment from "./buttons/AddAppointment";
 import AppointmentCard from "./appointmentCard/AppointmentCard";
 import DayOffCard from "./appointmentCard/DayOffCard";
+import MessageCard from "../messages/MessageCard";
 
 import {
   getAllTeamApp,
@@ -74,14 +75,14 @@ const TeamLanding = ({
             selectUser={selectUser}
           />
         </Col>
-        <Col md="4">
+        <Col md="4" className="mb-2 team-btn-container">
           <DatePickerButton
             selectedDate={selectedDate}
             pickDate={changeDate}
             maxDate={90}
           />
         </Col>
-        <Col md="4">
+        <Col md="4" className="mb-2 team-btn-container">
           <AddAppointment
             teamId={currentUserId}
             day={selectedDate}
@@ -89,7 +90,17 @@ const TeamLanding = ({
           />
         </Col>
       </Row>
-      <Row className="mt-4">{cards}</Row>
+      <Row className="mt-4">
+        {appByDateAndId.length === 0 ? (
+          <MessageCard
+            header="No Appointments."
+            body="This team member does not have any appointments on this day. Please choose another date."
+            linkTo={false}
+          />
+        ) : (
+          cards
+        )}
+      </Row>
     </React.Fragment>
   );
 };

@@ -82,7 +82,7 @@ const AddAppointment = ({
 
   return (
     <React.Fragment>
-      <Button color="primary" onClick={toggleModal}>
+      <Button color="primary" onClick={toggleModal} className="px-4">
         Add Appointment
       </Button>
       <Modal isOpen={modalIsOpen} toggle={toggleModal}>

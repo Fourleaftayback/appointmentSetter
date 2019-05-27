@@ -21,7 +21,7 @@ import { getType, firstUpperCase } from "../../../controller/dataConverter";
 const AppointmentCard = ({ data, owner }) => {
   return (
     <React.Fragment>
-      <Col md={4}>
+      <Col lg={4}>
         <Card>
           <CardHeader>{moment(data.appointment_start).format("LT")}</CardHeader>
           <CardBody>

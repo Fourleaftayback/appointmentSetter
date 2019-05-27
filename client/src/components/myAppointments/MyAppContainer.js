@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { Row } from "reactstrap";
 
 import MyAppointment from "./MyAppointment";
+import MessageCard from "../messages/MessageCard";
 
 const MyAppContainer = ({ myAppointments }) => {
   let appointments = myAppointments.map(item => (
@@ -11,7 +12,19 @@ const MyAppContainer = ({ myAppointments }) => {
   ));
   return (
     <React.Fragment>
-      <Row>{appointments}</Row>
+      <Row>
+        {myAppointments.length === 0 ? (
+          <MessageCard
+            header="No up coming appointments."
+            body="You do not have any scheduled appointments. Please go back to the home page and request one."
+            linkTo={true}
+            url="/"
+            linkName="Home"
+          />
+        ) : (
+          appointments
+        )}
+      </Row>
     </React.Fragment>
   );
 };

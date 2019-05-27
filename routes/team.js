@@ -82,7 +82,8 @@ router.post("/login", (req, res) => {
           last_name: user.last_name,
           email: user.email,
           phone: user.phone,
-          isAdmin: user.isAdmin
+          isAdmin: user.isAdmin,
+          profileImage: user.image_url
         };
 
         jwt.sign(payload, keys, { expiresIn: 7200 }, (err, token) => {
