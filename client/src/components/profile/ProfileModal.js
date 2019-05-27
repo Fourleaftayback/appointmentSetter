@@ -113,10 +113,14 @@ const ProfileModal = ({
           </ModalBody>
           <ModalFooter>
             {user.hasOwnProperty("isAdmin") ? (
-              <NavLink href="/timeoff">Time Off</NavLink>
+              <NavLink href="/timeoff" className="profile-link">
+                Time Off
+              </NavLink>
             ) : null}
             {user.isAdmin ? (
-              <NavLink href="/manage">Manage Team</NavLink>
+              <NavLink href="/manage" className="profile-link">
+                Manage Team
+              </NavLink>
             ) : null}
             <Button color="primary" onClick={onSubmit}>
               Save

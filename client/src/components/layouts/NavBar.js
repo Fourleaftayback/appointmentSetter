@@ -1,15 +1,18 @@
 import React, { useState, Suspense } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import history from "../../history/History";
 
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav } from "reactstrap";
 
 import AuthLinks from "../navbar/AuthLinks";
 import Profile from "../profile/Profile";
 
-const SignOut = React.lazy(() => import("../navbar/SignOut"));
+import { logOutUser } from "../../actions/authActions";
 
-const NavBar = ({ isLoggedIn, userName, isTeam }) => {
+const NavBarButton = React.lazy(() => import("../navbar/NavBarButton"));
+
+const NavBar = ({ isLoggedIn, userName, isTeam, logOutUser }) => {
   const [collapsed, setCollapse] = useState(false);
 
   const collapseHandler = () => {
@@ -31,7 +34,13 @@ const NavBar = ({ isLoggedIn, userName, isTeam }) => {
         <Nav className="navbar-nav mt-2 mt-lg-0">
           {isLoggedIn ? (
             <Suspense fallback={<li>Error</li>}>
-              <SignOut />
+              {isTeam ? (
+                <NavBarButton
+                  body="  Manage   "
+                  onClick={() => history.push("/team")}
+                />
+              ) : null}
+              <NavBarButton body="Sign Out" onClick={logOutUser} />
             </Suspense>
           ) : (
             <AuthLinks />
@@ -45,7 +54,8 @@ const NavBar = ({ isLoggedIn, userName, isTeam }) => {
 NavBar.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   userName: PropTypes.string,
-  isTeam: PropTypes.bool.isRequired
+  isTeam: PropTypes.bool.isRequired,
+  logOutUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -54,4 +64,11 @@ const mapStateToProps = state => ({
   isTeam: state.auth.user.hasOwnProperty("isAdmin")
 });
 
-export default connect(mapStateToProps)(NavBar);
+const mapDispatchToProps = {
+  logOutUser: logOutUser
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NavBar);

@@ -10,7 +10,8 @@ const FormSelect = ({
   name,
   valueArr,
   nameArr,
-  marginRight
+  marginRight,
+  isLight
 }) => {
   let choices = valueArr.map((item, i) => (
     <option value={item} key={i}>
@@ -19,8 +20,13 @@ const FormSelect = ({
   ));
   return (
     <React.Fragment>
-      <FormGroup>
-        <Label for={name} className={classnames({ "mr-2": marginRight })}>
+      <FormGroup className="admin-inline-form">
+        <Label
+          for={name}
+          className={classnames({
+            "mr-2": marginRight,
+            "cus-text-light": isLight
+          })}>
           {label}
         </Label>
         <Input type="select" name={name} id={name} onChange={onSelect}>
@@ -37,7 +43,8 @@ FormSelect.propTypes = {
   name: PropTypes.string.isRequired,
   valueArr: PropTypes.array.isRequired,
   nameArr: PropTypes.array.isRequired,
-  marginRight: PropTypes.bool
+  marginRight: PropTypes.bool,
+  isLight: PropTypes.bool
 };
 
 export default FormSelect;

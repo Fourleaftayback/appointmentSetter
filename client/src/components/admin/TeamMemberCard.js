@@ -18,7 +18,7 @@ import { firstUpperCase } from "../../controller/dataConverter";
 const TeamMemberCard = ({ data }) => {
   return (
     <React.Fragment>
-      <Col md={6}>
+      <Col md={6} className="mb-3">
         <Card>
           <CardHeader className="text-center">
             {firstUpperCase(data.first_name)} {firstUpperCase(data.last_name)}

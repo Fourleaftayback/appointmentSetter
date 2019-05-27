@@ -31,7 +31,7 @@ const AddMemberInlineForm = ({ error, createNewTeamMate, message }) => {
       <Col md={{ size: 8, order: 2, offset: 3 }}>
         <Form inline>
           <FormGroup className="mb-2 mr-sm-3 mb-sm-0">
-            <Label for="email" className="mr-sm-2">
+            <Label for="email" className="mr-sm-2 cus-text-light">
               Email
             </Label>
             <Input
@@ -52,6 +52,7 @@ const AddMemberInlineForm = ({ error, createNewTeamMate, message }) => {
             valueArr={[false, true]}
             nameArr={["No", "Yes"]}
             marginRight={true}
+            isLight={true}
           />
           <Button color="primary" className="ml-3" onClick={onSubmit}>
             Submit
