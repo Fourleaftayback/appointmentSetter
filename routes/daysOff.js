@@ -4,8 +4,6 @@ const passport = require("passport");
 const randonstring = require("randomstring");
 
 const Appointment = require("../models/Appointment");
-//const Team = require("../models/Team");
-
 const converter = require("../controller/dataConverter");
 
 require("../config/passportTeam")(passport);

@@ -59,7 +59,7 @@ router.post(
         app.date_updated_on = undefined;
         app.team_member_id = undefined;
         app.__v = undefined;
-        res.status(200).json(app); //delete for prod testing
+        // res.status(200).json(app); //delete for prod testing
 
         sgMail
           .send(email)

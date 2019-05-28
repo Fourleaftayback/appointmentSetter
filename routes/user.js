@@ -41,7 +41,7 @@ router.post("/register", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then(user => res.status(200)) //change after testing to just return status
+            .then(user => res.status(200).json(user)) //change after testing to just return status
             .catch(err => {
               errors.email = "something went wrong";
               res.status(400).json(errors);

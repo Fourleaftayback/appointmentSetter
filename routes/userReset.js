@@ -34,36 +34,27 @@ router.post("/forgot", (req, res) => {
       errors.email = "Sorry this email does not exist";
       return res.status(400).json(errors);
     }
-    user.save().then(() =>
-      res.status(200).json({
-        success:
-          "Please check your email. You should recieve a link to reset your password"
-      })
-    );
-    //refactor after testing
-    /*
-    let email = new PasswordResetMessage(req.body.email, token, req.hostname);
-    sgMail
-      .send(email)
-      .then(() => {
-        return res
-          .status(200)
-          .json({
+    user.save().then(() => {
+      let email = new PasswordResetMessage(req.body.email, token, req.hostname);
+      sgMail
+        .send(email)
+        .then(() => {
+          return res.status(200).json({
             success:
               "Please check your email. You should recieve a link to reset your password"
           });
-      })
-      .catch(err => {
-        let emailErr = new EmailErrors(
-          req.body.email,
-          "/reset/user/forgot",
-          err
-        );
-        emailErr.save();
-        errors.email = "Sorry email could not be sent";
-        return res.status(400).json(errors);
-      });
-      */
+        })
+        .catch(err => {
+          let emailErr = new EmailErrors(
+            req.body.email,
+            "/reset/user/forgot",
+            err
+          );
+          emailErr.save();
+          errors.email = "Sorry email could not be sent";
+          return res.status(400).json(errors);
+        });
+    });
   });
 });
 

@@ -5,7 +5,8 @@ import {
   GET_ALL_TEAMAPP,
   GET_ALL_CLIENTS,
   GET_APPBY_TEAMID,
-  GET_APPBY_DATE_ID
+  GET_APPBY_DATE_ID,
+  GET_CONFIRM_DATA
 } from "./types";
 
 import { getAllTeamMembers } from "./commonAppActions";
@@ -97,4 +98,21 @@ export const filterByDateAndId = (id, date, allAppointments) => dispatch => {
     type: GET_APPBY_DATE_ID,
     payload: appointments
   });
+};
+
+export const getAppById = id => dispatch => {
+  axios
+    .get(`/confirm/appointment/${id}`)
+    .then(res => {
+      dispatch({
+        type: GET_CONFIRM_DATA,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
 };

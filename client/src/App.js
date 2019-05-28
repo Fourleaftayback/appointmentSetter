@@ -24,6 +24,8 @@ import MyAppContainer from "./components/myAppointments/MyAppContainer";
 import AdminLanding from "./components/admin/AdminLanding";
 import TimeOffLanding from "./components/timeOff/TimeOffLanding";
 
+import ConfirmLanding from "./components/confirm/ConfirmLanding";
+
 import ResetRequest from "./components/common/ResetRequest";
 import NotAuthorized from "./components/common/NotAuthorized";
 import NotFound from "./components/common/NotFound";
@@ -61,6 +63,8 @@ const App = () => {
               <Route path="/team/register" component={RegisterTeam} />
               <Route exact path="/forgot" component={ResetRequest} />
               <Route exact path="/team/forgot" component={ResetRequest} />
+
+              <Route path="/confirm/team" component={ConfirmLanding} />
 
               <Route exact path="/not-authorized" component={NotAuthorized} />
               <PrivateRoute exact path="/pending" component={Pending} />

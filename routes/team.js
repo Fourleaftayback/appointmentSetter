@@ -133,32 +133,28 @@ router.post(
         password: randomStr,
         resetPasswordToken: token
       });
-      //this is only for testing
       newTeam.save().then(() => {
-        return res.status(200).json({
-          success:
-            "Please have the team member check thier email to complete the registration process"
-        });
+        let mail = new TeamRegistrationMessage(
+          req.body.email,
+          token,
+          req.hostname
+        );
+        sgMail
+          .send(mail)
+          .then(() => {
+            return res.status(200).json({
+              success:
+                "Please have the team member check thier email to complete the registration process"
+            });
+          })
+          .catch(err => {
+            let emailErr = new EmailErrors(req.body.email, "/team/create", err);
+            emailErr.save();
+            errors.email = "Sorry email could not be sent";
+            return res.status(400).json(errors);
+          });
       });
     });
-
-    /*
-    let mail = new TeamRegistrationMessage(req.body.email, token, req.hostname);
-    sgMail
-      .send(mail)
-      .then(() => {
-        return res.status(200).json({
-          message:
-            "please have the team member check thier Email to finish the registration process"
-        });
-      })
-      .catch(err => {
-        let emailErr = new EmailErrors(req.body.email, "/team/create", err);
-        emailErr.save();
-        errors.email = "Sorry email could not be sent";
-        return res.status(400).json(errors);
-      });
-      */
   }
 );
 
@@ -225,7 +221,7 @@ router.post("/register", (req, res) => {
         team.password = hash;
         team.first_name = req.body.first_name;
         team.last_name = req.body.last_name;
-        team.phone = req.body.phone.replace(/\(|\)|-/g, "");
+        team.phone = Number(req.body.phone.replace(/\(|\)|-/g, ""));
         team.resetPasswordToken = undefined;
         team
           .save()
