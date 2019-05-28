@@ -51,8 +51,11 @@ router.post("/test/register", (req, res) => {
           newTeam.password = hash;
           newTeam
             .save()
-            .then(team => res.json(team)) //change after testing to just return status
-            .catch(err => console.log(err));
+            .then(team => res.status(200))
+            .catch(err => {
+              errors.email = "Something went wrong.";
+              res.status(400).json(errors);
+            });
         });
       });
     }
@@ -246,7 +249,7 @@ router.get("/allmembers", (req, res) => {
     .then(members => {
       res.status(200).json(members);
     })
-    .catch(err => res.status(400).json({ errors: err }));
+    .catch(err => res.status(400).json({ errors: { error: err } }));
 });
 
 // @route   GET /team/allteam
@@ -262,7 +265,7 @@ router.get(
       .then(members => {
         res.status(200).json(members);
       })
-      .catch(err => res.status(400).json({ errors: err }));
+      .catch(err => res.status(400).json({ errors: { error: err } }));
   }
 );
 

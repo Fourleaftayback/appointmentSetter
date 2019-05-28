@@ -121,7 +121,9 @@ router.get(
         res.status(200).json(app);
       })
       .catch(err =>
-        res.status(400).json({ errors: "Sorry could not fetch data" })
+        res
+          .status(400)
+          .json({ errors: { error: "Sorry could not fetch data" } })
       );
   }
 );
@@ -141,7 +143,9 @@ router.get(
         res.status(200).json(app);
       })
       .catch(err =>
-        res.status(400).json({ errors: "Sorry coulld not fetch data" })
+        res
+          .status(400)
+          .json({ errors: { error: "Sorry coulld not fetch data" } })
       );
   }
 );
@@ -160,7 +164,7 @@ router.get(
       .then(users => {
         res.status(200).json(users);
       })
-      .catch(err => res.status(400).json({ errors: err }));
+      .catch(err => res.status(400).json({ errors: { error: err } }));
   }
 );
 

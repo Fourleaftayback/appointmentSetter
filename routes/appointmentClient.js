@@ -77,7 +77,10 @@ router.post(
             return res.status(400).json(errors);
           }); */
       })
-      .catch(err => res.status(400).json({ errors: "failed to save" }));
+      .catch(err => {
+        errors.appointment = "Failed to save.";
+        res.status(400).json(errors);
+      });
   }
 );
 
@@ -104,21 +107,24 @@ router.put(
       }
     )
       .then(app => {
-        if (!app)
-          return res.status(400).json({
-            errors: "This appointment does not exist."
-          });
+        if (!app) {
+          errors.appointment = "This appointment does not exist.";
+          return res.status(400).json(errors);
+        }
         if (app.user._id !== req.user._id) {
-          return res.status(400).json({
-            errors: "Sorry you are not authorized to modify this appointment"
-          });
+          errors.appointment =
+            "Sorry you are not authorized to modify this appointment";
+          return res.status(400).json(errors);
         }
         app.save();
         return res.status(400).json({
           appointment: "You will recieve a email confirming your change soon"
         });
       })
-      .catch(err => res.status(400).json({ errors: err }));
+      .catch(err => {
+        errors.error = "something went wrong.";
+        res.status(400).json(errors);
+      });
   }
 );
 
@@ -164,7 +170,7 @@ router.get("/all", (req, res) => {
     .then(app => {
       res.status(200).json(app);
     })
-    .catch(err => res.status(400).json({ errors: err }));
+    .catch(err => res.status(400).json({ errors: { error: err } }));
 });
 
 // @route   Get /appointment/user

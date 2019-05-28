@@ -81,7 +81,7 @@ router.get(
       .select("-confirmed -user")
       .sort("appointment_start")
       .then(daysOff => res.status(200).json(daysOff))
-      .catch(err => res.status(400).json({ errors: err }));
+      .catch(err => res.status(400).json({ errors: { error: err } }));
   }
 );
 // @route   Delete /daysoff/removeone/:id
