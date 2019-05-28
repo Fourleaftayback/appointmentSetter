@@ -51,46 +51,6 @@ router.post(
   }
 );
 
-// @route   put team/appointment/edit/:id
-// @desc    edit appointment by team ID
-// @access  private
-
-router.put(
-  "/edit/:id",
-  passport.authenticate("teamPass", { session: false }),
-  (req, res) => {
-    const { errors, isValid } = validateAppointment(req.body);
-
-    if (!isValid) return res.status(400).json(errors);
-    Appointment.findOneAndUpdate(
-      { _id: req.params.id },
-      {
-        appointment_type: req.body.appointment_type,
-        appointment_start: req.body.appointment_start,
-        appointment_end: req.body.appointment_end
-      }
-    )
-      .then(app => {
-        if (!app)
-          return res.status(400).json({
-            errors: "This appointment does not exist."
-          });
-        if (req.user.isAdmin) {
-          app.save();
-          return res.status(400).json({ appointment: "success" });
-        }
-        if (app.team_member_id !== req.user.id) {
-          return res.status(400).json({
-            errors: "Sorry you are not authorized to modify this appointment"
-          });
-        }
-        app.save();
-        return res.status(400).json({ appointment: "success" });
-      })
-      .catch(err => res.status(400).json({ errors: err }));
-  }
-);
-
 // @route   team/appointment/delete/:id
 // @desc    delete appointment by appointment id
 // @access  private team
@@ -135,6 +95,7 @@ router.get(
   "/team",
   passport.authenticate("teamPass", { session: false }),
   (req, res) => {
+    console.log("called");
     Appointment.find({
       team_member_id: req.user.id,
       appointment_end: { $gte: Date.now() }

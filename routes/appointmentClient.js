@@ -60,10 +60,10 @@ router.post(
         app.team_member_id = undefined;
         app.__v = undefined;
         res.status(200).json(app); //delete for prod testing
-        /*
+
         sgMail
           .send(email)
-          .then(app => {
+          .then(() => {
             res.status(200).json(app);
           })
           .catch(err => {
@@ -75,54 +75,10 @@ router.post(
             emailErr.save();
             errors.email = "Sorry email could not be sent";
             return res.status(400).json(errors);
-          }); */
+          });
       })
       .catch(err => {
         errors.appointment = "Failed to save.";
-        res.status(400).json(errors);
-      });
-  }
-);
-
-// This route might not be needed so possibily delete to prod
-// @route   Put appointment/edit/:id
-// @desc    modify appointment
-// @access  Private
-
-router.put(
-  "/edit/:id",
-  passport.authenticate("userPass", { session: false }),
-  (req, res) => {
-    const { errors, isValid } = validateAppointment(req.body);
-
-    if (!isValid) return res.status(400).json(errors);
-
-    Appointment.findOneAndUpdate(
-      { _id: req.params.id },
-      {
-        appointment_type: req.body.appointment_type,
-        appointment_start: req.body.appointment_start,
-        appointment_end: req.body.appointment_end,
-        confirmed: false
-      }
-    )
-      .then(app => {
-        if (!app) {
-          errors.appointment = "This appointment does not exist.";
-          return res.status(400).json(errors);
-        }
-        if (app.user._id !== req.user._id) {
-          errors.appointment =
-            "Sorry you are not authorized to modify this appointment";
-          return res.status(400).json(errors);
-        }
-        app.save();
-        return res.status(400).json({
-          appointment: "You will recieve a email confirming your change soon"
-        });
-      })
-      .catch(err => {
-        errors.error = "something went wrong.";
         res.status(400).json(errors);
       });
   }
