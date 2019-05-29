@@ -64,7 +64,10 @@ const App = () => {
               <Route exact path="/forgot" component={ResetRequest} />
               <Route exact path="/team/forgot" component={ResetRequest} />
 
-              <Route path="/confirm/team" component={ConfirmLanding} />
+              <TeamPrivateRoute
+                path="/confirm/team"
+                component={ConfirmLanding}
+              />
 
               <Route exact path="/not-authorized" component={NotAuthorized} />
               <PrivateRoute exact path="/pending" component={Pending} />

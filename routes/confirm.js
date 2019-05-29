@@ -13,7 +13,7 @@ sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 
 require("../config/passportTeam")(passport);
 
-// @route   GET /confirm/appointment
+// @route   GET /confirm/appointment/:id
 // @desc    route gets info about the single appointment
 // @access  Private
 
@@ -35,10 +35,12 @@ router.get(
 // @route   GET confirm/team/:token
 // @desc    route showing route to confirm appoinments for team members
 // @access  Private
+
 router.get(
   "/team/:id",
   passport.authenticate("teamPass", { session: false }),
   (req, res) => {
+    console.log("called");
     Appointment.findById(req.params.id).then(app => {
       if (!app)
         return res.redirect(`https://${req.hostname}/confirm/team/notvalid`);

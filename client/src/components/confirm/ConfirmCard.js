@@ -15,7 +15,7 @@ import {
 import { getType } from "../../controller/dataConverter";
 
 const ConfirmCard = ({ data, owner }) => {
-  console.log(data);
+  console.log(data, owner);
   return (
     <React.Fragment>
       <Col lg={4} className="m-auto">
@@ -28,7 +28,7 @@ const ConfirmCard = ({ data, owner }) => {
             <CardTitle>{`${getType(
               data.appointment_type
             )}  appointment`}</CardTitle>
-
+            <CardText>{data._id}</CardText>
             {data.confirmed ? (
               <CardText className="text-primary">
                 This appointment has been confirmed
@@ -52,14 +52,3 @@ ConfirmCard.propTypes = {
 };
 
 export default ConfirmCard;
-
-/*
-<CardFooter>
-            {!data.confirmed ? <ConfirmButton appId={data._id} /> : null}
-            {data.client_info._id === owner ? (
-              <CancelButtonModal
-                appId={data._id}
-                url="/team/appointment/delete/"
-              />
-            ) : null}
-          </CardFooter> */

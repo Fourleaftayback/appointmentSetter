@@ -13,7 +13,6 @@ const ConfirmLanding = ({ data, userId, getAppById }) => {
     const id = window.location.pathname.replace(/\/confirm\/team\//, "");
     getAppById(id);
   }, []);
-
   return (
     <React.Fragment>
       <Row>
