@@ -23,7 +23,7 @@ const ConfirmLanding = ({ data, userId, getAppById }) => {
         </Col>
       </Row>
       <Row>
-        <ConfirmCard data={data} owner={userId} />
+        <ConfirmCard data={data} />
       </Row>
     </React.Fragment>
   );

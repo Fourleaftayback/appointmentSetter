@@ -25,7 +25,20 @@ router.get(
       .select(
         "-days_off -days_off_group -team_member_info -date_requested_on -date_updated_on"
       )
-      .then(app => res.status(200).json(app))
+      .then(app => {
+        const data = {
+          appointment_start: app.appointment_start,
+          appointment_end: app.appointment_end,
+          _id: app._id,
+          appointment_type: app.appointment_type,
+          confirmed: app.confirmed,
+          first_name: app.client_info.first_name,
+          last_name: app.client_info.last_name,
+          team_member_id: app.team_member_id
+        };
+        return data;
+      })
+      .then(data => res.status(200).json(data))
       .catch(err =>
         res.status(400).json({ errors: { erorr: "cannot find appointment" } })
       );
@@ -35,7 +48,7 @@ router.get(
 // @route   GET confirm/team/:token
 // @desc    route showing route to confirm appoinments for team members
 // @access  Private
-
+/*
 router.get(
   "/team/:id",
   passport.authenticate("teamPass", { session: false }),
@@ -52,7 +65,7 @@ router.get(
       );
     });
   }
-);
+); */
 
 // @route   PUT /confirm/team/appointment/:id
 // @desc    route confirms appointment
@@ -65,7 +78,7 @@ router.put(
     Appointment.findById(req.params.id).then(app => {
       app.confirmed = true;
       app
-        .save()
+        .save() //.then(() => res.status(200).json({ success: true }));
         .then(data => {
           let email = new ClientConfirmAppMessage(
             data.client_info.email,

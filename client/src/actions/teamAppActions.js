@@ -69,6 +69,9 @@ export const confirmAppointment = id => dispatch => {
     .then(res => {
       dispatch(getAllTeamApp());
     })
+    .then(() => {
+      dispatch(getAppById(id));
+    })
     .catch(err => {
       dispatch({
         type: GET_ERRORS,

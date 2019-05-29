@@ -12,10 +12,11 @@ import {
   CardFooter
 } from "reactstrap";
 
+import ConfirmButton from "../team/buttons/ConfirmButton";
+
 import { getType } from "../../controller/dataConverter";
 
-const ConfirmCard = ({ data, owner }) => {
-  console.log(data, owner);
+const ConfirmCard = ({ data }) => {
   return (
     <React.Fragment>
       <Col lg={4} className="m-auto">
@@ -28,7 +29,9 @@ const ConfirmCard = ({ data, owner }) => {
             <CardTitle>{`${getType(
               data.appointment_type
             )}  appointment`}</CardTitle>
-            <CardText>{data._id}</CardText>
+            <CardText>
+              <b>Client Name:</b> {data.first_name} {data.last_name}
+            </CardText>
             {data.confirmed ? (
               <CardText className="text-primary">
                 This appointment has been confirmed
@@ -39,7 +42,11 @@ const ConfirmCard = ({ data, owner }) => {
               </CardText>
             )}
           </CardBody>
-          <CardFooter>confirm button will go here</CardFooter>
+          <CardFooter>
+            {!data.confirmed && data.hasOwnProperty("_id") ? (
+              <ConfirmButton appId={data._id} />
+            ) : null}
+          </CardFooter>
         </Card>
       </Col>
     </React.Fragment>
@@ -47,8 +54,7 @@ const ConfirmCard = ({ data, owner }) => {
 };
 
 ConfirmCard.propTypes = {
-  data: PropTypes.object.isRequired,
-  owner: PropTypes.string.isRequired
+  data: PropTypes.object.isRequired
 };
 
 export default ConfirmCard;
