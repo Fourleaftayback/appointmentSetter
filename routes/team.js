@@ -24,44 +24,6 @@ const uploadToS3 = require("../aws/s3bucket");
 const { TeamRegistrationMessage } = require("../emails/Emails");
 sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 
-// @route   POST team/test/register
-// @desc    Register team for testing purposes only
-// @access  Public
-router.post("/test/register", (req, res) => {
-  const { errors, isValid } = validateRegisterInput(req.body);
-
-  if (!isValid) return res.status(400).json(errors);
-
-  Team.findOne({ email: req.body.email }).then(user => {
-    if (user) {
-      errors.email = "Email already exists";
-      return res.status(400).json(errors);
-    } else {
-      let newTeam = new Team({
-        email: req.body.email,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        phone: req.body.phone.replace(/\(|\)|-/g, ""),
-        password: req.body.password
-      });
-
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newTeam.password, salt, (err, hash) => {
-          if (err) throw err;
-          newTeam.password = hash;
-          newTeam
-            .save()
-            .then(team => res.status(200))
-            .catch(err => {
-              errors.email = "Something went wrong.";
-              res.status(400).json(errors);
-            });
-        });
-      });
-    }
-  });
-});
-
 // @route   POST team/login
 // @desc    Login User / Returning JWT Token
 // @access  Public
@@ -189,6 +151,7 @@ router.delete(
 // @route   GET /team/register/:token
 // @desc    route to redirect team to register page to complete set up
 // @access  Public
+/*
 router.get("/register/:token", (req, res) => {
   Team.findOne({ resetPasswordToken: req.params.token }).then(team => {
     if (!team)
@@ -199,7 +162,7 @@ router.get("/register/:token", (req, res) => {
     );
   });
 });
-
+*/
 // @route   POST /team/register
 // @desc    get token for req from the params in frontend
 // @access  Public
@@ -216,8 +179,9 @@ router.post("/register", (req, res) => {
       return res.status(400).json(errors);
     }
     let newPassword = req.body.password;
-    bcrypt.getSalt(10, (err, salt) => {
+    bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(newPassword, salt, (err, hash) => {
+        if (err) throw err;
         team.password = hash;
         team.first_name = req.body.first_name;
         team.last_name = req.body.last_name;
@@ -225,10 +189,10 @@ router.post("/register", (req, res) => {
         team.resetPasswordToken = undefined;
         team
           .save()
-          .then(() => res.status(200).json({ teamInfo: "updated" }))
+          .then(user => res.status(200).json(user))
           .catch(err => {
-            errors.teamInfo = "Sorry your information could not be updated";
-            return res.status(400).json(errors);
+            errors.email = "something went wrong";
+            res.status(400).json(errors);
           });
       });
     });
