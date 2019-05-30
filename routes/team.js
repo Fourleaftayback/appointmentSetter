@@ -64,6 +64,21 @@ router.post("/login", (req, res) => {
   });
 });
 
+//@route   GET team/check/register/:token
+// @desc   checks token to see if it is valid. Then will render the page or redirect
+// @access  Public
+router.get("/check/register/:token", (req, res) => {
+  Team.findOne({ resetPasswordToken: req.params.token })
+    .then(team => {
+      if (team === null) {
+        return res.status(400).json({ token: "The token does not exist." });
+      } else {
+        return res.status(200).json({ success: "Token is still valid" });
+      }
+    })
+    .catch(err => res.status(400).json({ token: "Something went wrong." }));
+});
+
 // @route   POST team/create
 // @desc    Admin Only can create new user invite sent to the user only then they will need to register in the route
 // @access  private

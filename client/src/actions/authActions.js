@@ -138,3 +138,12 @@ export const logOutUser = () => dispatch => {
   dispatch({ type: CLEAR_ERRORS });
   history.push("/");
 };
+
+//check page token validation
+
+export const checkToken = (url, token) => {
+  axios
+    .get(url + token)
+    .then()
+    .catch(err => history.push("/"));
+};

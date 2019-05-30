@@ -3,7 +3,10 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Row, Col, Form, Button } from "reactstrap";
-import { completeTeamRegistration } from "../../../actions/authActions";
+import {
+  completeTeamRegistration,
+  checkToken
+} from "../../../actions/authActions";
 
 import history from "../../../history/History";
 
@@ -31,6 +34,10 @@ const RegisterTeam = ({
 
   useEffect(() => {
     setToken(window.location.pathname.replace("/team/register/", ""));
+    checkToken(
+      "/team/check/register/",
+      window.location.pathname.replace("/team/register/", "")
+    );
   }, []);
 
   const onSubmit = e => {
