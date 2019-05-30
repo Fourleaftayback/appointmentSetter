@@ -14,7 +14,6 @@ const EmailErrors = require("../models/EmailErrors");
 const keys = process.env.secret;
 
 const validateLoginInput = require("../validation/loginValidation");
-const validateRegisterInput = require("../validation/registerValidation");
 const validateEmail = require("../validation/emailValidation");
 const validateTeamRegister = require("../validation/registerTeamValidation");
 const validateProfile = require("../validation/profileValidation");

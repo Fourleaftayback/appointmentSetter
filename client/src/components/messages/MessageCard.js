@@ -11,7 +11,7 @@ const MessageCard = ({ header, body, linkTo, url, linkName }) => {
             <CardTitle>{header}</CardTitle>
             <CardText>{body}</CardText>
             {linkTo ? (
-              <Badge color="info" href={url} className="text-center">
+              <Badge color="info" href={url} className="text-center p-1">
                 {linkName}
               </Badge>
             ) : null}

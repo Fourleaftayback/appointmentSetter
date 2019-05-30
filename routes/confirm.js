@@ -40,32 +40,10 @@ router.get(
       })
       .then(data => res.status(200).json(data))
       .catch(err =>
-        res.status(400).json({ errors: { erorr: "cannot find appointment" } })
+        res.status(400).json({ appointment: "cannot find appointment" })
       );
   }
 );
-
-// @route   GET confirm/team/:token
-// @desc    route showing route to confirm appoinments for team members
-// @access  Private
-/*
-router.get(
-  "/team/:id",
-  passport.authenticate("teamPass", { session: false }),
-  (req, res) => {
-    console.log("called");
-    Appointment.findById(req.params.id).then(app => {
-      if (!app)
-        return res.redirect(`https://${req.hostname}/confirm/team/notvalid`);
-      if (app.confirmed)
-        return res.redirect(`https://${req.hostname}/confirm/team/notvalid`);
-
-      return res.redirect(
-        `https://${req.hostname}/confirm/team/${req.params.id}`
-      );
-    });
-  }
-); */
 
 // @route   PUT /confirm/team/appointment/:id
 // @desc    route confirms appointment
