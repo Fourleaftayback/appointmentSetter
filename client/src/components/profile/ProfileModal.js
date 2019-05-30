@@ -56,23 +56,23 @@ const ProfileModal = ({
   return (
     <React.Fragment>
       <NavItem className="cus-m-auto">
-        {user.profileImage !== undefined ? (
+        {user.profileImage === undefined || user.profileImage === "" ? (
+          <NavLink className="text-white" onClick={toggleModal}>
+            <i className="fas fa-user-circle fa-2x" />
+          </NavLink>
+        ) : (
           <ProfileImage
             imageUrl={user.profileImage}
             onClick={toggleModal}
             size="3.5em"
           />
-        ) : (
-          <NavLink className="text-white" onClick={toggleModal}>
-            <i className="fas fa-user-circle fa-2x" />
-          </NavLink>
         )}
         <Modal isOpen={profileModalIsOpen} toggle={toggleModal}>
           <ModalHeader toggle={toggleModal}>
-            {user.profileImage !== undefined ? (
-              <ProfileImage imageUrl={user.profileImage} size="4rem" />
-            ) : (
+            {user.profileImage === undefined || user.profileImage === "" ? (
               <i className="fas fa-user-circle fa-3x" />
+            ) : (
+              <ProfileImage imageUrl={user.profileImage} size="4rem" />
             )}
           </ModalHeader>
           <ModalBody>

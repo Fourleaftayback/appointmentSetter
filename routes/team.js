@@ -148,21 +148,6 @@ router.delete(
   }
 );
 
-// @route   GET /team/register/:token
-// @desc    route to redirect team to register page to complete set up
-// @access  Public
-/*
-router.get("/register/:token", (req, res) => {
-  Team.findOne({ resetPasswordToken: req.params.token }).then(team => {
-    if (!team)
-      return res.redirect(`https://${req.hostname}/reset/team/notvalid`);
-
-    return res.redirect(
-      `https://${req.hostname}/team/register/${req.params.token}`
-    );
-  });
-});
-*/
 // @route   POST /team/register
 // @desc    get token for req from the params in frontend
 // @access  Public
