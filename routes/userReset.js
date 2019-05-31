@@ -10,7 +10,7 @@ const EmailErrors = require("../models/EmailErrors");
 const validateEmail = require("../validation/emailValidation");
 const validateResetPassword = require("../validation/resetPasswordValidation");
 
-const { PasswordResetMessage } = require("../emails/Emails");
+const { PasswordResetMessageUser } = require("../emails/Emails");
 sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 
 // @route   POST reset/user/forgot
@@ -35,7 +35,11 @@ router.post("/forgot", (req, res) => {
       return res.status(400).json(errors);
     }
     user.save().then(() => {
-      let email = new PasswordResetMessage(req.body.email, token, req.hostname);
+      let email = new PasswordResetMessageUser(
+        req.body.email,
+        token,
+        req.hostname
+      );
       sgMail
         .send(email)
         .then(() => {
@@ -64,20 +68,21 @@ router.post("/forgot", (req, res) => {
 
 router.get("/:token", (req, res) => {
   User.findOne({
-    resetPassworsToken: req.params.token,
+    resetPasswordToken: req.params.token,
     resetPasswordExp: { $gte: Date.now() }
-  }).then(user => {
-    if (!user)
-      return res.redirect(`https://${req.hostname}/reset/user/notvalid`);
-
-    return res.redirect(
-      `https://${req.hostname}/reset/user/password/${req.params.token}`
-    );
-  });
+  })
+    .then(user => {
+      if (user === null) {
+        return res.status(400).json({ token: "The token is not valid" });
+      } else {
+        return res.status(200).json({ token: "Token is still valid." });
+      }
+    })
+    .catch(err => res.status(400).json({ token: "Something went wrong" }));
 });
 
 // @route   POST reset/user/newpassword
-// @desc    set new passoword. the token is passed from the body get from url params in redux
+// @desc    set new password. the token is passed from the body get from url params in redux
 // @access  public
 router.post("/newpassword", (req, res) => {
   const { errors, isValid } = validateResetPassword(req.body);
@@ -90,17 +95,17 @@ router.post("/newpassword", (req, res) => {
         return res.status(400).json(errors);
       }
       let newPassword = req.body.password;
-      bcrypt.getSalt(10, (err, salt) => {
+      bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newPassword, salt, (err, hash) => {
+          if (err) throw err;
           user.password = hash;
           user.resetPasswordToken = undefined;
-          user.resetPasswordExp = undefined;
           user
             .save()
-            .then(() => res.status(200).json({ success: true }))
+            .then(user => res.status(200).json({ success: "Ok" }))
             .catch(err => {
-              errors.password = "Sorry password could not be reset";
-              return res.status(400).json(errors);
+              errors.email = "something went wrong";
+              res.status(400).json(errors);
             });
         });
       });

@@ -147,3 +147,18 @@ export const checkToken = (url, token) => {
     .then()
     .catch(err => history.push("/"));
 };
+// reset password put route
+
+export const resetPassword = (url, data) => dispatch => {
+  axios
+    .post(url, data)
+    .then(res => {
+      history.push("/");
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};

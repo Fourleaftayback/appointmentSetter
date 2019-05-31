@@ -1,8 +1,15 @@
-function PasswordResetMessage(toEmail, token, url) {
+function PasswordResetMessageUser(toEmail, token, url) {
   (this.to = toEmail),
     (this.from = process.env.SEND_GRID_EMAIL),
     (this.subject = `Reset Password Request from AppointmentSetter`),
     (this.html = `<p>Please click on the following link, or paste this into your browser to complete the process: https://${url}/reset/password/${token}</p>`);
+}
+
+function PasswordResetMessageTeam(toEmail, token, url) {
+  (this.to = toEmail),
+    (this.from = process.env.SEND_GRID_EMAIL),
+    (this.subject = `Reset Password Request from AppointmentSetter`),
+    (this.html = `<p>Please click on the following link, or paste this into your browser to complete the process: https://${url}/reset/team/password/${token}</p>`);
 }
 
 function TeamRegistrationMessage(toEmail, token, url) {
@@ -34,7 +41,8 @@ function ClientRejectAppMessage(toEmail, name, date, teamName) {
 }
 
 module.exports = {
-  PasswordResetMessage,
+  PasswordResetMessageUser,
+  PasswordResetMessageTeam,
   TeamRegistrationMessage,
   TeamConfirmAppMessage,
   ClientConfirmAppMessage,

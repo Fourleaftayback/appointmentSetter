@@ -11,7 +11,7 @@ import setAuthToken from "./utils/setAuthToken";
 import PrivateRoute from "./components/common/PrivateRoute";
 import TeamPrivateRoute from "./components/common/TeamPrivateRoute";
 
-import { setCurrentUser, logOutUser } from "./actions/authActions";
+import { setCurrentUser, logOutUser, checkToken } from "./actions/authActions";
 
 import NavBar from "./components/layouts/NavBar";
 import Landing from "./components/layouts/Landing";
@@ -27,6 +27,7 @@ import TimeOffLanding from "./components/timeOff/TimeOffLanding";
 import ConfirmLanding from "./components/confirm/ConfirmLanding";
 
 import ResetRequest from "./components/common/ResetRequest";
+import ResetPassword from "./components/common/ResetPassword";
 import NotAuthorized from "./components/common/NotAuthorized";
 import NotFound from "./components/common/NotFound";
 
@@ -63,6 +64,29 @@ const App = () => {
               <Route path="/team/register" component={RegisterTeam} />
               <Route exact path="/forgot" component={ResetRequest} />
               <Route exact path="/team/forgot" component={ResetRequest} />
+              <Route
+                path="/reset/team/password"
+                component={props => (
+                  <ResetPassword
+                    {...props}
+                    getUrl="/reset/team"
+                    putUrl="/reset/team/newpassword"
+                    checkToken={checkToken}
+                  />
+                )}
+              />
+
+              <Route
+                path="/reset/password"
+                component={props => (
+                  <ResetPassword
+                    {...props}
+                    getUrl="/reset/user"
+                    putUrl="/reset/user/newpassword"
+                    checkToken={checkToken}
+                  />
+                )}
+              />
 
               <TeamPrivateRoute
                 path="/confirm/team"

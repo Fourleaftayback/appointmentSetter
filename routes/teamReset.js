@@ -10,7 +10,7 @@ const EmailErrors = require("../models/EmailErrors");
 const validateEmail = require("../validation/emailValidation");
 const validateResetPassword = require("../validation/resetPasswordValidation");
 
-const { PasswordResetMessage } = require("../emails/Emails");
+const { PasswordResetMessageTeam } = require("../emails/Emails");
 sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 
 // @route   POST reset/team/forgot
@@ -34,7 +34,11 @@ router.post("/forgot", (req, res) => {
       return res.status(400).json(errors);
     }
     team.save().then(() => {
-      let email = new PasswordResetMessage(req.body.email, token, req.hostname);
+      let email = new PasswordResetMessageTeam(
+        req.body.email,
+        token,
+        req.hostname
+      );
       sgMail
         .send(email)
         .then(() => {
@@ -63,21 +67,24 @@ router.post("/forgot", (req, res) => {
 
 router.get("/:token", (req, res) => {
   Team.findOne({
-    resetPassworsToken: req.params.token,
+    resetPasswordToken: req.params.token,
     resetPasswordExp: { $gte: Date.now() }
-  }).then(team => {
-    if (!team)
-      return res.redirect(`https://${req.hostname}/reset/team/notvalid`);
-    return res.redirect(
-      `https://${req.hostname}/reset/team/password/${req.params.token}`
-    );
-  });
+  })
+    .then(team => {
+      if (team === null) {
+        return res.status(400).json({ token: "The token is not valid" });
+      } else {
+        return res.status(200).json({ token: "Token is still valid." });
+      }
+    })
+    .catch(err => res.status(400).json({ token: "Something went wrong" }));
 });
 
 // @route   POST reset/team/newpassword
-// @desc    set new passoword. the token is passed from the body get from url params in redux
+// @desc    set new password. the token is passed from the body get from url params in redux
 // @access  public
 router.post("/newpassword", (req, res) => {
+  console.log("true");
   const { errors, isValid } = validateResetPassword(req.body);
   if (!isValid) return res.status(400).json(errors);
 
@@ -88,17 +95,17 @@ router.post("/newpassword", (req, res) => {
         return res.status(400).json(errors);
       }
       let newPassword = req.body.password;
-      bcrypt.getSalt(10, (err, salt) => {
+      bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newPassword, salt, (err, hash) => {
+          if (err) throw err;
           team.password = hash;
           team.resetPasswordToken = undefined;
-          team.resetPasswordExp = undefined;
           team
             .save()
-            .then(() => res.status(200).json({ success: true }))
+            .then(user => res.status(200).json({ success: "Ok" }))
             .catch(err => {
-              errors.password = "Sorry password could not be reset";
-              return res.status(400).json(errors);
+              errors.email = "something went wrong";
+              res.status(400).json(errors);
             });
         });
       });
