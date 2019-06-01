@@ -82,7 +82,7 @@ router.put(
             return res.status(400).json({ errors: "Email was not sent" });
           });
       })
-      .catch(err => console.log(err));
+      .catch(err => res.status(400).json({ errors: "DB Error" }));
   }
 );
 

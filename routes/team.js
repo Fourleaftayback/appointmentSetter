@@ -28,7 +28,6 @@ sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 // @access  Public
 router.post("/login", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
-
   if (!isValid) return res.status(400).json(errors);
 
   let { email, password } = req.body;
@@ -102,13 +101,13 @@ router.post(
 
       let isAmdin = req.body.isAdmin === "true" ? true : false;
       let token = crypto.randomBytes(20).toString("hex");
-
       let newTeam = new Team({
         email: req.body.email,
         isAmdin: isAmdin,
         password: randomStr,
         resetPasswordToken: token
       });
+
       newTeam.save().then(() => {
         let mail = new TeamRegistrationMessage(
           req.body.email,
@@ -208,7 +207,9 @@ router.get("/allmembers", (req, res) => {
     .then(members => {
       res.status(200).json(members);
     })
-    .catch(err => res.status(400).json({ errors: { error: err } }));
+    .catch(err =>
+      res.status(400).json({ errors: "Could not get all team members" })
+    );
 });
 
 // @route   GET /team/allteam
@@ -224,7 +225,9 @@ router.get(
       .then(members => {
         res.status(200).json(members);
       })
-      .catch(err => res.status(400).json({ errors: { error: err } }));
+      .catch(err =>
+        res.status(400).json({ errors: "Could not get all team members" })
+      );
   }
 );
 

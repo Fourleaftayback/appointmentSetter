@@ -1,13 +1,11 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Container } from "reactstrap";
-
 import { Provider } from "react-redux";
 import { Router, Route, Switch } from "react-router-dom";
 import store from "./store";
 import history from "./history/History";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
-
 import PrivateRoute from "./components/common/PrivateRoute";
 import TeamPrivateRoute from "./components/common/TeamPrivateRoute";
 
@@ -16,23 +14,29 @@ import { setCurrentUser, logOutUser, checkToken } from "./actions/authActions";
 import NavBar from "./components/layouts/NavBar";
 import Landing from "./components/layouts/Landing";
 import Footer from "./components/layouts/Footer";
-import UserRegister from "./components/auth/UserRegister";
 import TeamLanding from "./components/team/TeamLanding";
-import RegisterTeam from "./components/auth/team/RegisterTeam";
 import Pending from "./components/messages/Pending";
 import MyAppContainer from "./components/myAppointments/MyAppContainer";
-import AdminLanding from "./components/admin/AdminLanding";
-import TimeOffLanding from "./components/timeOff/TimeOffLanding";
-
 import ConfirmLanding from "./components/confirm/ConfirmLanding";
-
 import ResetRequest from "./components/common/ResetRequest";
 import ResetPassword from "./components/common/ResetPassword";
 import NotAuthorized from "./components/common/NotAuthorized";
 import NotFound from "./components/common/NotFound";
+import FallBack from "./components/common/FallBack";
 
 import "./App.scss";
 import "react-infinite-calendar/styles.css";
+
+const UserRegister = React.lazy(() => import("./components/auth/UserRegister"));
+const AdminLanding = React.lazy(() =>
+  import("./components/admin/AdminLanding")
+);
+const TimeOffLanding = React.lazy(() =>
+  import("./components/timeOff/TimeOffLanding")
+);
+const RegisterTeam = React.lazy(() =>
+  import("./components/auth/team/RegisterTeam")
+);
 
 //set up jwt token auth here
 if (localStorage.jwtToken) {
@@ -58,10 +62,24 @@ const App = () => {
           <Container className="main-container">
             <Switch>
               <Route exact path="/" component={Landing} />
-              <Route exact path="/signup" component={UserRegister} />
               <TeamPrivateRoute exact path="/team" component={TeamLanding} />
-
-              <Route path="/team/register" component={RegisterTeam} />
+              <Route
+                exact
+                path="/signup"
+                component={() => (
+                  <Suspense fallback={<FallBack />}>
+                    <UserRegister />
+                  </Suspense>
+                )}
+              />
+              <Route
+                path="/team/register"
+                component={() => (
+                  <Suspense fallback={<FallBack />}>
+                    <RegisterTeam />
+                  </Suspense>
+                )}
+              />
               <Route exact path="/forgot" component={ResetRequest} />
               <Route exact path="/team/forgot" component={ResetRequest} />
               <Route
@@ -100,13 +118,24 @@ const App = () => {
                 path="/myappointments"
                 component={MyAppContainer}
               />
-              <TeamPrivateRoute exact path="/manage" component={AdminLanding} />
+              <TeamPrivateRoute
+                exact
+                path="/manage"
+                component={() => (
+                  <Suspense fallback={<FallBack />}>
+                    <AdminLanding />
+                  </Suspense>
+                )}
+              />
               <TeamPrivateRoute
                 exact
                 path="/timeoff"
-                component={TimeOffLanding}
+                component={() => (
+                  <Suspense fallback={<FallBack />}>
+                    <TimeOffLanding />
+                  </Suspense>
+                )}
               />
-
               <Route component={NotFound} />
             </Switch>
           </Container>

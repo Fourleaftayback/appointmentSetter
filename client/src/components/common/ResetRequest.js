@@ -64,7 +64,11 @@ const mapStateToProps = state => ({
   message: state.views.message
 });
 
+const mapDispatchToProps = {
+  sendResetRequest: sendResetRequest
+};
+
 export default connect(
   mapStateToProps,
-  { sendResetRequest }
+  mapDispatchToProps
 )(ResetRequest);

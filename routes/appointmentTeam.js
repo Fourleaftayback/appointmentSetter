@@ -95,7 +95,6 @@ router.get(
   "/team",
   passport.authenticate("teamPass", { session: false }),
   (req, res) => {
-    console.log("called");
     Appointment.find({
       team_member_id: req.user.id,
       appointment_end: { $gte: Date.now() }
