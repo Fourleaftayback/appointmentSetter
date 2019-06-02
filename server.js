@@ -24,38 +24,6 @@ const daysOff = require("./routes/daysOff");
 
 app.use(compression());
 
-app.use(helmet.dnsPrefetchControl());
-app.use(helmet.frameguard({ action: "deny" }));
-app.use(helmet.hidePoweredBy());
-app.use(helmet.ieNoOpen());
-app.use(helmet.xssFilter());
-app.use(helmet.referrerPolicy({ policy: "same-origin" }));
-
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: [
-        "'self'",
-        "'unsafe-inline'",
-        "maxcdn.bootstrapcdn.com",
-        "use.fontawesome.com",
-        "stackpath.bootstrapcdn.com"
-      ],
-      fontSrc: ["'self'", "use.fontawesome.com", "maxcdn.bootstrapcdn.com"],
-      scriptSrc: [
-        "'self'",
-        "'unsafe-inline'",
-        "code.jquery.com",
-        "cdnjs.cloudflare.com",
-        "stackpath.bootstrapcdn.com",
-        "storage.googleapis.com",
-        "use.fontawesome.com"
-      ]
-    }
-  })
-);
-
 mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => console.log("connected to database " + db))
