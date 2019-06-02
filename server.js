@@ -45,4 +45,13 @@ app.use("/reset/user", userReset);
 app.use("/reset/team", teamReset);
 app.use("/daysoff", daysOff);
 
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static("client/build", { maxAge: "7d" }));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
+
 app.listen(port, () => console.log(`server connected on ${port}`));
