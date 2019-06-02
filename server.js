@@ -73,14 +73,6 @@ app.use(bodyParser.json());
 app.use(busboy());
 app.use(busboyBodyParser());
 
-app.get("/*", (req, res) => {
-  let url = path.join(__dirname, "../client/build", "index.html");
-  if (!url.startsWith("/app/"))
-    // we're on local windows
-    url = url.substring(1);
-  res.sendFile(url);
-});
-
 app.use("/team", teamApi);
 app.use("/team/appointment", appointmentApiTeam);
 app.use("/user", userApi);
@@ -93,9 +85,16 @@ app.use("/daysoff", daysOff);
 if (process.env.NODE_ENV === "production") {
   // Set static folder
   app.use(express.static("client/build", { maxAge: "7d" }));
-
+  /*
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  }); */
+  app.get("/*", (req, res) => {
+    let url = path.join(__dirname, "../client/build", "index.html");
+    if (!url.startsWith("/book-appointments/"))
+      // we're on local windows
+      url = url.substring(1);
+    res.sendFile(url);
   });
 }
 
