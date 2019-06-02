@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const busboy = require("connect-busboy");
 const busboyBodyParser = require("busboy-body-parser");
+const compression = require("compression");
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -19,6 +20,8 @@ const userReset = require("./routes/userReset");
 const teamReset = require("./routes/teamReset");
 const confirm = require("./routes/confirm");
 const daysOff = require("./routes/daysOff");
+
+app.use(compression());
 
 mongoose
   .connect(db, { useNewUrlParser: true })
