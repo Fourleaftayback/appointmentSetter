@@ -52,7 +52,8 @@ app.use(
         "stackpath.bootstrapcdn.com",
         "storage.googleapis.com",
         "use.fontawesome.com"
-      ]
+      ],
+      imgSrc: ["'self'", "'appointmentbooker.s3.amazonaws.com'"]
     }
   })
 );
