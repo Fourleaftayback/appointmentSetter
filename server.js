@@ -56,7 +56,6 @@ app.use(
       imgSrc: [
         "'self'",
         "appointmentbooker.s3.amazonaws.com",
-        "appointmentbooker.s3*",
         "appointmentbooker.s3.us-east-2.amazonaws.com"
       ]
     }
