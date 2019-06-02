@@ -89,12 +89,13 @@ if (process.env.NODE_ENV === "production") {
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   }); */
-  app.get("/*", (req, res) => {
-    let url = path.join(__dirname, "../client/build", "index.html");
-    if (!url.startsWith("/book-appointments/"))
-      // we're on local windows
-      url = url.substring(1);
-    res.sendFile(url);
+  app.get("/*", function(req, res) {
+    res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  });
+} else {
+  app.use(express.static(path.join(__dirname, "/client/public")));
+  app.get("/*", function(req, res) {
+    res.sendFile(path.join(__dirname, "./client/public/index.html"));
   });
 }
 
