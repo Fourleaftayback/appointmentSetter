@@ -57,7 +57,8 @@ app.use(
         "'self'",
         "appointmentbooker.s3.amazonaws.com",
         "appointmentbooker.s3.us-east-2.amazonaws.com",
-        "http://www.w3.org/2000/svg"
+        "http://www.w3.org/2000/svg",
+        "data:"
       ]
     }
   })
