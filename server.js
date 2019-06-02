@@ -53,7 +53,7 @@ app.use(
         "storage.googleapis.com",
         "use.fontawesome.com"
       ],
-      imgSrc: ["'self'", "'appointmentbooker.s3.amazonaws.com'"]
+      imgSrc: ["'self'", "appointmentbooker.s3.amazonaws.com"]
     }
   })
 );
