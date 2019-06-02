@@ -24,6 +24,46 @@ const daysOff = require("./routes/daysOff");
 
 app.use(compression());
 
+app.use(helmet.dnsPrefetchControl());
+app.use(helmet.frameguard({ action: "deny" }));
+app.use(helmet.hidePoweredBy());
+app.use(helmet.ieNoOpen());
+app.use(helmet.xssFilter());
+
+app.use(helmet.referrerPolicy({ policy: "same-origin" }));
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        "maxcdn.bootstrapcdn.com",
+        "use.fontawesome.com",
+        "stackpath.bootstrapcdn.com"
+      ],
+      fontSrc: ["'self'", "use.fontawesome.com", "maxcdn.bootstrapcdn.com"],
+      scriptSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        "code.jquery.com",
+        "cdnjs.cloudflare.com",
+        "stackpath.bootstrapcdn.com",
+        "storage.googleapis.com",
+        "use.fontawesome.com"
+      ],
+      imgSrc: [
+        "'self'",
+        "appointmentbooker.s3.amazonaws.com",
+        "appointmentbooker.s3.us-east-2.amazonaws.com",
+        "data:image/svg+xml,%3csvg",
+        "http://www.w3.org/2000/svg"
+      ]
+    }
+  })
+);
+
 mongoose.connect(db, { useNewUrlParser: true });
 
 app.use(bodyParser.urlencoded({ extended: false }));
