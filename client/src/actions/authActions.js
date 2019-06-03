@@ -22,6 +22,13 @@ export const registerUser = userData => dispatch => {
         type: CLEAR_ERRORS
       });
     })
+    .then(() => {
+      setTimeout(() => {
+        dispatch({
+          type: USERLOGIN_MODAL_TOGGLE
+        });
+      }, 400);
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

@@ -28,6 +28,8 @@ Run client and server at the same time
 
 `npm run dev`
 
+To have the abilty to uplaod images to AWS. You will need to configure a [AWS](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) account. Here is a [Youtube Tutorial](https://www.youtube.com/watch?v=Oc69SEtbM_U) to configure your account and set up your S3 bucket to save images.
+
 ### Deployment
 
 The react app can be built in herokus server.
