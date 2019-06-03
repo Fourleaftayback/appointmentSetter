@@ -74,9 +74,6 @@ app.use(busboy());
 app.use(busboyBodyParser());
 
 app.use(express.static("client/build", { maxAge: "7d" }));
-app.get("/*", (req, res) => {
-  res.sendFile(path.resolve(__dirname + "/client/build/index.html"));
-});
 
 app.use("/team", teamApi);
 app.use("/team/appointment", appointmentApiTeam);
@@ -94,5 +91,9 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   }); 
 } */
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.resolve(__dirname + "/client/build/index.html"));
+});
 
 app.listen(port, () => console.log(`server connected on ${port}`));
