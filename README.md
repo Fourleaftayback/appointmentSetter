@@ -1,1 +1,50 @@
 # appointmentSetter
+
+Scheduler app for buinesses like: Salons, Barbers, etc...
+
+### Getting Started
+
+`npm install`
+
+Run client and server at the same time
+
+`npm run dev`
+
+#### Installing
+
+Install dependencies in both [server](https://github.com/Fourleaftayback/appointmentSetter/blob/master/package.json) and [client](https://github.com/Fourleaftayback/appointmentSetter/blob/master/client/package.json) package.json files.
+
+Modify the script in server package.json to run client and server concurrently.
+
+`"scripts": { "dev": "concurrently \"npm run server\" \"npm run client\"", }`
+
+Add a proxy in the client package.json file.
+
+`"proxy": "http://localhost:5000"`
+
+Set up your .env file and include database url (mongoose), secret, and emailerAPI key for sendGrid.
+
+Run client and server at the same time
+
+`npm run dev`
+
+### Deployment
+
+The react app can be built in herokus server.
+Add this in your server package.json file to run the build when uploading the build.
+
+`"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"`
+
+Here is a working [live app](https://book-appointments.herokuapp.com/).
+
+### Built With
+
+- [Mongoose.js](https://mongoosejs.com/)
+- [Express.js](https://expressjs.com/)
+- [React](https://reactjs.org/)
+- [Node.js](https://nodejs.org/en/)
+- [Redux](https://redux.js.org/)
+
+### Authors
+
+- Jay Shong [Portfolio](https://www.jayshong.com/)
