@@ -1,6 +1,6 @@
 # appointmentSetter
 
-Scheduler app for buinesses like: Salons, Barbers, etc...
+A Scheduler app that can be used in buinesses like: Salons, Barbers, etc... There is a page for both user and the Employee side. You can request and delete appointment from the user side. From the Employee side, you can manage the appointments by adding, deleting, and confirming the appointments. You are able to set days offs to block days that are not available.
 
 ### Getting Started
 
