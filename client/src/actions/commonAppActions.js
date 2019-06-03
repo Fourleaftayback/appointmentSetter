@@ -14,7 +14,7 @@ import { deleteModalToggle, profileModalToggle } from "./viewsActions";
 
 export const deleteAppointment = (url, id) => dispatch => {
   axios
-    .delete(`${url}/${id}`)
+    .delete(url + id)
     .then(res => {
       dispatch(deleteModalToggle());
     })
