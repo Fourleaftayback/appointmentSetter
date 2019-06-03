@@ -48,6 +48,7 @@ app.use(
       scriptSrc: [
         "'self'",
         "'unsafe-inline'",
+        "'unsafe-eval'",
         "code.jquery.com",
         "cdnjs.cloudflare.com",
         "stackpath.bootstrapcdn.com",
