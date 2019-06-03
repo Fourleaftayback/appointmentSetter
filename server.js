@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const busboy = require("connect-busboy");
@@ -91,6 +92,10 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   }); 
 } */
+
+app.get("/forgot", (req, res) => {
+  res.sendFile(path.resolve(__dirname + "/client/build/index.html"));
+});
 
 app.get("/*", (req, res) => {
   res.sendFile(path.resolve(__dirname + "/client/build/index.html"));
