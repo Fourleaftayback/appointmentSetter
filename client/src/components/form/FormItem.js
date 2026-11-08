@@ -14,7 +14,7 @@ const FormItem = ({
   label
 }) => {
   return (
-    <FormGroup>
+    <FormGroup data-test="formItemComponent">
       {label && <Label>{label}</Label>}
       <Input
         type={type}

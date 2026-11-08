@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import uniqId from "uniqid";
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-import { getAvaliableTimes } from "../../controller/dataConverter";
+import { getAvaliableTimes } from '../../controller/dataConverter';
 
-import { Col, Card, CardHeader, CardBody, ListGroup } from "reactstrap";
+import { Col, Card, CardHeader, CardBody, ListGroup } from 'reactstrap';
 
-import { checkDayOff } from "../../controller/dataConverter";
+import { checkDayOff } from '../../controller/dataConverter';
 
-import DatePickerButton from "../common/Buttons/DatePickerButton";
-import AvailableTimeItem from "./AvailableTimeItem";
-import ProfileImage from "../common/imageComponents/ProfileImage";
+import DatePickerButton from '../common/Buttons/DatePickerButton';
+import AvailableTimeItem from './AvailableTimeItem';
+import ProfileImage from '../common/imageComponents/ProfileImage';
 
 const ScheduleDisplayCard = ({ teamName, data, teamId, teamImage }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   const [isDayOff, setIsDayOff] = useState(false);
 
-  const changeDate = date => {
+  const changeDate = (date) => {
     setSelectedDate(date);
   };
 
@@ -32,12 +31,12 @@ const ScheduleDisplayCard = ({ teamName, data, teamId, teamImage }) => {
     setAvailableTimeSlots(times);
   }, []);
 
-  let listItems = availableTimeSlots.map(item => (
+  let listItems = availableTimeSlots.map((item) => (
     <AvailableTimeItem
       time={item}
       teamId={teamId}
       teamName={teamName}
-      key={uniqId()}
+      key={`${teamId}-${item}`}
     />
   ));
 
@@ -45,7 +44,7 @@ const ScheduleDisplayCard = ({ teamName, data, teamId, teamImage }) => {
     <Col lg={4} className="mb-3 schedule-card">
       <Card>
         <CardHeader>
-          {teamImage !== "" ? (
+          {teamImage !== '' ? (
             <ProfileImage
               imageUrl={teamImage}
               size="4rem"
@@ -84,7 +83,7 @@ ScheduleDisplayCard.propTypes = {
   teamName: PropTypes.string.isRequired,
   teamImage: PropTypes.string,
   data: PropTypes.array.isRequired,
-  teamId: PropTypes.string.isRequired
+  teamId: PropTypes.string.isRequired,
 };
 
 export default ScheduleDisplayCard;

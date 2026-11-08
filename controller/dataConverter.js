@@ -45,4 +45,7 @@ const setTime = (date, hour, minute) => {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate(), hour, minute);
 };
 
-module.exports = { createDaysOffArray: createDaysOffArray, setTime: setTime };
+module.exports = {
+  createDaysOffArray: createDaysOffArray,
+  setTime: setTime
+};

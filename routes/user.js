@@ -18,11 +18,16 @@ const uploadToS3 = require("../aws/s3bucket");
 // @desc    user(client) registration
 // @access  Public
 router.post("/register", (req, res) => {
-  const { errors, isValid } = validateRegisterInput(req.body);
+  const {
+    errors,
+    isValid
+  } = validateRegisterInput(req.body);
 
   if (!isValid) return res.status(400).json(errors);
 
-  User.findOne({ email: req.body.email }).then(user => {
+  User.findOne({
+    email: req.body.email
+  }).then(user => {
     if (user) {
       errors.email = "Email already exists";
       return res.status(400).json(errors);
@@ -56,13 +61,21 @@ router.post("/register", (req, res) => {
 // @desc    Login User / Returning JWT Token
 // @access  Public
 router.post("/login", (req, res) => {
-  const { errors, isValid } = validateLoginInput(req.body);
+  const {
+    errors,
+    isValid
+  } = validateLoginInput(req.body);
 
   if (!isValid) return res.status(400).json(errors);
 
-  let { email, password } = req.body;
+  let {
+    email,
+    password
+  } = req.body;
 
-  User.findOne({ email }).then(user => {
+  User.findOne({
+    email
+  }).then(user => {
     if (!user) {
       errors.email = "This Email does not Exist";
       return res.status(400).json(errors);
@@ -78,7 +91,9 @@ router.post("/login", (req, res) => {
           profileImage: user.image_url
         };
 
-        jwt.sign(payload, keys, { expiresIn: 7200 }, (err, token) => {
+        jwt.sign(payload, keys, {
+          expiresIn: 7200
+        }, (err, token) => {
           res.json({
             success: true,
             token: "Bearer " + token
@@ -97,9 +112,14 @@ router.post("/login", (req, res) => {
 // @access  Private
 router.put(
   "/modify",
-  passport.authenticate("userPass", { session: false }),
+  passport.authenticate("userPass", {
+    session: false
+  }),
   (req, res) => {
-    const { errors, isValid } = validateProfile(req.body);
+    const {
+      errors,
+      isValid
+    } = validateProfile(req.body);
     if (!isValid) return res.status(400).json(errors);
     const mimes = ["image/png", "image/jpeg", "image/jpg"];
     let newData = {
@@ -125,7 +145,11 @@ router.put(
         aws
           .then(data => {
             newData.image_url = data.Location;
-            User.findOneAndUpdate({ _id: req.user.id }, newData, { new: true })
+            User.findOneAndUpdate({
+                _id: req.user.id
+              }, newData, {
+                new: true
+              })
               .select("-password -created_on")
               .then(user => {
                 if (!user) {
@@ -140,7 +164,9 @@ router.put(
                   phone: user.phone,
                   profileImage: user.image_url
                 };
-                jwt.sign(payload, keys, { expiresIn: 7200 }, (err, token) => {
+                jwt.sign(payload, keys, {
+                  expiresIn: 7200
+                }, (err, token) => {
                   res.json({
                     success: true,
                     token: "Bearer " + token
@@ -155,7 +181,11 @@ router.put(
           });
       });
     } else {
-      User.findOneAndUpdate({ _id: req.user.id }, newData, { new: true })
+      User.findOneAndUpdate({
+          _id: req.user.id
+        }, newData, {
+          new: true
+        })
         .select("-password -created_on")
         .then(user => {
           if (!user) {
@@ -171,7 +201,9 @@ router.put(
             phone: user.phone,
             profileImage: user.image_url
           };
-          jwt.sign(payload, keys, { expiresIn: 7200 }, (err, token) => {
+          jwt.sign(payload, keys, {
+            expiresIn: 7200
+          }, (err, token) => {
             res.json({
               success: true,
               token: "Bearer " + token
