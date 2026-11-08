@@ -1,28 +1,30 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Container, Row } from "reactstrap";
-import { getAllAppointments } from "../../actions/clientAppActions";
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Container, Row } from 'reactstrap';
+import { getAllAppointments } from '../../actions/clientAppActions';
 
-import "react-infinite-calendar/styles.css";
+import 'react-infinite-calendar/styles.css';
 
-import Spinner from "../common/Spinner";
-import ScheduleDisplayCard from "../schedule/ScheduleDisplayCard";
+import Spinner from '../common/Spinner';
+import ScheduleDisplayCard from '../schedule/ScheduleDisplayCard';
 
 const ScheduleContainer = ({
   getAllAppointments,
   schedules,
   teamMembers,
   loading,
-  daysOff
+  daysOff,
 }) => {
   let content;
   useEffect(() => {
     getAllAppointments();
   }, []);
 
-  let daySchedules = teamMembers.map(item => {
-    let memberData = schedules.filter(data => data.team_member_id === item._id);
+  let daySchedules = teamMembers.map((item) => {
+    let memberData = schedules.filter(
+      (data) => data.team_member_id === item._id,
+    );
 
     return (
       <ScheduleDisplayCard
@@ -48,20 +50,17 @@ ScheduleContainer.propTypes = {
   getAllAppointments: PropTypes.func.isRequired,
   schedules: PropTypes.array.isRequired,
   teamMembers: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   schedules: state.clientAppointment.schedules,
   teamMembers: state.clientAppointment.teamMembers,
-  loading: state.views.dataLoading
+  loading: state.views.dataLoading,
 });
 
 const mapDispatchToProps = {
-  getAllAppointments: getAllAppointments
+  getAllAppointments: getAllAppointments,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ScheduleContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ScheduleContainer);
